@@ -20,9 +20,9 @@ accordingly
       
   </parent>
     
-  <groupId>edu.pdx.cs410J.YourUserId</groupId>
+  <groupId>edu.pdx.cs410J.nmuller</groupId>
     
-  <artifactId>PortlandStateJavaSummer2022</artifactId>
+  <artifactId>advancedJava2022</artifactId>
     
   <version>2022.0.0</version>
     
