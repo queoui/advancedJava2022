@@ -17,9 +17,15 @@ public class StudentTest
 
   @Test
   void studentNamedPatIsNamedPat() {
-    String name = "Pat";
+    String name = "Sue";
     var pat = new Student(name, new ArrayList<>(), 0.0, "Doesn't matter");
     assertThat(pat.getName(), equalTo(name));
+  }
+
+  @Test
+  void studentSaysWhat(){
+    var pat = new Student("pat", new ArrayList<>(), 0.0, "Doesn't matter");
+    assertThat("This class is too much work", equalTo(pat.says()));
   }
 
 }

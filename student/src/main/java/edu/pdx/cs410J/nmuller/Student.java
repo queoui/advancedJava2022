@@ -31,7 +31,8 @@ public class Student extends Human {
    */
   @Override
   public String says() {                                                            
-    throw new UnsupportedOperationException("Not implemented yet");
+
+    return "This class is too much work";
   }
                                                                                     
   /**                                                                               
@@ -39,6 +40,7 @@ public class Student extends Human {
    * <code>Student</code>.                                                          
    */                                                                               
   public String toString() {
+
     throw new UnsupportedOperationException("Not implemented yet");
   }
 
@@ -48,6 +50,29 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    System.err.println("Missing command line arguments");
+    ArrayList<String> argv = new ArrayList<>();
+    if(args.length == 0){
+        System.err.println("Missing command line arguments");
+    }
+    else if(args.length<4){
+      //System.err.println("Requires at least 4 command line arguments");
+    }
+
+
+    System.out.println(args.length);
+
+    for (String str : args){
+      argv.add(str);
+    }
+    for (String str : args){
+      System.out.println(str);
+    }
+
+    //Student newStudent = new Student(name, courses, gpa, gender);
+
+    //newStudent.toString();
+
+
+
   }
 }
