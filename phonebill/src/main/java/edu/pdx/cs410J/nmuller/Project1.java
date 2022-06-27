@@ -19,6 +19,11 @@ public class Project1 {
     if(args.length == 0) {
       System.err.println("Missing command line arguments");
     }
+
+//    else if(args.length == 1 || "-README".equals(args[1])){
+//
+//    }
+
     if(args.length != 8){
         System.out.println("Not enough or too many command line arguments. Provide in order\n" +
              "-print or -README\n" +
@@ -50,10 +55,10 @@ public class Project1 {
 
     PhoneBill newBill = new PhoneBill(args[1]);
 
-
-    System.out.format("%s\t%s\t%s\n%s\t%s", newBill.getCustomer(), call.getCaller(), call.getCallee(),
-            call.getBeginTimeString(), call.getEndTimeString());
-
+    if("-path".equals(args[1])){
+      System.out.format("%s\t%s\t%s\n%s\t%s", newBill.getCustomer(), call.getCaller(), call.getCallee(),
+              call.getBeginTimeString(), call.getEndTimeString());
+    }
     System.exit(1);
   }
 
