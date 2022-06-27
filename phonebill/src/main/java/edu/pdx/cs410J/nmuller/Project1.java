@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class for the CS410J Phone Bill Project
@@ -27,6 +29,16 @@ public class Project1 {
              "-phone call end date and time\n");
       System.exit(1);
     }
+    if(!checkDate(args[4]) || !checkDate(args[6])){
+      System.out.println("use MM/DD/YYYY format for date");
+      System.exit(1);
+    }
+
+    if(!checkTime(args[5]) || !checkTime(args[7])){
+      System.out.println("use HH:MM format for time");
+      System.exit(1);
+    }
+
     for (String arg : args) {
       System.out.print(arg + "\t");
     }
@@ -45,4 +57,29 @@ public class Project1 {
     System.exit(1);
   }
 
+  public static boolean checkDate(String date){
+    String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
+    //Creating a pattern object
+    Pattern pattern = Pattern.compile(regex);
+    //Matching the compiled pattern in the String
+    Matcher matcher = pattern.matcher(date);
+    boolean bool = matcher.matches();
+    if(bool)
+      return true;
+    else
+      return false;
+  }
+
+  public static boolean checkTime(String time) {
+    String regex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
+    //Creating a pattern object
+    Pattern pattern = Pattern.compile(regex);
+    //Matching the compiled pattern in the String
+    Matcher matcher = pattern.matcher(time);
+    boolean bool = matcher.matches();
+    if (bool)
+      return true;
+    else
+      return false;
+  }
 }
