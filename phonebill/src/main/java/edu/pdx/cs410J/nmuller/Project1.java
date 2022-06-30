@@ -19,35 +19,32 @@ public class Project1 {
   public static void main(String[] args) {
 
     //error check the command line arguments
-    cmdLineCheck(args);
+    boolean valid = cmdLineCheck(args);
+    if(valid) {
 
-    // Refer to one of Dave's classes so that we can be sure it is on the classpath
-    PhoneCall call = new PhoneCall(args[2], args[3], args[4]+ " " + args[5],
-                                    args[6] + " " +args[7]);
+      // Refer to one of Dave's classes so that we can be sure it is on the classpath
+      PhoneCall call = new PhoneCall(args[2], args[3], args[4] + " " + args[5],
+              args[6] + " " + args[7]);
 
-    PhoneBill newBill = new PhoneBill(args[1]);
+      PhoneBill newBill = new PhoneBill(args[1]);
 
-//    for(String cmd :args){
-//      System.out.println(cmd +"\t");
-//    }
-
-    if("-print".equals(args[0])){
-      System.out.format("%s\t%s\t%s\n%s\t%s", newBill.getCustomer(), call.getCaller(), call.getCallee(),
-              call.getBeginTimeString(), call.getEndTimeString());
+      if ("-print".equals(args[0])) {
+        System.out.format("%s\t%s\t%s\n%s\t%s", newBill.getCustomer(), call.getCaller(), call.getCallee(),
+                call.getBeginTimeString(), call.getEndTimeString());
+      }
     }
-    System.exit(1);
   }
 
 
-  public static void cmdLineCheck(String [] args){
+  public static boolean cmdLineCheck(String [] args) {
     if(args.length == 0) {
       err.println("Missing command line arguments");
-      System.exit(1);
+      return false;
     }
 
     else if(args.length == 1 || "-README".equals(args[1])){
       System.out.println("This is the phone bill application");
-      System.exit(1);
+      return false;
     }
 
     if(args.length != 8){
@@ -58,7 +55,7 @@ public class Project1 {
               "-callee phone number\n" +
               "-phone call start date and time\n"+
               "-phone call end date and time\n");
-      System.exit(1);
+      return false;
     }
     try{
       if(!checkDate(args[4]) || !checkDate(args[6]) ||
@@ -67,7 +64,7 @@ public class Project1 {
       }
     }catch(IllegalArgumentException e){
       err.println("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-      System.exit(1);
+      return false;
     }
     try{
       if(!checkPhoneNumber(args[2]) || !checkPhoneNumber(args[3])) {
@@ -75,9 +72,9 @@ public class Project1 {
       }
     }catch(IllegalArgumentException e){
       err.println("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-      System.exit(1);
+      return false;
     }
-
+  return true;
   }
 
 
