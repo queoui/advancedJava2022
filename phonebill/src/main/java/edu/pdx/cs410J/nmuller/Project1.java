@@ -14,6 +14,10 @@ public class Project1 {
 
   public static void main(String[] args) {
 
+      boolean readme = checkReadMe(args);
+      if(readme){
+        //print the read me
+      }
     //error check the command line arguments and create phone call
     try {
       PhoneCall validCall = createNewCall(args);
@@ -24,7 +28,7 @@ public class Project1 {
       System.err.println(e.getMessage());
     }
 
-//    PhoneBill newBill = new PhoneBill(args[1]);
+//    PhoneBill newBill = new PhoneBill(validCall.);
 
   }
 
@@ -99,6 +103,18 @@ public class Project1 {
       return true;
     else
       return false;
+  }
+
+  @VisibleForTesting
+  public static boolean checkReadMe(String [] args){
+    if(args.length>=1){
+      for (String check : args){
+        if(check.toLowerCase().equals("-readme")){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   static class MissingCommandLineArguments extends Exception {
