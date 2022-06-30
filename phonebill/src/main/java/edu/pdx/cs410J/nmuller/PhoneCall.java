@@ -15,6 +15,10 @@ public class PhoneCall extends AbstractPhoneCall {
     this.callEnd = callEnd;
   }
 
+  public void getPhoneCall(){
+    String call = toString();
+    System.out.println(call);
+  }
   @Override
   public String getCaller() {return this.caller;}
 

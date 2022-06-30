@@ -11,73 +11,55 @@ import static java.lang.System.err;
  */
 public class Project1 {
 
-  @VisibleForTesting
-  static boolean isValidPhoneNumber(String phoneNumber) {
-    return true;
-  }
 
   public static void main(String[] args) {
 
-    //error check the command line arguments
-    boolean valid = cmdLineCheck(args);
-    if(valid) {
-
-      // Refer to one of Dave's classes so that we can be sure it is on the classpath
-      PhoneCall call = new PhoneCall(args[2], args[3], args[4] + " " + args[5],
-              args[6] + " " + args[7]);
-
-      PhoneBill newBill = new PhoneBill(args[1]);
-
+    //error check the command line arguments and create phone call
+    try {
+      PhoneCall validCall = createNewCall(args);
       if ("-print".equals(args[0])) {
-        System.out.format("%s\t%s\t%s\n%s\t%s", newBill.getCustomer(), call.getCaller(), call.getCallee(),
-                call.getBeginTimeString(), call.getEndTimeString());
+        validCall.getPhoneCall();
       }
+    }catch(MissingCommandLineArguments e) {
+      System.err.println(e.getMessage());
     }
+
+//    PhoneBill newBill = new PhoneBill(args[1]);
+
   }
 
-
-  public static boolean cmdLineCheck(String [] args) {
+  @VisibleForTesting
+  static PhoneCall createNewCall(String [] args) throws MissingCommandLineArguments {
     if(args.length == 0) {
-      err.println("Missing command line arguments");
-      return false;
-    }
-
-    else if(args.length == 1 || "-README".equals(args[1])){
-      System.out.println("This is the phone bill application");
-      return false;
+      throw new MissingCommandLineArguments("Missing command line arguments");
     }
 
     if(args.length != 8){
-      System.out.println("Not enough or too many command line arguments. Provide in order\n" +
+      throw new MissingCommandLineArguments("Not enough or too many command line arguments. Provide in order\n" +
               "-print or -README\n" +
               "-\"customer name\"\n" +
               "-caller phone number\n" +
               "-callee phone number\n" +
               "-phone call start date and time\n"+
               "-phone call end date and time\n");
-      return false;
+
     }
-    try{
       if(!checkDate(args[4]) || !checkDate(args[6]) ||
               !checkTime(args[5]) || !checkTime(args[7])) {
-        throw new IllegalArgumentException();
+        throw new MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
       }
-    }catch(IllegalArgumentException e){
-      err.println("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-      return false;
-    }
-    try{
+
       if(!checkPhoneNumber(args[2]) || !checkPhoneNumber(args[3])) {
-        throw new IllegalArgumentException();
+        throw new MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
       }
-    }catch(IllegalArgumentException e){
-      err.println("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-      return false;
-    }
-  return true;
+
+    PhoneCall call = new PhoneCall(args[2], args[3], args[4] + " " + args[5],
+            args[6] + " " + args[7]);
+
+  return call;
   }
 
-
+  @VisibleForTesting
   public static boolean checkDate(String date){
     String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
     //Creating a pattern object
@@ -91,6 +73,7 @@ public class Project1 {
       return false;
   }
 
+  @VisibleForTesting
   public static boolean checkTime(String time) {
     String regex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
     //Creating a pattern object
@@ -104,6 +87,7 @@ public class Project1 {
       return false;
   }
 
+  @VisibleForTesting
   public static boolean checkPhoneNumber(String number) {
     String regex = "^(\\d{3}[-]?){2}\\d{4}$";
     //Creating a pattern object
@@ -115,6 +99,13 @@ public class Project1 {
       return true;
     else
       return false;
+  }
+
+  static class MissingCommandLineArguments extends Exception {
+    public MissingCommandLineArguments(String missing_command_line_arguments) {
+      super(missing_command_line_arguments);
+    }
+
   }
 
 }
