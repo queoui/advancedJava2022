@@ -1,8 +1,15 @@
 package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.BufferedReader;
 
 import static java.lang.System.err;
 
@@ -14,18 +21,24 @@ public class Project1 {
 
   public static void main(String[] args) {
 
-      boolean readme = checkReadMe(args);
-      if(readme){
-        //print the read me
-      }
-    //error check the command line arguments and create phone call
+    boolean readme = true;
     try {
-      PhoneCall validCall = createNewCall(args);
-      if ("-print".equals(args[0])) {
-        validCall.getPhoneCall();
-      }
-    }catch(MissingCommandLineArguments e) {
+      readme = checkReadMe(args);
+    }catch(IOException e){
       System.err.println(e.getMessage());
+    }
+
+    if(!readme) {
+
+      //error check the command line arguments and create phone call
+      try {
+        PhoneCall validCall = createNewCall(args);
+        if ("-print".equals(args[0])) {
+          validCall.getPhoneCall();
+        }
+      } catch (MissingCommandLineArguments e) {
+        System.err.println(e.getMessage());
+      }
     }
 
 //    PhoneBill newBill = new PhoneBill(validCall.);
@@ -36,9 +49,10 @@ public class Project1 {
   static PhoneCall createNewCall(String [] args) throws MissingCommandLineArguments {
     if(args.length == 0) {
       throw new MissingCommandLineArguments("Missing command line arguments");
+
     }
 
-    if(args.length != 8){
+    else if(args.length != 8){
       throw new MissingCommandLineArguments("Not enough or too many command line arguments. Provide in order\n" +
               "-print or -README\n" +
               "-\"customer name\"\n" +
@@ -48,12 +62,12 @@ public class Project1 {
               "-phone call end date and time\n");
 
     }
-      if(!checkDate(args[4]) || !checkDate(args[6]) ||
+      else if(!checkDate(args[4]) || !checkDate(args[6]) ||
               !checkTime(args[5]) || !checkTime(args[7])) {
         throw new MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
       }
 
-      if(!checkPhoneNumber(args[2]) || !checkPhoneNumber(args[3])) {
+      else if(!checkPhoneNumber(args[2]) || !checkPhoneNumber(args[3])) {
         throw new MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
       }
 
@@ -106,20 +120,22 @@ public class Project1 {
   }
 
   @VisibleForTesting
-  public static boolean checkReadMe(String [] args){
-    if(args.length>=1){
+  public static boolean checkReadMe(String [] args) throws IOException {
       for (String check : args){
-        if(check.toLowerCase().equals("-readme")){
+        if(check.equalsIgnoreCase("-readme")) {
+          Path path = Paths.get("src/main/resources/edu/pdx/cs410J/nmuller/README.txt");
+          String read = Files.readAllLines(path).get(0);
+          System.out.println(read);
           return true;
         }
       }
-    }
     return false;
   }
 
   static class MissingCommandLineArguments extends Exception {
     public MissingCommandLineArguments(String missing_command_line_arguments) {
-      super(missing_command_line_arguments);
+     super(missing_command_line_arguments);
+      //missing_command_line_arguments.toString();
     }
 
   }
