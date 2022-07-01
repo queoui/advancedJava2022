@@ -42,14 +42,14 @@ public class Project1 {
       }
     }
 
-    String customer = null;
-    if(args.length == 8){
-      customer = args[1];
-    }
-    else{
-      customer = args[2];
-    }
-    PhoneBill newBill = new PhoneBill(customer);
+//    String customer = null;
+//    if(args.length == 8){
+//      customer = args[1];
+//    }
+//    else{
+//      customer = args[2];
+//    }
+//    PhoneBill newBill = new PhoneBill(customer);
 
   }
 
