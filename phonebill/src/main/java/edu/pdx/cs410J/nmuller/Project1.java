@@ -41,7 +41,14 @@ public class Project1 {
       }
     }
 
-//    PhoneBill newBill = new PhoneBill(validCall.);
+    String customer = null;
+    if(args.length == 8){
+      customer = args[1];
+    }
+    else{
+      customer = args[2];
+    }
+    PhoneBill newBill = new PhoneBill(customer);
 
   }
 
@@ -51,16 +58,8 @@ public class Project1 {
       throw new MissingCommandLineArguments("Missing command line arguments");
 
     }
-
     else if(args.length != 8){
-      throw new MissingCommandLineArguments("Not enough or too many command line arguments. Provide in order\n" +
-              "-print or -README\n" +
-              "-\"customer name\"\n" +
-              "-caller phone number\n" +
-              "-callee phone number\n" +
-              "-phone call start date and time\n"+
-              "-phone call end date and time\n");
-
+      throw new MissingCommandLineArguments("Not enough or too many command line arguments. Use -readme for help");
     }
       else if(!checkDate(args[4]) || !checkDate(args[6]) ||
               !checkTime(args[5]) || !checkTime(args[7])) {

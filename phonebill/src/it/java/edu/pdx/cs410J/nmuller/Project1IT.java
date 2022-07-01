@@ -18,20 +18,29 @@ class Project1IT extends InvokeMainTestCase {
     /**
      * Invokes the main method of {@link Project1} with the given arguments.
      */
-    @VisibleForTesting
+
     public MainMethodResult invokeMain(String... args) {
 
         return invokeMain(Project1.class, args);
     }
 
-  /**
-   * Tests that invoking the main method with no arguments issues an error
-   */
+    /**
+     * Tests that invoking the main method with no arguments issues an error
+     */
 
-  @Test
-  void testNoCommandLineArguments() {
-    MainMethodResult result = invokeMain();
-    assertEquals(1, 1);
-  }
+    @Test
+    void testNoCommandLineArguments() {
+        MainMethodResult result = invokeMain();
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("Missing command line arguments"));
+    }
 
+    @Test
+    void testAccurateCommandLineWithPrint() {
+        MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
+                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+    }
 }
