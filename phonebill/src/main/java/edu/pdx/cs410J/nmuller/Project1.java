@@ -34,7 +34,8 @@ public class Project1 {
       try {
         PhoneCall validCall = createNewCall(args);
         if ("-print".equals(args[0])) {
-          validCall.getPhoneCall();
+          String callDetails = validCall.getPhoneCall();
+          System.out.println(callDetails);
         }
       } catch (MissingCommandLineArguments e) {
         System.err.println(e.getMessage());
