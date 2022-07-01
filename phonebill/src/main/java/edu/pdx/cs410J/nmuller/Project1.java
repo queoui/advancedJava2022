@@ -123,9 +123,14 @@ public class Project1 {
   public static boolean checkReadMe(String [] args) throws IOException {
       for (String check : args){
         if(check.equalsIgnoreCase("-readme")) {
-          Path path = Paths.get("src/main/resources/edu/pdx/cs410J/nmuller/README.txt");
-          String read = Files.readAllLines(path).get(0);
-          System.out.println(read);
+
+          String readMeFile = "src/main/resources/edu/pdx/cs410J/nmuller/README.txt";
+          BufferedReader reader = new BufferedReader(new FileReader(readMeFile));
+          String curr;
+          while((curr = reader.readLine()) != null){
+            System.out.println(curr);
+          }
+          reader.close();
           return true;
         }
       }
