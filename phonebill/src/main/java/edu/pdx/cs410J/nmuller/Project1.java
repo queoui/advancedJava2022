@@ -29,27 +29,33 @@ public class Project1 {
     }
 
     if(!readme) {
-
       //error check the command line arguments and create phone call
       try {
         PhoneCall validCall = createNewCall(args);
+
+        //print phone call if needed
         if ("-print".equals(args[0])) {
           String callDetails = validCall.getPhoneCall();
           System.out.println(callDetails);
         }
+
+//      create phone bill and phone call to bill
+//        if(args.length == 8) {
+//          String customer = args[1];
+//
+//          PhoneBill newBill = new PhoneBill(customer);
+//            newBill.addPhoneCall(validCall);
+//        }
+
+
       } catch (MissingCommandLineArguments e) {
         System.err.println(e.getMessage());
       }
+
+
     }
 
-//    String customer = null;
-//    if(args.length == 8){
-//      customer = args[1];
-//    }
-//    else{
-//      customer = args[2];
-//    }
-//    PhoneBill newBill = new PhoneBill(customer);
+
 
   }
 
@@ -57,7 +63,6 @@ public class Project1 {
   static PhoneCall createNewCall(String [] args) throws MissingCommandLineArguments {
     if(args.length == 0) {
       throw new MissingCommandLineArguments("Missing command line arguments");
-
     }
     else if(args.length != 8){
       throw new MissingCommandLineArguments("Not enough or too many command line arguments. Use -readme for help");
@@ -85,10 +90,7 @@ public class Project1 {
     //Matching the compiled pattern in the String
     Matcher matcher = pattern.matcher(date);
     boolean bool = matcher.matches();
-    if(bool)
-      return true;
-    else
-      return false;
+    return bool;
   }
 
   @VisibleForTesting
@@ -99,10 +101,7 @@ public class Project1 {
     //Matching the compiled pattern in the String
     Matcher matcher = pattern.matcher(time);
     boolean bool = matcher.matches();
-    if (bool)
-      return true;
-    else
-      return false;
+    return bool;
   }
 
   @VisibleForTesting
@@ -113,10 +112,7 @@ public class Project1 {
     //Matching the compiled pattern in the String
     Matcher matcher = pattern.matcher(number);
     boolean bool = matcher.matches();
-    if (bool)
-      return true;
-    else
-      return false;
+    return bool;
   }
 
   @VisibleForTesting
@@ -140,7 +136,6 @@ public class Project1 {
   static class MissingCommandLineArguments extends Exception {
     public MissingCommandLineArguments(String missing_command_line_arguments) {
      super(missing_command_line_arguments);
-      //missing_command_line_arguments.toString();
     }
 
   }

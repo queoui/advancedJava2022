@@ -19,25 +19,31 @@ public class PhoneCallTest {
    */
 
   @Test
-  void getBeginTimeStringNeedsToBeImplemented() {
-    //PhoneCall call = new PhoneCall();
-    //assertThrows(UnsupportedOperationException.class, call::getBeginTimeString);
-  }
-
-  /**
-   * This unit test will need to be modified (likely deleted) as you implement
-   * your project.
-   */
-  @Test
-  void initiallyAllPhoneCallsHaveTheSameCallee() {
-    //PhoneCall call = new PhoneCall();
-    //assertThat(call.getCallee(), containsString("not implemented"));
+  void getBeginTimeStringWorks() {
+    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+    assertThat(testCall.getBeginTimeString(), containsString("05/24/2022 12:50"));
   }
 
   @Test
-  void forProject1ItIsOkayIfGetBeginTimeReturnsNull() {
-    //PhoneCall call = new PhoneCall();
-    //assertThat(call.getBeginTime(), is(nullValue()));
+  void getEndTimeStringWorks() {
+    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+    assertThat(testCall.getEndTimeString(), containsString("05/24/2022 1:00"));
+  }
+
+  @Test
+  void getCallerWorks() {
+    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+    assertThat(testCall.getCaller(), containsString("425-555-5555"));
+  }
+
+  @Test
+  void getCalleeWorks() {
+    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+    assertThat(testCall.getCallee(), containsString("206-555-5555"));
   }
 
 }
