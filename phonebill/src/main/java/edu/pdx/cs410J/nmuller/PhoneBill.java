@@ -10,7 +10,7 @@ import java.util.Vector;
  */
 public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
   private final String customer;
-  public Vector<PhoneCall> billOfCalls = new Vector<>() {
+  public Collection<PhoneCall> billOfCalls = new Vector<>() {
   };
 
   /**
@@ -36,14 +36,7 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
    *        Void return is successful, otherwise Exception thrown
    */
   @Override
-  public void addPhoneCall(PhoneCall call) {
-    try {
-      billOfCalls.addElement(call);
-    }catch(Exception e){
-      System.err.println("failure to add phone call to phone bill");
-    }
-    throw new UnsupportedOperationException("This method is not implemented yet");
-  }
+  public void addPhoneCall(PhoneCall call) {this.billOfCalls.add(call);}
 
   /**
    * @return Collection in form of vector

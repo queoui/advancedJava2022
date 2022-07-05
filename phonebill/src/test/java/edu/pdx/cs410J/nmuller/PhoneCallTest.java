@@ -14,10 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class PhoneCallTest {
 
   /**
-   * This unit test will need to be modified (likely deleted) as you implement
-   * your project.
+   * tests getBeginTime method
    */
-
   @Test
   void getBeginTimeStringWorks() {
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
@@ -25,6 +23,9 @@ public class PhoneCallTest {
     assertThat(testCall.getBeginTimeString(), containsString("05/24/2022 12:50"));
   }
 
+  /**
+   * tests getEndTime method
+   */
   @Test
   void getEndTimeStringWorks() {
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
@@ -32,6 +33,9 @@ public class PhoneCallTest {
     assertThat(testCall.getEndTimeString(), containsString("05/24/2022 1:00"));
   }
 
+  /**
+   * tests getCaller method
+   */
   @Test
   void getCallerWorks() {
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
@@ -39,6 +43,10 @@ public class PhoneCallTest {
     assertThat(testCall.getCaller(), containsString("425-555-5555"));
   }
 
+
+  /**
+   * tests getCallee method
+   */
   @Test
   void getCalleeWorks() {
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",

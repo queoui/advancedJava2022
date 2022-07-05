@@ -4,14 +4,9 @@ import com.google.common.annotations.VisibleForTesting;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.BufferedReader;
-
-import static java.lang.System.err;
 
 /**
  * The main class for the CS410J Phone Bill Project
@@ -19,6 +14,11 @@ import static java.lang.System.err;
 public class Project1 {
 
 
+  /**
+   * Main function for the Program1 Project
+   * @param args
+   *        command line arguments
+   */
   public static void main(String[] args) {
 
     boolean readme = true;
@@ -40,12 +40,17 @@ public class Project1 {
         }
 
 //      create phone bill and phone call to bill
-//        if(args.length == 8) {
-//          String customer = args[1];
-//
-//          PhoneBill newBill = new PhoneBill(customer);
-//            newBill.addPhoneCall(validCall);
-//        }
+        try {
+          if (args.length == 8) {
+            String customer = args[1];
+
+            PhoneBill newBill = new PhoneBill(customer);
+            newBill.addPhoneCall(validCall);
+            newBill.getPhoneCalls();
+          }
+        }catch(Exception e){
+          System.err.println(e.getMessage());
+        }
 
 
       } catch (MissingCommandLineArguments e) {
@@ -55,10 +60,17 @@ public class Project1 {
 
     }
 
-
-
   }
 
+  /**
+   * Method checks for valid command line arguments and creates a new Call if valid
+   *
+   * @param args
+   *        command line arguments
+   * @return <PhoneCall>call</PhoneCall>
+   * @throws MissingCommandLineArguments
+   *         error is thrown when command line arguments are not valid.
+   */
   @VisibleForTesting
   static PhoneCall createNewCall(String [] args) throws MissingCommandLineArguments {
     if(args.length == 0) {
@@ -82,6 +94,13 @@ public class Project1 {
   return call;
   }
 
+  /**
+   * Helper function to check if a given date is in the valid form MM/DD/YYYY
+   *
+   * @param date
+   *        <String>date</String> for month/day/year
+   * @return <boolean>bool</boolean>
+   */
   @VisibleForTesting
   public static boolean checkDate(String date){
     String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
@@ -93,6 +112,13 @@ public class Project1 {
     return bool;
   }
 
+  /**
+   * Helper function to check if a given time is in the valid form HH:MM
+   *
+   * @param time
+   *        <String>time</String> for hours and minutes
+   * @return <boolean>bool</boolean>
+   */
   @VisibleForTesting
   public static boolean checkTime(String time) {
     String regex = "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$";
@@ -104,6 +130,13 @@ public class Project1 {
     return bool;
   }
 
+  /**
+   * Helper function to check if a given phone number is in the valid form NNN-NNN-NNNN
+   *
+   * @param number
+   *        <String>number</String> for a phone number
+   * @return <boolean>bool</boolean>
+   */
   @VisibleForTesting
   public static boolean checkPhoneNumber(String number) {
     String regex = "^(\\d{3}[-]?){2}\\d{4}$";
@@ -115,6 +148,15 @@ public class Project1 {
     return bool;
   }
 
+  /**
+   *Method that prints to standard out the README.txt file saved in the src/resources folder
+   *
+   * @param args
+   *        command line arguments as string
+   * @return <boolean>bool</boolean>
+   * @throws IOException
+   *        makes sure it reads from the file successfully
+   */
   @VisibleForTesting
   public static boolean checkReadMe(String [] args) throws IOException {
       for (String check : args){
@@ -133,6 +175,9 @@ public class Project1 {
     return false;
   }
 
+  /**
+   * Exception class for missing command line arguments.
+   */
   static class MissingCommandLineArguments extends Exception {
     public MissingCommandLineArguments(String missing_command_line_arguments) {
      super(missing_command_line_arguments);

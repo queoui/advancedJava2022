@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the functionality in the {@link Project1} main class.
@@ -100,7 +99,7 @@ class Project1IT extends InvokeMainTestCase {
     }
 
     /**
-     * Tests no option argumert (-print, -readme)
+     * Tests no option argument (-print, -readme)
      */
     @Test
     void noOptionArgument() {
@@ -108,6 +107,15 @@ class Project1IT extends InvokeMainTestCase {
                 "05/24/2022", "12:50", "05/24/2022", "1:00");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString(""));
+
+    }
+
+
+    @Test
+    void tryReadMeArgument() {
+        MainMethodResult result = invokeMain("-readme");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString("The command line options are -print and -readme."));
 
     }
 }
