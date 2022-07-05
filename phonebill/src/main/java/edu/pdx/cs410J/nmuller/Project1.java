@@ -67,7 +67,7 @@ public class Project1 {
    *
    * @param args
    *        command line arguments
-   * @return <PhoneCall>call</PhoneCall>
+   * @return <code>call</code>
    * @throws MissingCommandLineArguments
    *         error is thrown when command line arguments are not valid.
    */
@@ -98,8 +98,8 @@ public class Project1 {
    * Helper function to check if a given date is in the valid form MM/DD/YYYY
    *
    * @param date
-   *        <String>date</String> for month/day/year
-   * @return <boolean>bool</boolean>
+   *        <code>date</code> for month/day/year
+   * @return <code>bool</code>
    */
   @VisibleForTesting
   public static boolean checkDate(String date){
@@ -116,8 +116,8 @@ public class Project1 {
    * Helper function to check if a given time is in the valid form HH:MM
    *
    * @param time
-   *        <String>time</String> for hours and minutes
-   * @return <boolean>bool</boolean>
+   *        <code>time</code> for hours and minutes
+   * @return <code>>bool</code>
    */
   @VisibleForTesting
   public static boolean checkTime(String time) {
@@ -134,8 +134,8 @@ public class Project1 {
    * Helper function to check if a given phone number is in the valid form NNN-NNN-NNNN
    *
    * @param number
-   *        <String>number</String> for a phone number
-   * @return <boolean>bool</boolean>
+   *        <code>number</code> for a phone number
+   * @return <code>bool</code>
    */
   @VisibleForTesting
   public static boolean checkPhoneNumber(String number) {
@@ -153,7 +153,7 @@ public class Project1 {
    *
    * @param args
    *        command line arguments as string
-   * @return <boolean>bool</boolean>
+   * @return <code>bool</code>
    * @throws IOException
    *        makes sure it reads from the file successfully
    */
