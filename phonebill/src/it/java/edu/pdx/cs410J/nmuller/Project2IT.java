@@ -7,17 +7,17 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Tests the functionality in the {@link Project1} main class.
+ * Tests the functionality in the {@link Project2} main class.
  */
-class Project1IT extends InvokeMainTestCase {
+class Project2IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project1} with the given arguments.
+     * Invokes the main method of {@link Project2} with the given arguments.
      */
 
     public MainMethodResult invokeMain(String... args) {
 
-        return invokeMain(Project1.class, args);
+        return invokeMain(Project2.class, args);
     }
 
     /**
@@ -42,6 +42,18 @@ class Project1IT extends InvokeMainTestCase {
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
                         "05/24/2022 12:50 to 05/24/2022 1:00"));
     }
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void testPrintwithTextFileOptionsWithPrintFirst() {
+        MainMethodResult result = invokeMain("-print", "-textfile", "file", "Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
+                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+    }
+
 
     /**
      * Tests inaccurate phone number argument
