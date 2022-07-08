@@ -9,13 +9,14 @@ import java.io.InputStreamReader;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * A unit test for code in the <code>Project1</code> class.  This is different
  * from <code>Project1IT</code> which is an integration test (and can handle the calls
  * to {@link System#exit(int)} and the like.
  */
-class Project2Test {
+class Project2Test extends ErrorCheck {
 
   @Test
   void readmeCanBeReadAsResource() throws IOException {
@@ -28,4 +29,11 @@ class Project2Test {
       assertThat(line, containsString("This is the README file for the phonebill application!"));
     }
   }
+
+  @Test
+  void validFilePath(){
+    assertEquals(checkValidPathFile("C:/Users/nmull/OneDrive/Desktop/test.txt"), true);
+
+  }
+
 }
