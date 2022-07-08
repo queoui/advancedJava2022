@@ -91,24 +91,24 @@ class Project2IT extends InvokeMainTestCase {
     /**
      * Tests inaccurate amount of arguments
      */
-    @Test
-    void notEnoughArguments() {
-        MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022");
-        assertThat(result.getTextWrittenToStandardError(),
-                containsString("Not enough or too many command line arguments. Use -readme for help"));
-    }
+//    @Test
+//    void notEnoughArguments() {
+//        MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
+//                "05/24/2022", "12:50", "05/24/2022");
+//        assertThat(result.getTextWrittenToStandardError(),
+//                containsString("Not enough or too many command line arguments. Use -readme for help"));
+//    }
 
     /**
      * Tests inaccurate amount of arguments
      */
-    @Test
-    void tooManyArguments() {
-        MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00", "one argument too many");
-        assertThat(result.getTextWrittenToStandardError(),
-                containsString("Not enough or too many command line arguments. Use -readme for help"));
-    }
+//    @Test
+//    void tooManyArguments() {
+//        MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
+//                "05/24/2022", "12:50", "05/24/2022", "1:00", "one argument too many");
+//        assertThat(result.getTextWrittenToStandardError(),
+//                containsString("Not enough or too many command line arguments. Use -readme for help"));
+//    }
 
     /**
      * Tests no option argument (-print, -readme)
