@@ -68,18 +68,19 @@ public class Project2 {
             }
           }
 
+        //NEEDS TO BE REFACTORED OR NOT USED AT ALL
 //      create phone bill and phone call to bill
-        try {
-          if (args.length == 8) {
-            String customer = args[1];
-
-            PhoneBill newBill = new PhoneBill(customer);
-            newBill.addPhoneCall(validCall);
-            newBill.getPhoneCalls();
-          }
-        } catch (Exception e) {
-          System.err.println(e.getMessage());
-        }
+//        try {
+//          if (args.length == 8) {
+//            String customer = args[1];
+//
+//            PhoneBill newBill = new PhoneBill(customer);
+//            newBill.addPhoneCall(validCall);
+//            newBill.getPhoneCalls();
+//          }
+//        } catch (Exception e) {
+//          System.err.println(e.getMessage());
+//        }
 
 
       } catch (ErrorCheck.MissingCommandLineArguments e) {

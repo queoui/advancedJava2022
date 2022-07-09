@@ -20,7 +20,7 @@ public class TextParserTest {
 
     TextParser parser = new TextParser(new InputStreamReader(resource));
     PhoneBill bill = parser.parse();
-    assertThat(bill.getCustomer(), equalTo("Test Phone Bill"));
+    assertThat(bill.getCustomer(), equalTo("Nick"));
   }
 
   @Test
@@ -31,4 +31,5 @@ public class TextParserTest {
     TextParser parser = new TextParser(new InputStreamReader(resource));
     assertThrows(ParserException.class, parser::parse);
   }
+
 }
