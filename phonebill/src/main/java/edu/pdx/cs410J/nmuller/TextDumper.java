@@ -3,6 +3,7 @@ package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.AppointmentBookDumper;
 import edu.pdx.cs410J.PhoneBillDumper;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -16,12 +17,18 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
 
   @Override
   public void dump(PhoneBill bill) {
-    try (
-      PrintWriter pw = new PrintWriter(this.writer)
-    ) {
-      pw.println(bill.getCustomer());
 
-      pw.flush();
-    }
+    PrintWriter out = new PrintWriter(writer);
+    for (PhoneCall singleCall: bill.billOfCalls)
+      out.println(singleCall);
+    out.close();
+
+//    try (
+//      PrintWriter pw = new PrintWriter(this.writer)
+//    ) {
+//      pw.println(bill.getCustomer());
+//
+//      pw.flush();
+//    }
   }
 }

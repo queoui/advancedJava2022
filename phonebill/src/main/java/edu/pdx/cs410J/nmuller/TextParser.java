@@ -19,14 +19,23 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
     try (
       BufferedReader br = new BufferedReader(this.reader)
     ) {
-
+      String line;
       String customer = br.readLine();
 
       if (customer == null) {
         throw new ParserException("Missing customer");
       }
 
-      return new PhoneBill(customer);
+      PhoneBill newBill = new PhoneBill(customer);
+
+      while((line = br.readLine()) != null){
+        String [] words = line.split(" ");
+        PhoneCall addCall = new PhoneCall(words[3], words[5], words[7] + " " + words[8]
+                                            ,words[10] + " " + words[11]);
+        newBill.addPhoneCall(addCall);
+      }
+
+      return newBill;
 
     } catch (IOException e) {
       throw new ParserException("While parsing phone bill text", e);

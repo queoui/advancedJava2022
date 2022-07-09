@@ -1,52 +1,72 @@
 package edu.pdx.cs410J.nmuller;
+import edu.pdx.cs410J.ParserException;
 
-import com.google.common.annotations.VisibleForTesting;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-
+import java.io.Reader;
 
 
 /**
  * The main class for the CS410J Phone Bill Project
  */
-public class Project2 extends ErrorCheck {
+public class Project2 {
 
 
   /**
    * Main function for the Program1 Project
-   * @param args
-   *        command line arguments
+   *
+   * @param args command line arguments
    */
   public static void main(String[] args) {
 
     boolean readme = true;
     try {
       readme = ErrorCheck.checkReadMe(args);
-    }catch(IOException e){
+    } catch (IOException e) {
       System.err.println(e.getMessage());
     }
 
-    if(!readme) {
+    if (!readme) {
       //check filepath/file existence
 
       //create new phone call
       try {
-        PhoneCall validCall = createNewCall(args);
+        PhoneCall validCall = PhoneCall.createNewCall(args);
 
         //print phone call if needed
-        if (args.length == 8 && "-print".equals(args[0])) {
-          String callDetails = validCall.getPhoneCall();
-          System.out.println(callDetails);
-        }
-        else if(args.length == 10){
-          for(int check = 0; check != 2; ++check){
-            if("-print".equals(args[check])) {
-              String callDetails = validCall.getPhoneCall();
-              System.out.println(callDetails);
-            }
+        for(int i = 0; i < 3; ++i){
+          if ("-print".equalsIgnoreCase(args[i])){
+            String callDetails = validCall.getPhoneCall();
+            System.out.println(callDetails);
           }
         }
 
+        //check for -textfile & file
+        for(int i = 0; i < 3; ++i){
+          if ("-textfile".equalsIgnoreCase(args[i])) {
+            String givenPath = args[i + 1];
+            ErrorCheck.checkValidPathFile(givenPath);
+              try {
+                Reader confirmedPath = new FileReader(givenPath);
+                TextParser fileReader = new  TextParser(confirmedPath);
+                try {
+                  PhoneBill newBill = fileReader.parse();
+                  if(!(args[(args.length) -7].equals(newBill.getCustomer()))){
+                    throw new ParserException("given customer does not match the bill.");
+                  }
+                }catch(ParserException e){
+                  System.err.println("error reading from file");
+                }
+              }catch(FileNotFoundException e){
+                //create new file here;
+                //file does not exist but path is valid.
+                //create a new file in the file path.
+                //create new phone bill with the one phone call
+                //textDump to newly created file.
+              }
+            }
+          }
 
 //      create phone bill and phone call to bill
         try {
@@ -57,12 +77,12 @@ public class Project2 extends ErrorCheck {
             newBill.addPhoneCall(validCall);
             newBill.getPhoneCalls();
           }
-        }catch(Exception e){
+        } catch (Exception e) {
           System.err.println(e.getMessage());
         }
 
 
-      } catch (MissingCommandLineArguments e) {
+      } catch (ErrorCheck.MissingCommandLineArguments e) {
         System.err.println(e.getMessage());
       }
 
@@ -70,81 +90,5 @@ public class Project2 extends ErrorCheck {
     }
 
   }
-
-  /**
-   * Method checks for valid command line arguments and creates a new Call if valid
-   *
-   * @param args
-   *        command line arguments
-   * @return <code>call</code>
-   * @throws ErrorCheck.MissingCommandLineArguments
-   *         error is thrown when command line arguments are not valid.
-   */
-  @VisibleForTesting
-  static PhoneCall createNewCall(String [] args) throws ErrorCheck.MissingCommandLineArguments {
-    int len = args.length;
-
-    if(len < 8) {
-      throw new ErrorCheck.MissingCommandLineArguments("Missing command line arguments.");
-    }
-    else if(len > 10){
-      throw new ErrorCheck.MissingCommandLineArguments("Too many command line arguments.");
-    }
-
-    else{
-      if (!checkDate(args[len-4]) || !checkDate(args[len-2]) ||
-              !checkTime(args[len-3]) || !checkTime(args[len-1])) {
-        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-      } else if (!checkPhoneNumber(args[len-6]) || !checkPhoneNumber(args[len-5])) {
-        throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-      }
-    }
-//    //check when args length is 8
-//    else if(args.length == 8) {
-//
-//      if (!checkDate(args[4]) || !checkDate(args[6]) ||
-//              !checkTime(args[5]) || !checkTime(args[7])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-//      } else if (!checkPhoneNumber(args[2]) || !checkPhoneNumber(args[3])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-//      }
-//
-//      PhoneCall call = new PhoneCall(args[2], args[3], args[4] + " " + args[5],
-//              args[6] + " " + args[7]);
-//      return call;
-//    }
-//
-//    //check when args length is 9
-//    else if(args.length == 9){
-//      if (!checkDate(args[5]) || !checkDate(args[7]) ||
-//              !checkTime(args[6]) || !checkTime(args[8])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-//
-//      }else if (!checkPhoneNumber(args[3]) || !checkPhoneNumber(args[4])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-//      }
-//      PhoneCall call = new PhoneCall(args[3], args[4], args[5] + " " + args[6],
-//              args[7] + " " + args[8]);
-//      return call;
-//    }
-//
-//    //check when args length is 10
-//    else if(args.length == 10){
-//      if (!checkDate(args[6]) || !checkDate(args[8]) ||
-//              !checkTime(args[7]) || !checkTime(args[9])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-//
-//      }else if (!checkPhoneNumber(args[4]) || !checkPhoneNumber(args[5])) {
-//        throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
-//      }
-//      PhoneCall call = new PhoneCall(args[4], args[5], args[6] + " " + args[7],
-//              args[8] + " " + args[9]);
-//      return call;
-//    }
-
-    throw new ErrorCheck.MissingCommandLineArguments("Too few or too many command line arguments, use the argument -readme for more information.");
-
-  }
-
-
 }
+

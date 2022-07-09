@@ -42,6 +42,20 @@ class Project2IT extends InvokeMainTestCase {
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
                         "05/24/2022 12:50 to 05/24/2022 1:00"));
     }
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void testAccurateCommandLineWithPrintAndTextFile() {
+        MainMethodResult result = invokeMain("-textfile", "file", "-print", "Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
+                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+    }
+
+
     /**
      * Tests accurate command line arguments
      */
@@ -130,4 +144,6 @@ class Project2IT extends InvokeMainTestCase {
                 containsString("The command line options are -print and -readme."));
 
     }
+
+
 }

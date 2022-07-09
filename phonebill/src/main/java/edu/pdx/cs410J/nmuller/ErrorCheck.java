@@ -94,15 +94,17 @@ public class ErrorCheck {
     }
 
     @VisibleForTesting
-    public static boolean checkValidPathFile(String path){
+    public static void checkValidPathFile(String path){
         try {
             Paths.get(path);
         }catch(InvalidPathException | NullPointerException ex){
             System.err.println("Not a valid file path");
         }
+    }
+
+    public static boolean checkFileExists(String path){
         File newFile = new File(path);
         return newFile.exists();
-
     }
 
     @VisibleForTesting
