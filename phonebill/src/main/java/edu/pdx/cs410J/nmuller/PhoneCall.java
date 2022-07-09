@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.nmuller;
 
+
 import edu.pdx.cs410J.AbstractPhoneCall;
+
 
 /**
  * this class represents a <code>PhoneCall</code>
@@ -65,4 +67,7 @@ public class PhoneCall extends AbstractPhoneCall {
   public String getEndTimeString() {
     return this.callEnd;
   }
+
+
+
 }
