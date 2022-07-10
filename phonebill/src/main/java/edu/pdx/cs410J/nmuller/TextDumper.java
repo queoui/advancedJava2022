@@ -17,16 +17,18 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
   public void dump(PhoneBill bill) {
 
     PrintWriter out = new PrintWriter(writer);
+    out.println((bill.getCustomer()));
     for (PhoneCall singleCall: bill.billOfCalls)
       out.println(singleCall);
     out.close();
   }
 
-  public void dumpAppend(PhoneCall call, String givenPath) throws IOException{
-    FileWriter fw = new FileWriter(givenPath, true);
-    BufferedWriter bw = new BufferedWriter(fw);
-    bw.write(call.getPhoneCall());
-    bw.newLine();
-    bw.close();
+  public void dumpAppend(PhoneCall call) throws IOException{
+
+    PrintWriter out = new PrintWriter(writer);
+    out.println("\n" + call.getPhoneCall());
+
+    out.close();
+
   }
 }

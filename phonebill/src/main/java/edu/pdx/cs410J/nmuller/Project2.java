@@ -25,7 +25,6 @@ public class Project2 {
     }
 
     if (!readme) {
-      //check filepath/file existence
 
       //create new phone call
       try {
@@ -57,10 +56,11 @@ public class Project2 {
                     throw new ParserException("given customer does not match the bill.");
                   }
                   newBill.addPhoneCall(validCall);
+                  //append a phone call to the bill
                   try {
                     Writer tempWriter = new FileWriter(givenPath, true);
                     TextDumper newDump = new TextDumper(tempWriter);
-                    newDump.dumpAppend(validCall, givenPath);
+                    newDump.dumpAppend(validCall);
                   }catch(IOException error1){
                     System.err.println("Something went wrong writing to file");
                   }

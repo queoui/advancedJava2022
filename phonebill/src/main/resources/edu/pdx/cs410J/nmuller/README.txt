@@ -10,6 +10,8 @@ The command line options are -print and -readme.
 /// OPTIONS///
     -print: Create a new phone call for the customer provided and print the details of that phone call to the user.
     -readme: Displays the text you are now reading and nothing else.
+    -textfile <file>: appends a phone number to an existing bill or creates a new bill with the given phone call
+                        <file> is a valid file path
 
 ///ARGS///
 *args must be in the following order*
