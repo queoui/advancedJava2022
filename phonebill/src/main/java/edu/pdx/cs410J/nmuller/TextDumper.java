@@ -4,9 +4,7 @@ import edu.pdx.cs410J.AppointmentBookDumper;
 import edu.pdx.cs410J.PhoneBillDumper;
 
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.*;
 
 public class TextDumper implements PhoneBillDumper<PhoneBill> {
   private final Writer writer;
@@ -22,13 +20,13 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
     for (PhoneCall singleCall: bill.billOfCalls)
       out.println(singleCall);
     out.close();
+  }
 
-//    try (
-//      PrintWriter pw = new PrintWriter(this.writer)
-//    ) {
-//      pw.println(bill.getCustomer());
-//
-//      pw.flush();
-//    }
+  public void dumpAppend(PhoneCall call, String givenPath) throws IOException{
+    FileWriter fw = new FileWriter(givenPath, true);
+    BufferedWriter bw = new BufferedWriter(fw);
+    bw.write(call.getPhoneCall());
+    bw.newLine();
+    bw.close();
   }
 }

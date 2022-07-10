@@ -1,10 +1,7 @@
 package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.ParserException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
 
 /**
@@ -42,28 +39,47 @@ public class Project2 {
           }
         }
 
-        //check for -textfile & file
+        //-textfile file
         for(int i = 0; i < 3; ++i){
           if ("-textfile".equalsIgnoreCase(args[i])) {
+
+            //check for a valid path
             String givenPath = args[i + 1];
             ErrorCheck.checkValidPathFile(givenPath);
+
+            //file already exists
               try {
                 Reader confirmedPath = new FileReader(givenPath);
                 TextParser fileReader = new  TextParser(confirmedPath);
                 try {
                   PhoneBill newBill = fileReader.parse();
-                  if(!(args[(args.length) -7].equals(newBill.getCustomer()))){
+                  if(!(args[(args.length) -7].equalsIgnoreCase(newBill.getCustomer()))){
                     throw new ParserException("given customer does not match the bill.");
                   }
+                  newBill.addPhoneCall(validCall);
+                  try {
+                    Writer tempWriter = new FileWriter(givenPath, true);
+                    TextDumper newDump = new TextDumper(tempWriter);
+                    newDump.dumpAppend(validCall, givenPath);
+                  }catch(IOException error1){
+                    System.err.println("Something went wrong writing to file");
+                  }
                 }catch(ParserException e){
-                  System.err.println("error reading from file");
+                  System.err.println("error reading from file: " + e.getMessage());
                 }
+
+
+                //file does not already exist
               }catch(FileNotFoundException e){
-                //create new file here;
-                //file does not exist but path is valid.
-                //create a new file in the file path.
-                //create new phone bill with the one phone call
-                //textDump to newly created file.
+                PhoneBill newBill = new PhoneBill(args[args.length - 7]);
+                newBill.addPhoneCall(validCall);
+                try {
+                  Writer tempWriter = new FileWriter(givenPath);
+                  TextDumper newDump = new TextDumper(tempWriter);
+                  newDump.dump(newBill);
+                }catch(IOException error1){
+                  System.err.println("Something went wrong creating new text file");
+                }
               }
             }
           }
