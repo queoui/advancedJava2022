@@ -27,7 +27,7 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
         throw new ParserException("Missing customer");
       }
       if("".equals(customer))
-        throw new ParserException("the file is empty");
+        throw new ParserException("bill has no customer name");
 
       PhoneBill newBill = new PhoneBill(customer);
 

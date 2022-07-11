@@ -107,6 +107,7 @@ public class ErrorCheck {
         }
     }
 
+    @VisibleForTesting
     public static boolean checkFileExists(String path){
         File newFile = new File(path);
         return newFile.exists();
@@ -116,6 +117,31 @@ public class ErrorCheck {
     public static boolean checkCustomer(PhoneBill currentBill, String customerName){
         return customerName.equalsIgnoreCase(currentBill.getCustomer());
     }
+
+    @VisibleForTesting
+    public static void checkUnknownOption(String [] args) throws MissingCommandLineArguments {
+        boolean check = true;
+        if((args.length < 7)){
+            throw new MissingCommandLineArguments("missing customer and phone call information");
+        }
+        else{
+            for (int i = 0 ; i < ((args.length)-7); ++i) {
+                if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")){
+                    if(i != 0)
+                    {
+                        if((args[i-1].equalsIgnoreCase("-textfile")))
+                            continue;
+                    }
+                    throw new MissingCommandLineArguments("unknown option used");
+                }
+
+            }
+        }
+    }
+
+//    public static boolean checkNoTimeTravel(String startDate, String startTime, String endDate, String endTime) {
+//        if()
+//    }
 
     /**
      * Exception class for missing command line arguments.

@@ -157,5 +157,48 @@ class Project2IT extends InvokeMainTestCase {
 
     }
 
+    /**
+     * Tests no option argument (-print, -readme)
+     */
+    @Test
+    void unknownOptionGiven() {
+        MainMethodResult result = invokeMain("-fred","Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("unknown option used"));
+
+    }
+
+    /**
+     * Tests no option argument (-print, -readme)
+     */
+    @Test
+    void onlyPrintGiven() {
+        MainMethodResult result = invokeMain("-print");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString(""));
+
+    }
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void customerDoesNotMatchTheBill() {
+        MainMethodResult result = invokeMain("-print", "-textfile", "file", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("error reading from file: given customer does not match the bill."));
+    }
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void billHasNoCustomer() {
+        MainMethodResult result = invokeMain("-print", "-textfile", "no-customer", "BillyBob Dumper", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "05/24/2022", "1:00");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("error reading from file: bill has no customer name"));
+    }
 
 }

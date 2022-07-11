@@ -17,6 +17,8 @@ public class Project2 {
    */
   public static void main(String[] args) {
 
+
+
     boolean readme = true;
     try {
       readme = ErrorCheck.checkReadMe(args);
@@ -24,16 +26,19 @@ public class Project2 {
       System.err.println(e.getMessage());
     }
 
+
     if (!readme) {
+      //check for unknown -options
+      try{ErrorCheck.checkUnknownOption(args);}catch(Exception e){System.err.println(e.getMessage());}
 
       //create new phone call
       try {
         PhoneCall validCall = PhoneCall.createNewCall(args);
 
         //print phone call if needed
-        for(int i = 0; i < (args.length)-7; ++i){
-          if ("-print".equalsIgnoreCase(args[i])){
-            if(i != 0 && "-textfile".equalsIgnoreCase(args[i -1])){
+        for (int i = 0; i < (args.length) - 7; ++i) {
+          if ("-print".equalsIgnoreCase(args[i])) {
+            if (i != 0 && "-textfile".equalsIgnoreCase(args[i - 1])) {
               break;
             }
             String callDetails = validCall.getPhoneCall();
@@ -42,7 +47,7 @@ public class Project2 {
         }
 
         //-textfile file
-        for(int i = 0; i < (args.length)-7; ++i){
+        for (int i = 0; i < (args.length) - 7; ++i) {
           if ("-textfile".equalsIgnoreCase(args[i])) {
 
             //check for a valid path
@@ -50,43 +55,43 @@ public class Project2 {
             ErrorCheck.checkValidPathFile(givenPath);
 
             //file already exists
+            try {
+              Reader confirmedPath = new FileReader(givenPath);
+              TextParser fileReader = new TextParser(confirmedPath);
               try {
-                Reader confirmedPath = new FileReader(givenPath);
-                TextParser fileReader = new  TextParser(confirmedPath);
-                try {
-                  PhoneBill newBill = fileReader.parse();
-                  if(!(args[(args.length) -7].equalsIgnoreCase(newBill.getCustomer()))){
-                    throw new ParserException("given customer does not match the bill.");
-                  }
-                  newBill.addPhoneCall(validCall);
-                  //append a phone call to the bill
-                  try {
-                    Writer tempWriter = new FileWriter(givenPath, true);
-                    TextDumper newDump = new TextDumper(tempWriter);
-                    newDump.dumpAppend(validCall);
-                  }catch(IOException error1){
-                    System.err.println("Something went wrong writing to file");
-                  }
-                }catch(ParserException e){
-                  System.err.println("error reading from file: " + e.getMessage());
+                PhoneBill newBill = fileReader.parse();
+                if (!(args[(args.length) - 7].equalsIgnoreCase(newBill.getCustomer()))) {
+                  throw new ParserException("given customer does not match the bill.");
                 }
-
-
-                //file does not already exist
-              }catch(FileNotFoundException e){
-                PhoneBill newBill = new PhoneBill(args[args.length - 7]);
                 newBill.addPhoneCall(validCall);
+                //append a phone call to the bill
                 try {
-                  Writer tempWriter = new FileWriter(givenPath);
+                  Writer tempWriter = new FileWriter(givenPath, true);
                   TextDumper newDump = new TextDumper(tempWriter);
-                  newDump.dump(newBill);
-                }catch(IOException error1){
-                  System.err.println("Something went wrong creating new text file" + error1.getMessage());
+                  newDump.dumpAppend(validCall);
+                } catch (IOException error1) {
+                  System.err.println("Something went wrong writing to file");
                 }
+              } catch (ParserException e) {
+                System.err.println("error reading from file: " + e.getMessage());
               }
-              break;
+
+
+              //file does not already exist
+            } catch (FileNotFoundException e) {
+              PhoneBill newBill = new PhoneBill(args[args.length - 7]);
+              newBill.addPhoneCall(validCall);
+              try {
+                Writer tempWriter = new FileWriter(givenPath);
+                TextDumper newDump = new TextDumper(tempWriter);
+                newDump.dump(newBill);
+              } catch (IOException error1) {
+                System.err.println("Something went wrong creating new text file" + error1.getMessage());
+              }
             }
+            break;
           }
+        }
 
 
       } catch (ErrorCheck.MissingCommandLineArguments e) {
@@ -97,5 +102,6 @@ public class Project2 {
     }
 
   }
+
 }
 
