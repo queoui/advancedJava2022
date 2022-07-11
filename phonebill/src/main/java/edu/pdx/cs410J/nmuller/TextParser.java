@@ -33,6 +33,8 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
 
       while((line = br.readLine()) != null){
         String [] words = line.split(" ");
+        if("".equals(line))
+          continue;
         PhoneCall addCall = new PhoneCall(words[3], words[5], words[7] + " " + words[8]
                                             ,words[10] + " " + words[11]);
         newBill.addPhoneCall(addCall);

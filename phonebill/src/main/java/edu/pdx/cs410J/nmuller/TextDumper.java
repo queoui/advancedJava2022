@@ -26,7 +26,7 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
   public void dumpAppend(PhoneCall call) throws IOException{
 
     PrintWriter out = new PrintWriter(writer);
-    out.println("\n" + call.getPhoneCall());
+    out.println(call.getPhoneCall());
 
     out.close();
 
