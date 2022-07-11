@@ -1,3 +1,6 @@
+Nicholas Muller
+Project 2
+
 This is the README file for the phonebill application!
 
 This application takes a series of command line arguments to log phone calls for a customer provided.

@@ -77,17 +77,30 @@ public class ErrorCheck {
      */
     @VisibleForTesting
     public static boolean checkReadMe(String [] args) throws IOException {
-        for (String check : args){
-            if(check.equalsIgnoreCase("-readme")) {
+        if((args.length == 1) && (args[0].equalsIgnoreCase("-readme"))){
+            String readMeFile = "src/main/resources/edu/pdx/cs410J/nmuller/README.txt";
+            BufferedReader reader = new BufferedReader(new FileReader(readMeFile));
+            String curr;
+            while ((curr = reader.readLine()) != null) {
+                System.out.println(curr);
+            }
+            reader.close();
+            return true;
+        }
 
-                String readMeFile = "src/main/resources/edu/pdx/cs410J/nmuller/README.txt";
-                BufferedReader reader = new BufferedReader(new FileReader(readMeFile));
-                String curr;
-                while((curr = reader.readLine()) != null){
-                    System.out.println(curr);
+        else{
+            for (int i = 0 ; i < ((args.length)-7); ++i) {
+                if (args[i].equalsIgnoreCase("-readme")) {
+
+                    String readMeFile = "src/main/resources/edu/pdx/cs410J/nmuller/README.txt";
+                    BufferedReader reader = new BufferedReader(new FileReader(readMeFile));
+                    String curr;
+                    while ((curr = reader.readLine()) != null) {
+                        System.out.println(curr);
+                    }
+                    reader.close();
+                    return true;
                 }
-                reader.close();
-                return true;
             }
         }
         return false;

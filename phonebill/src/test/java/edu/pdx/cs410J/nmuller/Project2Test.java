@@ -26,7 +26,7 @@ class Project2Test extends ErrorCheck {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("This is the README file for the phonebill application!"));
+      assertThat(line, containsString("Nicholas Muller"));
     }
   }
 

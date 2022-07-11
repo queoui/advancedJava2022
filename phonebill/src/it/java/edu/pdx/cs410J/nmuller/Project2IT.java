@@ -28,7 +28,7 @@ class Project2IT extends InvokeMainTestCase {
     void testNoCommandLineArguments() {
         MainMethodResult result = invokeMain();
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("Missing command line arguments"));
+                containsString("command line usage is <option><args>. run the program with the argument -README for more information."));
     }
 
     /**
@@ -60,7 +60,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void testInaccurateCommandLineWithPrintAndTextFile() {
-        MainMethodResult result = invokeMain("-textfile","-print", "file",  "Nick Muller", "425-555-5555", "206-555-5555",
+        MainMethodResult result = invokeMain("-textfile", "file","-print",  "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50", "05/24/2022" , "1:00");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
@@ -100,7 +100,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "5/24/2022", "12:50", "05/24/2022", "1:00");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("use MM/DD/YYYY format for date\nuse HH:MM format for time"));
+                containsString("use MM/DD/YYYY format for date"));
     }
 
     /**
@@ -111,7 +111,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", ":50", "05/24/2022", "1:00");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("use MM/DD/YYYY format for date\nuse HH:MM format for time"));
+                containsString("use HH:MM format for time"));
     }
 
     /**
@@ -122,7 +122,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50", "05/24/2022");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("Missing command line arguments."));
+                containsString("use MM/DD/YYYY format for date"));
     }
 
     /**

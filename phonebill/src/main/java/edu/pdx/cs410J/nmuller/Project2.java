@@ -31,15 +31,18 @@ public class Project2 {
         PhoneCall validCall = PhoneCall.createNewCall(args);
 
         //print phone call if needed
-        for(int i = 0; i < 3; ++i){
+        for(int i = 0; i < (args.length)-7; ++i){
           if ("-print".equalsIgnoreCase(args[i])){
+            if(i != 0 && "-textfile".equalsIgnoreCase(args[i -1])){
+              break;
+            }
             String callDetails = validCall.getPhoneCall();
             System.out.println(callDetails);
           }
         }
 
         //-textfile file
-        for(int i = 0; i < 3; ++i){
+        for(int i = 0; i < (args.length)-7; ++i){
           if ("-textfile".equalsIgnoreCase(args[i])) {
 
             //check for a valid path
@@ -78,25 +81,12 @@ public class Project2 {
                   TextDumper newDump = new TextDumper(tempWriter);
                   newDump.dump(newBill);
                 }catch(IOException error1){
-                  System.err.println("Something went wrong creating new text file");
+                  System.err.println("Something went wrong creating new text file" + error1.getMessage());
                 }
               }
+              break;
             }
           }
-
-        //NEEDS TO BE REFACTORED OR NOT USED AT ALL
-//      create phone bill and phone call to bill
-//        try {
-//          if (args.length == 8) {
-//            String customer = args[1];
-//
-//            PhoneBill newBill = new PhoneBill(customer);
-//            newBill.addPhoneCall(validCall);
-//            newBill.getPhoneCalls();
-//          }
-//        } catch (Exception e) {
-//          System.err.println(e.getMessage());
-//        }
 
 
       } catch (ErrorCheck.MissingCommandLineArguments e) {

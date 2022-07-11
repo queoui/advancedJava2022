@@ -82,7 +82,11 @@ public class PhoneCall extends AbstractPhoneCall {
   static PhoneCall createNewCall(String [] args) throws ErrorCheck.MissingCommandLineArguments {
     int len = args.length;
 
-    if(len < 8) {
+    if(len == 0){
+      throw new ErrorCheck.MissingCommandLineArguments("command line usage is <option><args>. run the program with the argument -README for more information.");
+    }
+
+    if(len < 7) {
       throw new ErrorCheck.MissingCommandLineArguments("Missing command line arguments.");
     }
     else if(len > 10){
@@ -90,10 +94,13 @@ public class PhoneCall extends AbstractPhoneCall {
     }
 
     else {
-      if (!ErrorCheck.checkDate(args[len - 4]) || !ErrorCheck.checkDate(args[len - 2]) ||
-              !ErrorCheck.checkTime(args[len - 3]) || !ErrorCheck.checkTime(args[len - 1])) {
-        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date\nuse HH:MM format for time");
-      } else if (!ErrorCheck.checkPhoneNumber(args[len - 6]) || !ErrorCheck.checkPhoneNumber(args[len - 5])) {
+      if (!ErrorCheck.checkDate(args[len - 4]) || !ErrorCheck.checkDate(args[len - 2])) {
+        throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date");
+      }
+      if(!ErrorCheck.checkTime(args[len - 3]) || !ErrorCheck.checkTime(args[len - 1])) {
+        throw new ErrorCheck.MissingCommandLineArguments("use HH:MM format for time");
+      }
+      if (!ErrorCheck.checkPhoneNumber(args[len - 6]) || !ErrorCheck.checkPhoneNumber(args[len - 5])) {
         throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
       }
       PhoneCall newCall = new PhoneCall(args[len - 6], args[len - 5], args[len - 4] + " " + args[len - 3],
