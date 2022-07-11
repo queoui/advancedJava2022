@@ -2,6 +2,8 @@ package intermediate;
 
 import com.sandwich.koan.Koan;
 
+import java.util.Objects;
+
 import static com.sandwich.koan.constant.KoanConstants.__;
 import static com.sandwich.util.Assert.assertEquals;
 
@@ -12,20 +14,20 @@ public class AboutEquality {
     public void sameObject() {
         Object a = new Object();
         Object b = a;
-        assertEquals(a == b, __);
+        assertEquals(a == b, true);
     }
 
     @Koan
     public void equalObject() {
         Integer a = new Integer(1);
         Integer b = new Integer(1);
-        assertEquals(a.equals(b), __);
-        assertEquals(b.equals(a), __);
+        assertEquals(a.equals(b), true);
+        assertEquals(b.equals(a), true);
     }
 
     @Koan
     public void noObjectShouldBeEqualToNull() {
-        assertEquals(new Object().equals(null), __);
+        assertEquals(new Object().equals(null), false);
     }
 
     static class Car {
@@ -39,16 +41,23 @@ public class AboutEquality {
 
         @Override
         public boolean equals(Object other) {
+            if(other instanceof Car){
+                Car that = (Car) other;
+                return Objects.equals(this.name, that.name) && Objects.equals(this.horsepower, that.horsepower);
+            }
+            return false;
             // Change this implementation to match the equals contract
             // Car objects with same horsepower and name values should be considered equal
             // http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)
-            return false;
         }
 
         @Override
         public int hashCode() {
+            int result = 17;
+            result = 31 * result + name.hashCode();
+            result = 31 * result + horsepower;
+            return result;
             // @see http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()
-            return super.hashCode();
         }
     }
 
@@ -99,7 +108,7 @@ public class AboutEquality {
     }
 
     static class Chicken {
-        String color = "green";
+        String color = "black";
 
         @Override
         public int hashCode() {
@@ -119,8 +128,8 @@ public class AboutEquality {
         Chicken chicken1 = new Chicken();
         chicken1.color = "black";
         Chicken chicken2 = new Chicken();
-        assertEquals(chicken1.equals(chicken2), __);
-        assertEquals(chicken1.hashCode() == chicken2.hashCode(), __);
+        assertEquals(chicken1.equals(chicken2), true);
+        assertEquals(chicken1.hashCode() == chicken2.hashCode(), true);
         // Does this still fit the hashCode contract? Why (not)?
         // Fix the Chicken class to correct this.
     }

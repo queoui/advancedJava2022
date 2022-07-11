@@ -37,6 +37,7 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
                                             ,words[10] + " " + words[11]);
         newBill.addPhoneCall(addCall);
       }
+      br.close();
 
       return newBill;
 
