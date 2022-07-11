@@ -30,7 +30,15 @@ public class AboutMocks {
         }
 
         public boolean doSomething() {
-            //ClassUnderTest(c);
+            new ClassUnderTest(new Collaborator() {
+                @Override
+                public void doBusinessStuff() {
+                    //System.out.println("New safe message");
+                }
+            }){
+
+            };
+
             c.doBusinessStuff();
             return true;
         }
