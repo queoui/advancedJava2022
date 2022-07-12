@@ -1,23 +1,22 @@
 package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
-
 import java.io.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class ErrorCheck {
     /**
      * Helper function to check if a given date is in the valid form MM/DD/YYYY
      *
-     * @param date
-     *        <code>date</code> for month/day/year
+     * @param date <code>date</code> for month/day/year
      * @return <code>bool</code>
      */
     @VisibleForTesting
-    public static boolean checkDate(String date){
+    public static boolean checkDate(String date) {
         String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
@@ -30,8 +29,7 @@ public class ErrorCheck {
     /**
      * Helper function to check if a given time is in the valid form HH:MM
      *
-     * @param time
-     *        <code>time</code> for hours and minutes
+     * @param time <code>time</code> for hours and minutes
      * @return <code>>bool</code>
      */
     @VisibleForTesting
@@ -48,8 +46,7 @@ public class ErrorCheck {
     /**
      * Helper function to check if a given phone number is in the valid form NNN-NNN-NNNN
      *
-     * @param number
-     *        <code>number</code> for a phone number
+     * @param number <code>number</code> for a phone number
      * @return <code>bool</code>
      */
     @VisibleForTesting
@@ -64,16 +61,14 @@ public class ErrorCheck {
     }
 
     /**
-     *Method that prints to standard out the README.txt file saved in the src/resources folder
+     * Method that prints to standard out the README.txt file saved in the src/resources folder
      *
-     * @param args
-     *        command line arguments as string
+     * @param args command line arguments as string
      * @return <code>bool</code>
-     * @throws IOException
-     *        makes sure it reads from the file successfully
+     * @throws IOException makes sure it reads from the file successfully
      */
     @VisibleForTesting
-    public static boolean checkReadMe(String [] args) throws IOException {
+    public static boolean checkReadMe(String[] args) throws IOException {
         boolean check = false;
         if ((args.length == 1) && (args[0].equalsIgnoreCase("-readme")))
             check = true;
@@ -102,37 +97,30 @@ public class ErrorCheck {
 
 
     @VisibleForTesting
-    public static void checkValidPathFile(String path){
+    public static void checkValidPathFile(String path) {
         try {
             Paths.get(path);
-        }catch(InvalidPathException | NullPointerException ex){
+        } catch (InvalidPathException | NullPointerException ex) {
             System.err.println("Not a valid file path");
         }
     }
 
-    @VisibleForTesting
-    public static boolean checkFileExists(String path){
-        File newFile = new File(path);
-        return newFile.exists();
-    }
 
     @VisibleForTesting
-    public static boolean checkCustomer(PhoneBill currentBill, String customerName){
+    public static boolean checkCustomer(PhoneBill currentBill, String customerName) {
         return customerName.equalsIgnoreCase(currentBill.getCustomer());
     }
 
     @VisibleForTesting
-    public static void checkUnknownOption(String [] args) throws MissingCommandLineArguments {
+    public static void checkUnknownOption(String[] args) throws MissingCommandLineArguments {
         boolean check = true;
-        if((args.length < 7)){
+        if ((args.length < 7)) {
             throw new MissingCommandLineArguments("missing customer and phone call information");
-        }
-        else{
-            for (int i = 0 ; i < ((args.length)-7); ++i) {
-                if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")){
-                    if(i != 0)
-                    {
-                        if((args[i-1].equalsIgnoreCase("-textfile")))
+        } else {
+            for (int i = 0; i < ((args.length) - 7); ++i) {
+                if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")) {
+                    if (i != 0) {
+                        if ((args[i - 1].equalsIgnoreCase("-textfile")))
                             continue;
                     }
                     throw new MissingCommandLineArguments("unknown option used");
@@ -142,8 +130,21 @@ public class ErrorCheck {
         }
     }
 
-//    public static boolean checkNoTimeTravel(String startDate, String startTime, String endDate, String endTime) {
-//        if()
+//    @VisibleForTesting
+//    public static String findFileInSubDir(String textFile) {
+//        String dir = file.getParent();
+//        File parentDir = new File(dir);
+//        String fileName = file.getName();
+//        File[] list = parentDir.listFiles();
+//        if (list != null) {
+//            for (File singlePath : list) {
+//                if (singlePath.getName().equals(fileName)) {
+//                    return singlePath.getPath();
+//                }
+//            }
+//
+//        }
+//        return null;
 //    }
 
     /**
@@ -155,4 +156,5 @@ public class ErrorCheck {
         }
 
     }
+
 }

@@ -3,6 +3,8 @@ package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -200,5 +202,18 @@ class Project2IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("error reading from file: bill has no customer name"));
     }
+//
+//    /**
+//     * Tests accurate command line arguments
+//     */
+//    @Test
+//    void relativePathForTextFile() {
+//        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/valid-phonebill.txt", "Nick", "425-555-5555", "206-555-5555",
+//                "05/24/2022", "12:50", "05/24/2022", "1:00");
+//        assertThat(ErrorCheck.findFileInSubDir("src/test/valid-phonebill.txt"),
+////            assertThat(result.getTextWrittenToStandardOut(),
+//                containsString("Smchmtiy"));
+//    }
+
 
 }

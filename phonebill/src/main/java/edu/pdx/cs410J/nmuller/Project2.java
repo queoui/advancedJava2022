@@ -45,14 +45,15 @@ public class Project2 {
             System.out.println(callDetails);
           }
         }
-
         //-textfile file
         for (int i = 0; i < (args.length) - 7; ++i) {
           if ("-textfile".equalsIgnoreCase(args[i])) {
 
-            //check for a valid path
-            String givenPath = args[i + 1];
-            ErrorCheck.checkValidPathFile(givenPath);
+              //check for a valid path
+              String givenPath = args[i + 1];
+
+              ErrorCheck.checkValidPathFile(givenPath);
+
 
             //file already exists
             try {
