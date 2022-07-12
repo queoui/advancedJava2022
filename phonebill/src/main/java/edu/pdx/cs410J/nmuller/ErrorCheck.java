@@ -2,10 +2,7 @@ package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.regex.Matcher;
@@ -78,25 +75,31 @@ public class ErrorCheck {
     @VisibleForTesting
     public static boolean checkReadMe(String [] args) throws IOException {
         boolean check = false;
-        if((args.length == 1) && (args[0].equalsIgnoreCase("-readme")))
+        if ((args.length == 1) && (args[0].equalsIgnoreCase("-readme")))
             check = true;
-        else{
-            for (int i = 0 ; i < ((args.length)-7); ++i) {
+        else {
+            for (int i = 0; i < ((args.length) - 7); ++i) {
                 if (args[i].equalsIgnoreCase("-readme"))
                     check = true;
             }
         }
-        if(check){
-            String readMeFile = "src/main/resources/edu/pdx/cs410J/nmuller/README.txt";
-            BufferedReader reader = new BufferedReader(new FileReader(readMeFile));
-            String curr;
-            while ((curr = reader.readLine()) != null) {
-                System.out.println(curr);
+        if (check) {
+            try (InputStream readme = Project2.class.getResourceAsStream("README.txt")) {
+                BufferedReader reader = new BufferedReader((new InputStreamReader(readme)));
+                String curr;
+                while ((curr = reader.readLine()) != null) {
+                    System.out.println(curr);
+                }
+                reader.close();
+            } catch (IOException exception) {
+                throw new IOException("README file not available. " + exception.getMessage());
             }
-            reader.close();
+
+
         }
         return check;
     }
+
 
     @VisibleForTesting
     public static void checkValidPathFile(String path){
