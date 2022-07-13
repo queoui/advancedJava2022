@@ -103,10 +103,6 @@ public class PhoneCall extends AbstractPhoneCall {
       if (!ErrorCheck.checkPhoneNumber(args[len - 6]) || !ErrorCheck.checkPhoneNumber(args[len - 5])) {
         throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
       }
-//      if(!ErrorCheck.checkNoTimeTravel(args[len-4], args[len-3], args[len-2], args[len-1])){
-//        throw new ErrorCheck.MissingCommandLineArguments("phone call arguments imply time travel exists");
-//      }
-
       PhoneCall newCall = new PhoneCall(args[len - 6], args[len - 5], args[len - 4] + " " + args[len - 3],
               args[len - 2] + " " + args[len - 1]);
       return newCall;

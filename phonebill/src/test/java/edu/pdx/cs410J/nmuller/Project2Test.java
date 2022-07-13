@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
  * A unit test for code in the <code>Project1</code> class.  This is different
@@ -26,7 +26,7 @@ class Project2Test extends ErrorCheck {
       assertThat(readme, not(nullValue()));
       BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
       String line = reader.readLine();
-      assertThat(line, containsString("Nicholas Muller"));
+      assertThat(line, containsString("********"));
     }
   }
 

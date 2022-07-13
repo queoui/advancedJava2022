@@ -153,7 +153,7 @@ class Project2IT extends InvokeMainTestCase {
     void tryReadMeArgument() {
         MainMethodResult result = invokeMain("-readme");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("The command line options are -print and -readme."));
+                containsString("The command line options are -print, -readme, and -textfile <filepath>"));
 
     }
 

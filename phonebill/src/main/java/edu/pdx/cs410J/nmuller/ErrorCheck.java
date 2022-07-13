@@ -114,12 +114,6 @@ public class ErrorCheck {
         }
     }
 
-//
-//    @VisibleForTesting
-//    public static boolean checkCustomer(PhoneBill currentBill, String customerName) {
-//        return customerName.equalsIgnoreCase(currentBill.getCustomer());
-//    }
-
     /**
      * checks for options that are not available in the command line
      * @param args
