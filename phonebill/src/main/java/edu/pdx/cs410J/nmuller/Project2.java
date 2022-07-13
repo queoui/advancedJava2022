@@ -17,8 +17,6 @@ public class Project2 {
    */
   public static void main(String[] args) {
 
-
-
     boolean readme = true;
     try {
       readme = ErrorCheck.checkReadMe(args);
@@ -52,10 +50,11 @@ public class Project2 {
               //check for a valid path
               String givenPath = args[i + 1];
 
+              //check for valid path
               ErrorCheck.checkValidPathFile(givenPath);
 
 
-            //file already exists
+            //file exists
             try {
               Reader confirmedPath = new FileReader(givenPath);
               TextParser fileReader = new TextParser(confirmedPath);
@@ -77,8 +76,8 @@ public class Project2 {
                 System.err.println("error reading from file: " + e.getMessage());
               }
 
-
-              //file does not already exist
+              //else
+              //file does not exist
             } catch (FileNotFoundException e) {
               PhoneBill newBill = new PhoneBill(args[args.length - 7]);
               newBill.addPhoneCall(validCall);

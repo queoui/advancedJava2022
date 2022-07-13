@@ -30,10 +30,5 @@ class Project2Test extends ErrorCheck {
     }
   }
 
-//  @Test
-//  void validFilePath(){
-//    assertEquals(checkValidPathFile("C:/Users/nmull/OneDrive/Desktop/test.txt"), true);
-//
-//  }
 
 }

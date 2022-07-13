@@ -95,7 +95,13 @@ public class ErrorCheck {
         return check;
     }
 
-
+    /**
+     * checks if passed file path is valid
+     * @param path
+     * @return <code>void</code>
+     * @throws InvalidPathException
+     * @throws NullPointerException
+     */
     @VisibleForTesting
     public static void checkValidPathFile(String path) {
         try {
@@ -105,12 +111,17 @@ public class ErrorCheck {
         }
     }
 
+//
+//    @VisibleForTesting
+//    public static boolean checkCustomer(PhoneBill currentBill, String customerName) {
+//        return customerName.equalsIgnoreCase(currentBill.getCustomer());
+//    }
 
-    @VisibleForTesting
-    public static boolean checkCustomer(PhoneBill currentBill, String customerName) {
-        return customerName.equalsIgnoreCase(currentBill.getCustomer());
-    }
-
+    /**
+     * checks for options that are not available in the command line
+     * @param args
+     * @throws MissingCommandLineArguments
+     */
     @VisibleForTesting
     public static void checkUnknownOption(String[] args) throws MissingCommandLineArguments {
         boolean check = true;
