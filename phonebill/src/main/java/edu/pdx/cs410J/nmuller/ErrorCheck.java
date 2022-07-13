@@ -98,9 +98,12 @@ public class ErrorCheck {
     /**
      * checks if passed file path is valid
      * @param path
-     * @return <code>void</code>
+     *         String directory path
+     *
      * @throws InvalidPathException
+     *          not a valid path
      * @throws NullPointerException
+     *          referencing a null pointer
      */
     @VisibleForTesting
     public static void checkValidPathFile(String path) {
@@ -120,13 +123,18 @@ public class ErrorCheck {
     /**
      * checks for options that are not available in the command line
      * @param args
+     *      command line arguments
      * @throws MissingCommandLineArguments
+     *          command line issues, unknown exceptions
      */
     @VisibleForTesting
     public static void checkUnknownOption(String[] args) throws MissingCommandLineArguments {
         boolean check = true;
         if ((args.length < 7)) {
-            throw new MissingCommandLineArguments("missing customer and phone call information");
+            throw new MissingCommandLineArguments("missing customer and phone call information ");
+        }
+        if (!checkTime(args[args.length - 1])) {
+            throw new MissingCommandLineArguments("extraneous argument on the command line");
         } else {
             for (int i = 0; i < ((args.length) - 7); ++i) {
                 if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")) {
@@ -136,27 +144,9 @@ public class ErrorCheck {
                     }
                     throw new MissingCommandLineArguments("unknown option used");
                 }
-
             }
         }
     }
-
-//    @VisibleForTesting
-//    public static String findFileInSubDir(String textFile) {
-//        String dir = file.getParent();
-//        File parentDir = new File(dir);
-//        String fileName = file.getName();
-//        File[] list = parentDir.listFiles();
-//        if (list != null) {
-//            for (File singlePath : list) {
-//                if (singlePath.getName().equals(fileName)) {
-//                    return singlePath.getPath();
-//                }
-//            }
-//
-//        }
-//        return null;
-//    }
 
     /**
      * Exception class for missing command line arguments.

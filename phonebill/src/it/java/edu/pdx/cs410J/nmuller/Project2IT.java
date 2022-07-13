@@ -3,8 +3,6 @@ package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -202,18 +200,35 @@ class Project2IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("error reading from file: bill has no customer name"));
     }
-//
-//    /**
-//     * Tests accurate command line arguments
-//     */
-//    @Test
-//    void relativePathForTextFile() {
-//        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/valid-phonebill.txt", "Nick", "425-555-5555", "206-555-5555",
-//                "05/24/2022", "12:50", "05/24/2022", "1:00");
-//        assertThat(ErrorCheck.findFileInSubDir("src/test/valid-phonebill.txt"),
-////            assertThat(result.getTextWrittenToStandardOut(),
-//                containsString("Smchmtiy"));
-//    }
 
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void PhoneNumbersHaveCharacters() {
+        MainMethodResult result = invokeMain("Test3", "ABC-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("use NNN-NNN-NNNN where N is 0-9 for phone numbers"));
+    }
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void unknownOptionFromProject1Tests() {
+        MainMethodResult result = invokeMain("--fred", "Test3", "425-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("unknown option used"));
+    }
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void extraneousArgumentsTest() {
+        MainMethodResult result = invokeMain("Test3", "425-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00", "fred");
+        assertThat(result.getTextWrittenToStandardError(),
+                containsString("extraneous argument"));
+    }
 
 }

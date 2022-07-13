@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+//class for parsing a text file into the program//
 public class TextParser implements PhoneBillParser<PhoneBill> {
   private final Reader reader;
 
@@ -14,6 +15,13 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
     this.reader = reader;
   }
 
+  /**
+   *
+   * @return <code>PhoneBill</code>
+   *          returns a parsed phone bill
+   * @throws ParserException
+   *        Parser Error with malformed text file
+   */
   @Override
   public PhoneBill parse() throws ParserException {
 

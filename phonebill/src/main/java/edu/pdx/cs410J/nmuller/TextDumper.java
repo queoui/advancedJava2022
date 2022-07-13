@@ -21,7 +21,8 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
   /**
    * dumps all contents of a bill to a text file
    * @param bill
-   */
+   *        Phone bill to dump to file
+   * */
   @Override
   public void dump(PhoneBill bill) {
 
@@ -35,7 +36,11 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
   /**
    * takes a phone call ans appends it to an existing phone bill
    * @param call
+   *        call to add to bill
+   *
+   *
    * @throws IOException
+   *        may throw IO error if writer not available
    */
   public void dumpAppend(PhoneCall call) throws IOException{
 
