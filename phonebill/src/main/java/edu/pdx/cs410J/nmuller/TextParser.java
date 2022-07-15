@@ -6,6 +6,9 @@ import edu.pdx.cs410J.PhoneBillParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 //class for parsing a text file into the program//
 public class TextParser implements PhoneBillParser<PhoneBill> {
@@ -43,9 +46,16 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
         String [] words = line.split(" ");
         if("".equals(line))
           continue;
-//        PhoneCall addCall = new PhoneCall(words[3], words[5], words[7] + " " + words[8]
-//                                           ,words[10] + " " + words[11]);
-//        newBill.addPhoneCall(addCall);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+        Date begin = new Date();
+        Date end = new Date();
+        try {
+          begin = formatter.parse(words[7] + " " + words[8] +words[9]);
+          end = formatter.parse(words[10] + " " + words[11] + words[12]);
+        }catch(Exception e){System.err.println("test date parser error");}
+        PhoneCall addCall = new PhoneCall(words[3], words[5], begin, end);
+        newBill.addPhoneCall(addCall);
       }
       br.close();
 
