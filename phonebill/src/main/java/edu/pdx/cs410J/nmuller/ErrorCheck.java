@@ -34,7 +34,7 @@ public class ErrorCheck {
      */
     @VisibleForTesting
     public static boolean checkTime(String time) {
-        String regex = "^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$";
+        String regex = "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
         //Matching the compiled pattern in the String
@@ -73,7 +73,7 @@ public class ErrorCheck {
         if ((args.length == 1) && (args[0].equalsIgnoreCase("-readme")))
             check = true;
         else {
-            for (int i = 0; i < ((args.length) - 7); ++i) {
+            for (int i = 0; i < ((args.length) - 9); ++i) {
                 if (args[i].equalsIgnoreCase("-readme"))
                     check = true;
             }
@@ -124,13 +124,13 @@ public class ErrorCheck {
     @VisibleForTesting
     public static void checkUnknownOption(String[] args) throws MissingCommandLineArguments {
         boolean check = true;
-        if ((args.length < 7)) {
-            throw new MissingCommandLineArguments("missing customer and phone call information ");
+        if ((args.length < 9)) {
+            throw new MissingCommandLineArguments("missing customer phone call information");
         }
-        if (!checkTime(args[args.length - 1])) {
+        if (!checkTime(args[args.length - 2]+ args[args.length -1])) {
             throw new MissingCommandLineArguments("extraneous argument on the command line");
         } else {
-            for (int i = 0; i < ((args.length) - 7); ++i) {
+            for (int i = 0; i < ((args.length) - 9); ++i) {
                 if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")) {
                     if (i != 0) {
                         if ((args[i - 1].equalsIgnoreCase("-textfile")))

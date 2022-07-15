@@ -34,7 +34,7 @@ public class Project2 {
         PhoneCall validCall = PhoneCall.createNewCall(args);
 
         //print phone call if needed
-        for (int i = 0; i < (args.length) - 7; ++i) {
+        for (int i = 0; i < (args.length) - 9; ++i) {
           if ("-print".equalsIgnoreCase(args[i])) {
             if (i != 0 && "-textfile".equalsIgnoreCase(args[i - 1])) {
               break;
@@ -44,7 +44,7 @@ public class Project2 {
           }
         }
         //-textfile file
-        for (int i = 0; i < (args.length) - 7; ++i) {
+        for (int i = 0; i < (args.length) - 9; ++i) {
           if ("-textfile".equalsIgnoreCase(args[i])) {
 
               //check for a valid path
@@ -60,7 +60,7 @@ public class Project2 {
               TextParser fileReader = new TextParser(confirmedPath);
               try {
                 PhoneBill newBill = fileReader.parse();
-                if (!(args[(args.length) - 7].equalsIgnoreCase(newBill.getCustomer()))) {
+                if (!(args[(args.length) - 9].equalsIgnoreCase(newBill.getCustomer()))) {
                   throw new ParserException("given customer does not match the bill.");
                 }
                 newBill.addPhoneCall(validCall);
@@ -79,7 +79,7 @@ public class Project2 {
               //else
               //file does not exist
             } catch (FileNotFoundException e) {
-              PhoneBill newBill = new PhoneBill(args[args.length - 7]);
+              PhoneBill newBill = new PhoneBill(args[args.length - 9]);
               newBill.addPhoneCall(validCall);
               try {
                 Writer tempWriter = new FileWriter(givenPath);
