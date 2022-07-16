@@ -80,7 +80,8 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getBeginTimeString() {
-    return DateFormat.getInstance().format(this.callBegin);
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callBegin);
   }
 
   /**
@@ -88,7 +89,8 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getEndTimeString() {
-    return DateFormat.getInstance().format(this.callEnd);
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callEnd);
   }
 
   /**
@@ -131,6 +133,7 @@ public class PhoneCall extends AbstractPhoneCall {
       Date end = new Date();
       try {
          begin = formatter.parse(args[len - 6] + " " + args[len - 5] + args[len - 4]);
+         System.out.println(begin);
          end = formatter.parse(args[len - 3] + " " + args[len - 2] + args[len-1]);
       }catch(Exception errParse){
         System.err.println("Unknown Date Format " + errParse);
