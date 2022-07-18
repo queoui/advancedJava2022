@@ -80,9 +80,9 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    */
   @Override
   public String getBeginTimeString() {
-    return getBeginTime().toString();
-    //DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    //return newFormat.format(this.callBegin);
+    //return getBeginTime().toString();
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callBegin);
   }
 
   /**
@@ -90,9 +90,9 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    */
   @Override
   public String getEndTimeString() {
-    return getEndTime().toString();
-    //DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    //return newFormat.format(this.callEnd);
+    //return getEndTime().toString();
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callEnd);
   }
 
   /**
