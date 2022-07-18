@@ -15,7 +15,7 @@ import static java.text.DateFormat.SHORT;
 /**
  * this class represents a <code>PhoneCall</code>
  */
-public class PhoneCall extends AbstractPhoneCall {
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
   private String caller;
   private String callee;
   private Date callBegin;
@@ -80,8 +80,9 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getBeginTimeString() {
-    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    return newFormat.format(this.callBegin);
+    return getBeginTime().toString();
+    //DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    //return newFormat.format(this.callBegin);
   }
 
   /**
@@ -89,8 +90,9 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getEndTimeString() {
-    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    return newFormat.format(this.callEnd);
+    return getEndTime().toString();
+    //DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    //return newFormat.format(this.callEnd);
   }
 
   /**
@@ -133,7 +135,6 @@ public class PhoneCall extends AbstractPhoneCall {
       Date end = new Date();
       try {
          begin = formatter.parse(args[len - 6] + " " + args[len - 5] + args[len - 4]);
-         System.out.println(begin);
          end = formatter.parse(args[len - 3] + " " + args[len - 2] + args[len-1]);
       }catch(Exception errParse){
         System.err.println("Unknown Date Format " + errParse);
@@ -144,6 +145,10 @@ public class PhoneCall extends AbstractPhoneCall {
 
   }
 
+  @Override
+  public int compareTo(PhoneCall o) {
+    return this.callBegin.compareTo(o.callBegin);
+  }
 }
 
 

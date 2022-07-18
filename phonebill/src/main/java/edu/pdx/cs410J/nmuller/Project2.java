@@ -64,11 +64,13 @@ public class Project2 {
                   throw new ParserException("given customer does not match the bill.");
                 }
                 newBill.addPhoneCall(validCall);
+                newBill.sortBill();
+
                 //append a phone call to the bill
                 try {
-                  Writer tempWriter = new FileWriter(givenPath, true);
+                  Writer tempWriter = new FileWriter(givenPath, false);
                   TextDumper newDump = new TextDumper(tempWriter);
-                  newDump.dumpAppend(validCall);
+                  newDump.dump(newBill);
                 } catch (IOException error1) {
                   System.err.println("Something went wrong writing to file");
                 }

@@ -2,7 +2,9 @@ package edu.pdx.cs410J.nmuller;
 
 import edu.pdx.cs410J.AbstractPhoneBill;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Vector;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Vector;
  */
 public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
   private final String customer;
-  public Collection<PhoneCall> billOfCalls = new Vector<>() {
+  public ArrayList<PhoneCall> billOfCalls = new ArrayList<>() {
   };
 
   /**
@@ -44,5 +46,9 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
    */
   @Override
   public Collection<PhoneCall> getPhoneCalls() {return this.billOfCalls;}
+
+  public void sortBill(){
+    Collections.sort(this.billOfCalls);
+  }
 
 }
