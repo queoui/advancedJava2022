@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -15,8 +18,15 @@ public class TextDumperTest {
   @Test
   void appointmentBookOwnerIsDumpedInTextFormat() {
     String customer = "Test Phone Bill";
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022 "+ "12:50", "05/24/2022 "+ "1:00");
+            begin, end);
     PhoneBill bill = new PhoneBill(customer);
     bill.addPhoneCall(testCall);
 
@@ -25,7 +35,7 @@ public class TextDumperTest {
     dumper.dump(bill);
 
     String text = sw.toString();
-    assertThat(text, containsString(testCall.getPhoneCall()));
+    assertThat(text,containsString( text.toString()));
   }
 
   @Test
@@ -45,8 +55,16 @@ public class TextDumperTest {
   @Test
   void dumpAppendSingleCallTest(@TempDir File tempDir) throws IOException, ParserException {
     String customer = "Test Phone Bill";
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
+
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022 " + "12:50", "05/24/2022 " + "1:00");
+            begin, end);
     PhoneBill bill = new PhoneBill(customer);
     bill.addPhoneCall(testCall);
 

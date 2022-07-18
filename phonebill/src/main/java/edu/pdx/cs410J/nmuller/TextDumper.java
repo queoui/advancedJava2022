@@ -27,8 +27,10 @@ public class TextDumper implements PhoneBillDumper<PhoneBill> {
 
     PrintWriter out = new PrintWriter(writer);
     out.println((bill.getCustomer()));
-    for (PhoneCall singleCall: bill.billOfCalls)
-      out.println(singleCall);
+    for (PhoneCall singleCall: bill.billOfCalls) {
+      out.println("Phone call from " + singleCall.getCaller() + " to " + singleCall.getCallee()
+              + " from " + singleCall.getBeginTime().toString() + " to " + singleCall.getEndTime().toString());
+    }
     out.close();
   }
 

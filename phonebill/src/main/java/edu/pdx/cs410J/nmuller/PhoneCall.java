@@ -4,15 +4,22 @@ package edu.pdx.cs410J.nmuller;
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.DateFormat;
+import java.util.Locale;
+
+import static java.text.DateFormat.SHORT;
+
 
 /**
  * this class represents a <code>PhoneCall</code>
  */
-public class PhoneCall extends AbstractPhoneCall {
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
   private String caller;
   private String callee;
-  private String callBegin;
-  private String callEnd;
+  private Date callBegin;
+  private Date callEnd;
 
   /**
    *
@@ -25,7 +32,7 @@ public class PhoneCall extends AbstractPhoneCall {
    * @param callEnd
    *        date and time of the call start MM/DD/YYYY HH:MM
    */
-  public PhoneCall(String caller, String callee, String callBegin, String callEnd ) {
+  public PhoneCall(String caller, String callee, Date callBegin, Date callEnd ) {
     this.caller = caller;
     this.callee = callee;
     this.callBegin = callBegin;
@@ -53,12 +60,29 @@ public class PhoneCall extends AbstractPhoneCall {
   @Override
   public String getCallee(){return this.callee;}
 
+
+
+  //DOCUMENTATION FOR THESE NEW METHODS *********************************
+  @Override
+  public Date getBeginTime() {
+    return this.callBegin;
+  }
+
+  @Override
+  public Date getEndTime() {
+    return this.callEnd;
+  }
+
+
+
   /**
    * returns <code>String</code> of call start time: Date and Time
    */
   @Override
   public String getBeginTimeString() {
-    return this.callBegin;
+    //return getBeginTime().toString();
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callBegin);
   }
 
   /**
@@ -66,7 +90,9 @@ public class PhoneCall extends AbstractPhoneCall {
    */
   @Override
   public String getEndTimeString() {
-    return this.callEnd;
+    //return getEndTime().toString();
+    DateFormat newFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    return newFormat.format(this.callEnd);
   }
 
   /**
@@ -86,30 +112,43 @@ public class PhoneCall extends AbstractPhoneCall {
       throw new ErrorCheck.MissingCommandLineArguments("command line usage is <option><args>. run the program with the argument -README for more information.");
     }
 
-    if(len < 7) {
+    if(len < 9) {
       throw new ErrorCheck.MissingCommandLineArguments("Missing command line arguments.");
     }
-    else if(len > 10){
+    else if(len > 14){
       throw new ErrorCheck.MissingCommandLineArguments("Too many command line arguments.");
     }
 
     else {
-      if (!ErrorCheck.checkDate(args[len - 4]) || !ErrorCheck.checkDate(args[len - 2])) {
+      if (!ErrorCheck.checkDate(args[len - 6]) || !ErrorCheck.checkDate(args[len - 3])) {
         throw new ErrorCheck.MissingCommandLineArguments("use MM/DD/YYYY format for date");
       }
-      if(!ErrorCheck.checkTime(args[len - 3]) || !ErrorCheck.checkTime(args[len - 1])) {
+      if(!ErrorCheck.checkTime(args[len - 5] + args[len-4]) || !ErrorCheck.checkTime(args[len - 2] + args[len-1])) {
         throw new ErrorCheck.MissingCommandLineArguments("use HH:MM format for time");
       }
-      if (!ErrorCheck.checkPhoneNumber(args[len - 6]) || !ErrorCheck.checkPhoneNumber(args[len - 5])) {
+      if (!ErrorCheck.checkPhoneNumber(args[len - 8]) || !ErrorCheck.checkPhoneNumber(args[len - 7])) {
         throw new ErrorCheck.MissingCommandLineArguments("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
       }
-      PhoneCall newCall = new PhoneCall(args[len - 6], args[len - 5], args[len - 4] + " " + args[len - 3],
-              args[len - 2] + " " + args[len - 1]);
+
+      SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
+      Date begin = new Date();
+      Date end = new Date();
+      try {
+         begin = formatter.parse(args[len - 6] + " " + args[len - 5] + args[len - 4]);
+         end = formatter.parse(args[len - 3] + " " + args[len - 2] + args[len-1]);
+      }catch(Exception errParse){
+        System.err.println("Unknown Date Format " + errParse);
+      }
+      PhoneCall newCall = new PhoneCall(args[len - 8], args[len - 7], begin,end);
       return newCall;
     }
 
   }
 
+  @Override
+  public int compareTo(PhoneCall o) {
+    return this.callBegin.compareTo(o.callBegin);
+  }
 }
 
 

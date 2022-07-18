@@ -37,10 +37,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testAccurateCommandLineWithPrint() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
-                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
     /**
@@ -49,10 +48,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testAccurateCommandLineWithPrintAndTextFile() {
         MainMethodResult result = invokeMain("-textfile", "file", "-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm",  "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
-                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
     /**
@@ -61,10 +59,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testInaccurateCommandLineWithPrintAndTextFile() {
         MainMethodResult result = invokeMain("-textfile", "file","-print",  "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022" , "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022" , "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
-                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
 
@@ -74,10 +71,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testPrintwithTextFileOptionsWithPrintFirst() {
         MainMethodResult result = invokeMain("-print", "-textfile", "file", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from " +
-                        "05/24/2022 12:50 to 05/24/2022 1:00"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
 
@@ -87,7 +83,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testInaccuratePhoneNumber() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-55", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("use NNN-NNN-NNNN where N is 0-9 for phone numbers"));
     }
@@ -98,7 +94,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testInaccurateDate() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "5/24/2022", "12:50", "05/24/2022", "1:00");
+                "5/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("use MM/DD/YYYY format for date"));
     }
@@ -109,7 +105,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void testInaccurateTime() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", ":50", "05/24/2022", "1:00");
+                "05/24/2022", ":50","pm", "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("use HH:MM format for time"));
     }
@@ -120,9 +116,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void notEnoughArguments() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022");
+                "05/24/2022", "12:50","pm", "05/24/2022");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("use MM/DD/YYYY format for date"));
+                containsString("missing customer phone call information"));
     }
 
     /**
@@ -131,9 +127,9 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void tooManyArguments() {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00", "one", "argument", "too", "many");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm", "one", "argument", "too", "many");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("Too many command line arguments."));
+                containsString("extraneous argument on the command line"));
     }
 
     /**
@@ -142,7 +138,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void noOptionArgument() {
         MainMethodResult result = invokeMain("Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString(""));
 
@@ -163,7 +159,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void unknownOptionGiven() {
         MainMethodResult result = invokeMain("-fred","Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("unknown option used"));
 
@@ -186,7 +182,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void customerDoesNotMatchTheBill() {
         MainMethodResult result = invokeMain("-print", "-textfile", "file", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("error reading from file: given customer does not match the bill."));
     }
@@ -196,7 +192,7 @@ class Project2IT extends InvokeMainTestCase {
     @Test
     void billHasNoCustomer() {
         MainMethodResult result = invokeMain("-print", "-textfile", "no-customer", "BillyBob Dumper", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "05/24/2022", "1:00");
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("error reading from file: bill has no customer name"));
     }
@@ -206,7 +202,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void PhoneNumbersHaveCharacters() {
-        MainMethodResult result = invokeMain("Test3", "ABC-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00");
+        MainMethodResult result = invokeMain("Test3", "ABC-123-4567", "123-456-7890", "03/03/2022", "12:00","pm", "03/03/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("use NNN-NNN-NNNN where N is 0-9 for phone numbers"));
     }
@@ -216,7 +212,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void unknownOptionFromProject1Tests() {
-        MainMethodResult result = invokeMain("--fred", "Test3", "425-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00");
+        MainMethodResult result = invokeMain("--fred", "Test3", "425-123-4567", "123-456-7890", "03/03/2022","pm", "12:00", "03/03/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("unknown option used"));
     }
@@ -226,7 +222,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void extraneousArgumentsTest() {
-        MainMethodResult result = invokeMain("Test3", "425-123-4567", "123-456-7890", "03/03/2022", "12:00", "03/03/2022", "16:00", "fred");
+        MainMethodResult result = invokeMain("Test3", "425-123-4567", "123-456-7890", "03/03/2022", "12:00","pm", "03/03/2022", "1:00","pm", "fred");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("extraneous argument"));
     }

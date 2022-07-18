@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 /**
  * Unit tests for the {@link PhoneCall} class.
@@ -17,9 +21,18 @@ public class PhoneCallTest {
    */
   @Test
   void getBeginTimeStringWorks() {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
+
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
-    assertThat(testCall.getBeginTimeString(), containsString("05/24/2022 12:50"));
+            begin, end);
+    assertThat(testCall.getBeginTimeString(), containsString("5/24/22, 12:50 PM"));
   }
 
   /**
@@ -27,9 +40,17 @@ public class PhoneCallTest {
    */
   @Test
   void getEndTimeStringWorks() {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
+
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
-    assertThat(testCall.getEndTimeString(), containsString("05/24/2022 1:00"));
+            begin,end);
+    assertThat(testCall.getEndTimeString(), containsString("5/24/22, 1:00 PM"));
   }
 
   /**
@@ -37,8 +58,16 @@ public class PhoneCallTest {
    */
   @Test
   void getCallerWorks() {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
+
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+            begin, end);
     assertThat(testCall.getCaller(), containsString("425-555-5555"));
   }
 
@@ -48,8 +77,16 @@ public class PhoneCallTest {
    */
   @Test
   void getCalleeWorks() {
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+    Date begin = new Date();
+    Date end = new Date();
+    try {
+      begin = formatter.parse("05/24/2022 12:50pm");
+      end = formatter.parse("05/24/2022 01:00pm");
+    }catch(Exception e){System.err.println("test date parser error");}
+
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            "05/24/2022" + " " + "12:50", "05/24/2022" + " " + "1:00");
+            begin, end);
     assertThat(testCall.getCallee(), containsString("206-555-5555"));
   }
 
