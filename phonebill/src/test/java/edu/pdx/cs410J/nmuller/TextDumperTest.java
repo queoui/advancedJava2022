@@ -35,7 +35,7 @@ public class TextDumperTest {
     dumper.dump(bill);
 
     String text = sw.toString();
-    assertThat(text, containsString(testCall.getPhoneCall()));
+    assertThat(text,containsString( "Tue May 24 12:50:00 PDT 2022 to Tue May 24 13:00:00 PDT 2022"));
   }
 
   @Test

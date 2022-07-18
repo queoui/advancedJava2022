@@ -22,7 +22,7 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
         for (PhoneCall singleCall: bill.billOfCalls) {
             Duration duration = Duration.ofMinutes(singleCall.getEndTime().getTime() - singleCall.getBeginTime().getTime());
 
-            out.println("Phone call duration of " + duration + " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
+            out.println("Phone call duration of " + duration.toString() + " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
                         + " beginning at "+ singleCall.getBeginTimeString()+ " and ending at "+ singleCall.getEndTimeString());
         }
 

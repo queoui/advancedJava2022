@@ -32,7 +32,7 @@ public class PhoneCallTest {
 
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
             begin, end);
-    assertThat(testCall.getBeginTimeString(), containsString("Tue May 24 12:50:00 PDT 2022"));
+    assertThat(testCall.getBeginTimeString(), containsString("5/24/22, 12:50 PM"));
   }
 
   /**
@@ -50,7 +50,7 @@ public class PhoneCallTest {
 
     PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
             begin,end);
-    assertThat(testCall.getEndTimeString(), containsString("Tue May 24 13:00:00 PDT 2022"));
+    assertThat(testCall.getEndTimeString(), containsString("5/24/22, 1:00 PM"));
   }
 
   /**

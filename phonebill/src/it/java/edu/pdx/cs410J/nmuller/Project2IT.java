@@ -39,7 +39,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from Tue May 24 12:50:00 PDT 2022 to Tue May 24 13:00:00 PDT 2022"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
     /**
@@ -50,7 +50,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-textfile", "file", "-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm",  "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from Tue May 24 12:50:00 PDT 2022 to Tue May 24 13:00:00 PDT 2022"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
     /**
@@ -61,7 +61,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-textfile", "file","-print",  "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022" , "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from Tue May 24 12:50:00 PDT 2022 to Tue May 24 13:00:00 PDT 2022"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
 
@@ -73,7 +73,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "-textfile", "file", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
-                containsString("Phone call from 425-555-5555 to 206-555-5555 from Tue May 24 12:50:00 PDT 2022 to Tue May 24 13:00:00 PDT 2022"));
+                containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
     }
 
 
@@ -129,7 +129,7 @@ class Project2IT extends InvokeMainTestCase {
         MainMethodResult result = invokeMain("-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm", "one", "argument", "too", "many");
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("Too many command line arguments."));
+                containsString("extraneous argument on the command line"));
     }
 
     /**

@@ -115,7 +115,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     if(len < 9) {
       throw new ErrorCheck.MissingCommandLineArguments("Missing command line arguments.");
     }
-    else if(len > 13){
+    else if(len > 14){
       throw new ErrorCheck.MissingCommandLineArguments("Too many command line arguments.");
     }
 

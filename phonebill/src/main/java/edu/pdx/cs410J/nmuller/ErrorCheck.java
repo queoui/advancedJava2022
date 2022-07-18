@@ -123,7 +123,6 @@ public class ErrorCheck {
      */
     @VisibleForTesting
     public static void checkUnknownOption(String[] args) throws MissingCommandLineArguments {
-        boolean check = true;
         if ((args.length < 9)) {
             throw new MissingCommandLineArguments("missing customer phone call information");
         }
@@ -131,9 +130,11 @@ public class ErrorCheck {
             throw new MissingCommandLineArguments("extraneous argument on the command line");
         } else {
             for (int i = 0; i < ((args.length) - 9); ++i) {
-                if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile")) {
+                if (!args[i].equalsIgnoreCase("-print") && !args[i].equalsIgnoreCase("-textfile") && !args[i].equalsIgnoreCase("-pretty")) {
                     if (i != 0) {
                         if ((args[i - 1].equalsIgnoreCase("-textfile")))
+                            continue;
+                        if ((args[i - 1].equalsIgnoreCase("-pretty")))
                             continue;
                     }
                     throw new MissingCommandLineArguments("unknown option used");
