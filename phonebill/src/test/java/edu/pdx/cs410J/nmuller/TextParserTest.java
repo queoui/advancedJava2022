@@ -20,7 +20,7 @@ public class TextParserTest {
 
     TextParser parser = new TextParser(new InputStreamReader(resource));
     PhoneBill bill = parser.parse();
-    assertThat(bill.getCustomer(), equalTo("Nick"));
+    assertThat(bill.getCustomer(), equalTo("Nick Muller"));
   }
 
   @Test

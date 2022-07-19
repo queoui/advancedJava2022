@@ -47,7 +47,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void testAccurateCommandLineWithPrintAndTextFile() {
-        MainMethodResult result = invokeMain("-textfile", "file", "-print", "Nick Muller", "425-555-5555", "206-555-5555",
+        MainMethodResult result = invokeMain("-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt", "-print", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm",  "05/24/2022", "1:00", "pm");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
@@ -58,10 +58,11 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void testInaccurateCommandLineWithPrintAndTextFile() {
-        MainMethodResult result = invokeMain("-textfile", "file","-print",  "Nick Muller", "425-555-5555", "206-555-5555",
+        MainMethodResult result = invokeMain("-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt","-print",  "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022" , "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
+
     }
 
 
@@ -70,7 +71,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void testPrintwithTextFileOptionsWithPrintFirst() {
-        MainMethodResult result = invokeMain("-print", "-textfile", "file", "Nick Muller", "425-555-5555", "206-555-5555",
+        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt", "Nick Muller", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardOut(),
                 containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
@@ -181,7 +182,7 @@ class Project2IT extends InvokeMainTestCase {
      */
     @Test
     void customerDoesNotMatchTheBill() {
-        MainMethodResult result = invokeMain("-print", "-textfile", "file", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
+        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
                 "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
         assertThat(result.getTextWrittenToStandardError(),
                 containsString("error reading from file: given customer does not match the bill."));
