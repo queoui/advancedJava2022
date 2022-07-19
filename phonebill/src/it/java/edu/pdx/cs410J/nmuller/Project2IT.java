@@ -247,12 +247,5 @@ class Project2IT extends InvokeMainTestCase {
                 containsString("10 minutes"));
     }
 
-    @Test
-    void invalidTextFileCantBeParsed() throws ParserException {
-        MainMethodResult resource = invokeMain("-print", "-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/invalid-phonebill.txt", "Nick Muller", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
 
-
-        assertThat(resource.getTextWrittenToStandardError(), containsString("test date parser error"));
-    }
 }
