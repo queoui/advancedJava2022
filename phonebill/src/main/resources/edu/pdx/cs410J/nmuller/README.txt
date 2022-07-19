@@ -36,6 +36,8 @@ The format for the command line arguments is as follows:
             -readme: Displays the text you are now reading and nothing else.
             -textfile <file>: appends a phone number to an existing bill or creates a new bill with the given phone call
                                 <file> is a valid file path
+            -pretty <file>: Prints a more human readable version of a phone bill. If STDOUT is the desired path, simply
+                            have the file option be "-", without the quotations.
 
         ############################
         ## COMMAND LINE ARGUMENTS ##
