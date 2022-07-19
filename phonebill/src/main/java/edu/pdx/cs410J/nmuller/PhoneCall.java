@@ -3,6 +3,7 @@ package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AbstractPhoneCall;
+import edu.pdx.cs410J.ParserException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +33,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    * @param callEnd
    *        date and time of the call start MM/DD/YYYY HH:MM
    */
-  public PhoneCall(String caller, String callee, Date callBegin, Date callEnd ) {
+  public PhoneCall(String caller, String callee, Date callBegin, Date callEnd )throws ErrorCheck.MissingCommandLineArguments {
+
+      if(!ErrorCheck.checkPhoneNumber(caller) || !ErrorCheck.checkPhoneNumber(callee))
+        throw new ErrorCheck.MissingCommandLineArguments("Not a valid phone number being parsed");
+
     this.caller = caller;
     this.callee = callee;
     this.callBegin = callBegin;

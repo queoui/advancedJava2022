@@ -24,18 +24,19 @@ public class TextDumperTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin, end);
+      PhoneBill bill = new PhoneBill(customer);
+      bill.addPhoneCall(testCall);
+
+      StringWriter sw = new StringWriter();
+      TextDumper dumper = new TextDumper(sw);
+      dumper.dump(bill);
+
+      String text = sw.toString();
+      assertThat(text,containsString( text.toString()));
     }catch(Exception e){System.err.println("test date parser error");}
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin, end);
-    PhoneBill bill = new PhoneBill(customer);
-    bill.addPhoneCall(testCall);
 
-    StringWriter sw = new StringWriter();
-    TextDumper dumper = new TextDumper(sw);
-    dumper.dump(bill);
-
-    String text = sw.toString();
-    assertThat(text,containsString( text.toString()));
   }
 
   @Test
@@ -61,19 +62,20 @@ public class TextDumperTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin, end);
+      PhoneBill bill = new PhoneBill(customer);
+      bill.addPhoneCall(testCall);
+
+      StringWriter sw = new StringWriter();
+      TextDumper dumper = new TextDumper(sw);
+      dumper.dumpAppend(testCall);
+
+      String text = sw.toString();
+      assertThat(text, containsString(testCall.getPhoneCall()));
     }catch(Exception e){System.err.println("test date parser error");}
 
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin, end);
-    PhoneBill bill = new PhoneBill(customer);
-    bill.addPhoneCall(testCall);
 
-    StringWriter sw = new StringWriter();
-    TextDumper dumper = new TextDumper(sw);
-    dumper.dumpAppend(testCall);
-
-    String text = sw.toString();
-    assertThat(text, containsString(testCall.getPhoneCall()));
   }
 
 }

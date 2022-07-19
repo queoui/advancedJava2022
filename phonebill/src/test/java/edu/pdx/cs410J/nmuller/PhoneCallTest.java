@@ -28,11 +28,12 @@ public class PhoneCallTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin, end);
+      assertThat(testCall.getBeginTimeString(), containsString("5/24/22, 12:50 PM"));
     }catch(Exception e){System.err.println("test date parser error");}
 
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin, end);
-    assertThat(testCall.getBeginTimeString(), containsString("5/24/22, 12:50 PM"));
+
   }
 
   /**
@@ -46,11 +47,12 @@ public class PhoneCallTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin,end);
+      assertThat(testCall.getEndTimeString(), containsString("5/24/22, 1:00 PM"));
     }catch(Exception e){System.err.println("test date parser error");}
 
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin,end);
-    assertThat(testCall.getEndTimeString(), containsString("5/24/22, 1:00 PM"));
+
   }
 
   /**
@@ -64,11 +66,12 @@ public class PhoneCallTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin, end);
+      assertThat(testCall.getCaller(), containsString("425-555-5555"));
     }catch(Exception e){System.err.println("test date parser error");}
 
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin, end);
-    assertThat(testCall.getCaller(), containsString("425-555-5555"));
+
   }
 
 
@@ -83,11 +86,12 @@ public class PhoneCallTest {
     try {
       begin = formatter.parse("05/24/2022 12:50pm");
       end = formatter.parse("05/24/2022 01:00pm");
+
+      PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
+              begin, end);
+      assertThat(testCall.getCallee(), containsString("206-555-5555"));
     }catch(Exception e){System.err.println("test date parser error");}
 
-    PhoneCall testCall = new PhoneCall("425-555-5555", "206-555-5555",
-            begin, end);
-    assertThat(testCall.getCallee(), containsString("206-555-5555"));
   }
 
 }

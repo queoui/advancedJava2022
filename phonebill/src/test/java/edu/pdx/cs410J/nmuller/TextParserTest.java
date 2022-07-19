@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextParserTest {
@@ -22,6 +22,7 @@ public class TextParserTest {
     PhoneBill bill = parser.parse();
     assertThat(bill.getCustomer(), equalTo("Nick Muller"));
   }
+
 
   @Test
   void invalidTextFileThrowsParserException() {
