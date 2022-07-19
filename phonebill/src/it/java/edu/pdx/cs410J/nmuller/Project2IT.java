@@ -228,4 +228,15 @@ class Project2IT extends InvokeMainTestCase {
                 containsString("extraneous argument"));
     }
 
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void testValidSTDOUTPrettyPrinter() {
+        MainMethodResult result = invokeMain("-print", "-pretty", "-",  "Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50","pm", "05/24/2022", "1:00","pm");
+        assertThat(result.getTextWrittenToStandardOut(),
+                containsString("10 minutes"));
+    }
 }

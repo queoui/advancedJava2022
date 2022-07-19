@@ -21,6 +21,9 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
         out.println((bill.getCustomer()));
         for (PhoneCall singleCall: bill.billOfCalls) {
             Duration duration = Duration.ofMinutes(singleCall.getEndTime().getTime() - singleCall.getBeginTime().getTime());
+            if(duration.toMinutes() / 60000 < 0){
+                throw new IOException("Time travel has been detected. enter accurate time.");
+            }
 
             out.println("Phone call duration of " + (duration.toMinutes() / 60000) +" minutes" +  " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
                         + " beginning at "+ singleCall.getBeginTimeString()+ " and ending at "+ singleCall.getEndTimeString());

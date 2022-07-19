@@ -139,6 +139,9 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
       }catch(Exception errParse){
         System.err.println("Unknown Date Format " + errParse);
       }
+      if(!ErrorCheck.checkTimeTravel(begin, end))
+        throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
+
       PhoneCall newCall = new PhoneCall(args[len - 8], args[len - 7], begin,end);
       return newCall;
     }

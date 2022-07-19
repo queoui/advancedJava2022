@@ -73,7 +73,7 @@ public class Project2 {
                   TextDumper newDump = new TextDumper(tempWriter);
                   newDump.dump(newBill);
                 } catch (IOException error1) {
-                  System.err.println("Something went wrong writing to file");
+                  System.err.println("Something went wrong writing to file" + error1);
                 }
               } catch (ParserException e) {
                 System.err.println("error reading from file: " + e.getMessage());

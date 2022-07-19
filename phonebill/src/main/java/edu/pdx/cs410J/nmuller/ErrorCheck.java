@@ -2,8 +2,10 @@ package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,8 +91,6 @@ public class ErrorCheck {
             } catch (IOException exception) {
                 throw new IOException("README file not available. " + exception.getMessage());
             }
-
-
         }
         return check;
     }
@@ -141,6 +141,11 @@ public class ErrorCheck {
                 }
             }
         }
+    }
+
+
+    public static boolean checkTimeTravel(Date beginTime, Date endTime){
+        return beginTime.before(endTime);
     }
 
     /**
