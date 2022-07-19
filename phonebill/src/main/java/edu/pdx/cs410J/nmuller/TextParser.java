@@ -59,7 +59,7 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
                   + " " + words[18] + " " + words[19] );
           PhoneCall addCall = new PhoneCall(words[3], words[5], begin, end);
           newBill.addPhoneCall(addCall);
-        }catch(Exception e){System.err.println("test date parser error");}
+        }catch(Exception e){System.err.println("Error: Unable to read from given file");}
 
 
 

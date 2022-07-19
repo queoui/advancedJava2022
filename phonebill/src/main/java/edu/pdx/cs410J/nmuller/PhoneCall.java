@@ -114,7 +114,9 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
     int len = args.length;
 
     if(len == 0){
-      throw new ErrorCheck.MissingCommandLineArguments("command line usage is <option><args>. run the program with the argument -README for more information.");
+      throw new ErrorCheck.MissingCommandLineArguments("usage: java -jar target/phonebill-2022.0.0.jar <options> <arguments>." +
+                                                                                    "\nfor more details on options and arguments do" +
+                                                                                      "\njava -jar target/phonebill-2022.0.0.jar -readme");
     }
 
     if(len < 9) {

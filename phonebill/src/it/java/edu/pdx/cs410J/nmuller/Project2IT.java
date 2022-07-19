@@ -34,7 +34,7 @@ class Project2IT extends InvokeMainTestCase {
     void testNoCommandLineArguments() {
         MainMethodResult result = invokeMain();
         assertThat(result.getTextWrittenToStandardError(),
-                containsString("command line usage is <option><args>. run the program with the argument -README for more information."));
+                containsString("java -jar target/phonebill-2022.0.0.jar <options> <arguments>"));
     }
 
     /**

@@ -116,11 +116,13 @@ public class Project2 {
 
             PhoneBill newBill = new PhoneBill(args[(args.length) - 9]);
             //file exists
-            if (isTextFile)
+            if (isTextFile) {
               newBill = newTextFile;
-
-            newBill.addPhoneCall(validCall);
-            newBill.sortBill();
+            }
+            else{
+              newBill.addPhoneCall(validCall);
+              newBill.sortBill();
+            }
             //append a phone call to the bill
             try {
               if (stdoutpretty) {
@@ -135,6 +137,7 @@ public class Project2 {
             } catch (IOException error1) {
               System.err.println("Something went wrong writing to pretty file");
             }
+            break;
           }
         }
       } catch (ErrorCheck.MissingCommandLineArguments e) {
