@@ -13,6 +13,10 @@ import java.time.Duration;
 public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
     private final Writer prettyWriter;
 
+    /**
+     * @param writer
+     *        constructor for pretty printer
+     */
     public PrettyPrinter(Writer writer) {
         this.prettyWriter = writer;
     }
