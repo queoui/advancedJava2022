@@ -12,7 +12,7 @@ import java.util.Locale;
 
 /**
  * Phone call class extends AbstractPhoneCall
- * implements Comparable<phoneCall>
+ * implements Comparable PhoneCalls
  */
 public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
 
