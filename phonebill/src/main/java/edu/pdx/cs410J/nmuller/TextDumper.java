@@ -13,6 +13,11 @@ import java.io.*;
 public class TextDumper implements PhoneBillDumper<PhoneBill> {
   private final Writer writer;
 
+  /**
+   *
+   * @param writer
+   *        constructor
+   */
   public TextDumper(Writer writer) {
     this.writer = writer;
   }

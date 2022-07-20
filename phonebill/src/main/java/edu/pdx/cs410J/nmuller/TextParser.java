@@ -11,10 +11,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-//class for parsing a text file into the program//
+
+/**
+ * Public class for parsing a phone bill text file
+ */
 public class TextParser implements PhoneBillParser<PhoneBill> {
   private final Reader reader;
 
+  /**
+   * constructor for textParser class
+   * @param reader
+   *        constructor reader
+   */
   public TextParser(Reader reader) {
     this.reader = reader;
   }
