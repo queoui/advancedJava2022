@@ -3,14 +3,12 @@ package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.AbstractPhoneCall;
-import edu.pdx.cs410J.ParserException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.DateFormat;
 import java.util.Locale;
 
-import static java.text.DateFormat.SHORT;
 
 
 /**
@@ -66,13 +64,21 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   public String getCallee(){return this.callee;}
 
 
-
-  //DOCUMENTATION FOR THESE NEW METHODS *********************************
+  /**
+   *
+   * @return
+   *      this call date begin time
+   */
   @Override
   public Date getBeginTime() {
     return this.callBegin;
   }
 
+  /**
+   *
+   * @return
+   *      this call date end time
+   */
   @Override
   public Date getEndTime() {
     return this.callEnd;
@@ -155,9 +161,21 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
 
   }
 
+  /**
+   *
+   * @param o
+   *      phone call to compare this phone call to
+   * @return
+   *      int, negative for this call first, 0 for same, positive for o call first
+   */
   @Override
   public int compareTo(PhoneCall o) {
-    return this.callBegin.compareTo(o.callBegin);
+    if(this.callBegin.compareTo(o.callBegin) == 0){
+      return this.caller.compareTo(this.callee);
+    }
+    else{
+      return this.callBegin.compareTo(o.callBegin);
+    }
   }
 }
 
