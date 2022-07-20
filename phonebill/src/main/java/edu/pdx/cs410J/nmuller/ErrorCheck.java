@@ -2,7 +2,6 @@ package edu.pdx.cs410J.nmuller;
 
 import com.google.common.annotations.VisibleForTesting;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -143,7 +142,15 @@ public class ErrorCheck {
         }
     }
 
-
+    /**
+     *
+     * @param beginTime
+     *          begin of the phonecall in Date class default format
+     * @param endTime
+     *          end of the phonecall in Date class default format
+     * @return
+     *      boolean. true if no time travel issues.
+     */
     public static boolean checkTimeTravel(Date beginTime, Date endTime){
         return beginTime.before(endTime);
     }

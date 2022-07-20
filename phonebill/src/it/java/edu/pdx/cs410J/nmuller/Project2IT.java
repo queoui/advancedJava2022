@@ -1,16 +1,10 @@
 package edu.pdx.cs410J.nmuller;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /**
  * Tests the functionality in the {@link Project2} main class.
