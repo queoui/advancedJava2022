@@ -10,14 +10,27 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 
-
 /**
- * this class represents a <code>PhoneCall</code>
+ * Phone call class extends AbstractPhoneCall
+ * implements Comparable<phoneCall>
  */
 public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
+
+  /**
+   * the one making the call
+   */
   private String caller;
+  /**
+   * the one being called
+   */
   private String callee;
+  /**
+   * Date and time the phone call began
+   */
   private Date callBegin;
+  /**
+   * date and time the call ended
+   */
   private Date callEnd;
 
   /**
@@ -30,6 +43,8 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    *        date and time of the call start MM/DD/YYYY HH:MM
    * @param callEnd
    *        date and time of the call start MM/DD/YYYY HH:MM
+   * @throws ErrorCheck.MissingCommandLineArguments
+   *      MissingCommandLineArguments
    */
   public PhoneCall(String caller, String callee, Date callBegin, Date callEnd )throws ErrorCheck.MissingCommandLineArguments {
 
@@ -45,6 +60,8 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   /**
    * Returns <code>String</code> with details of the call in
    *    plain english.
+   * @return call
+   *        string version of phone call
    */
   public String getPhoneCall(){
     String call = toString();

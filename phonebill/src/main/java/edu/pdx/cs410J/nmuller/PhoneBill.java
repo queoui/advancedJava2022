@@ -11,7 +11,14 @@ import java.util.Collections;
  * This class represents a <code>PhoneBill</code>
  */
 public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
+  /**
+   * final customer for the bill
+   */
   private final String customer;
+
+  /**
+   * bill list for keeping track of calls
+   */
   public ArrayList<PhoneCall> billOfCalls = new ArrayList<>() {
   };
 

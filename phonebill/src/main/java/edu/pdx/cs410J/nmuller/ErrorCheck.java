@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * class for general command line error checking
+ */
 public class ErrorCheck {
     /**
      * Helper function to check if a given date is in the valid form MM/DD/YYYY
@@ -159,6 +161,12 @@ public class ErrorCheck {
      * Exception class for missing command line arguments.
      */
     static class MissingCommandLineArguments extends Exception {
+
+        /**
+         *
+         * @param missing_command_line_arguments
+         *          exception handling
+         */
         public MissingCommandLineArguments(String missing_command_line_arguments) {
             super(missing_command_line_arguments);
         }
