@@ -19,72 +19,165 @@ public class Project4 {
     public static void main(String... args) {
         String hostName = null;
         String portString = null;
-        String word = null;
-        String definition = null;
+        boolean search = false;
+        boolean print = false;
+        int optionsTotal = 0;
+        int port;
+        String customer = null;
+        String caller = null;
+        String callee = null;
+        String beginTime = null;
+        String endTime = null;
 
-        for (String arg : args) {
+
+        if(args.length == 0){
+            //print usage and exit
+        }
+        else{
+            for (int i = 0; i < args.length ; ++i){
+                if (args[i].equalsIgnoreCase("-readme")){
+                    //print readme and exit
+                }
+                else if((args[i].equalsIgnoreCase("-host"))){
+                    optionsTotal += 2;
+                    hostName = args[i + 1];
+                    ++i;
+                }
+                else if((args[i].equalsIgnoreCase("-port"))){
+                    optionsTotal += 2;
+                    portString = args[i +1];
+                    ++i;
+                }
+                else if((args[i].equalsIgnoreCase("-search"))){
+                    optionsTotal+=1;
+                    search = true;
+                }
+                else if((args[i].equalsIgnoreCase("-print"))){
+                    optionsTotal+=1;
+                    print = true;
+                }
+            }
             if (hostName == null) {
-                hostName = arg;
+                usage( MISSING_ARGS );
 
             } else if ( portString == null) {
-                portString = arg;
+                usage( "Missing port" );
+            }
 
-            } else if (word == null) {
-                word = arg;
+            try {
+                port = Integer.parseInt( portString );
 
-            } else if (definition == null) {
-                definition = arg;
+            } catch (NumberFormatException ex) {
+                usage("Port \"" + portString + "\" must be an integer");
+                return;
+            }
 
-            } else {
-                usage("Extraneous command line argument: " + arg);
+            if(search){
+                for(int i = optionsTotal; i < args.length; ++i){
+
+                    if (customer == null) {
+                        customer = args[i];
+
+                    } else if ( beginTime == null) {
+
+                        //try block out of bounds error
+                        beginTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
+                        i += 3;
+
+                    } else if (endTime == null) {
+
+                        //try block out of bounds error
+                        endTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
+                        i += 3;
+
+                    } else {
+                        usage("Extraneous command line argument: " + args[i]);
+                    }
+                }
+
+                //get the data between the date times and pretty print to stdout
+
+            }
+            else if((args.length == 5)){
+                for(int i = optionsTotal; i < args.length; ++i){
+                    if (customer == null) {
+                        customer = args[i];
+                    }
+                    else{
+                        usage("Extraneous command line argument: " + args[i]);
+                    }
+                }
+
+                //get the phonebill data for the given customer and pretty print to stdout
+
+            }
+            else{
+                for(int i = optionsTotal; i < args.length; ++i){
+
+                    if (customer == null) {
+                        customer = args[i];
+
+                    }else if(caller == null){
+                        caller = args[i];
+
+                    }else if(callee == null){
+                        callee = args[i];
+
+                    }else if ( beginTime == null) {
+
+                        //try block out of bounds error
+                        beginTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
+                        i += 3;
+
+                    } else if (endTime == null) {
+
+                        //try block out of bounds error
+                        endTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
+                        i += 3;
+
+                    } else {
+                        usage("Extraneous command line argument: " + args[i]);
+                    }
+                }
+
+                if(print){
+
+                    //print the new phone call data to stdout
+
+                }
             }
         }
 
-        if (hostName == null) {
-            usage( MISSING_ARGS );
-
-        } else if ( portString == null) {
-            usage( "Missing port" );
-        }
-
-        int port;
-        try {
-            port = Integer.parseInt( portString );
-            
-        } catch (NumberFormatException ex) {
-            usage("Port \"" + portString + "\" must be an integer");
-            return;
-        }
 
         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
-        String message;
-        try {
-            if (word == null) {
-                // Print all word/definition pairs
-                Map<String, String> dictionary = client.getAllDictionaryEntries();
-                StringWriter sw = new StringWriter();
-                PrettyPrinter pretty = new PrettyPrinter(sw);
-                pretty.dump(dictionary);
-                message = sw.toString();
-
-            } else if (definition == null) {
-                // Print all dictionary entries
-                message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
-
-            } else {
-                // Post the word/definition pair
-                client.addDictionaryEntry(word, definition);
-                message = Messages.definedWordAs(word, definition);
-            }
-
-        } catch (IOException | ParserException ex ) {
-            error("While contacting server: " + ex);
-            return;
-        }
-
-        System.out.println(message);
-    }
+//        String message;
+//        try {
+//            if (word == null) {
+//                // Print all word/definition pairs
+//                Map<String, String> dictionary = client.getAllDictionaryEntries();
+//                StringWriter sw = new StringWriter();
+//                PrettyPrinter pretty = new PrettyPrinter(sw);
+//                pretty.dump(dictionary);
+//                message = sw.toString();
+//
+//            } else if (definition == null) {
+//                // Print all dictionary entries
+//                message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
+//
+//            } else {
+//                // Post the word/definition pair
+//                client.addDictionaryEntry(word, definition);
+//                message = Messages.definedWordAs(word, definition);
+//            }
+//
+//        } catch (IOException | ParserException ex ) {
+//            error("While contacting server: " + ex);
+//            return;
+//        }
+//
+//        System.out.println(message);
+//    }
 
     /**
      * Makes sure that the give response has the expected HTTP status code
