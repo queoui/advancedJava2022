@@ -83,7 +83,7 @@ public class Project4 {
                             try{
                             ErrorCheck.checkDate(args[i]);
                             ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                            beginTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                            beginTime = args[i] + " " + args[i + 1]  + args[i + 2];
                             i += 2;
                             }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                                 System.err.println("**"+e);}
@@ -94,7 +94,7 @@ public class Project4 {
                             try{
                             ErrorCheck.checkDate(args[i]);
                             ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                            endTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                            endTime = args[i] + " " + args[i + 1] + args[i + 2];
                             i += 2;
                             }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                                 System.err.println("**"+e);}
@@ -145,7 +145,7 @@ public class Project4 {
                             try{
                                 ErrorCheck.checkDate(args[i]);
                                 ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                                beginTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                                beginTime = args[i] + " " + args[i + 1] + args[i + 2];
                                 i += 2;
                             }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                                 System.err.println("**" +e);}
@@ -156,7 +156,7 @@ public class Project4 {
                             try{
                                 ErrorCheck.checkDate(args[i]);
                                 ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                                endTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                                endTime = args[i] + " " + args[i + 1] + args[i + 2];
                                 i += 2;
                             }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
                                 System.err.println("**"+e);}
@@ -164,15 +164,18 @@ public class Project4 {
                             usage("Extraneous command line argument: " + args[i]);
                         }
                     }
-                    PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
-                    try {
+                    try{
+                        PhoneBill newBill = new PhoneBill(customer);
+                        PhoneCall newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+                        PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
 
 
 
 
                                         //*******change this error *********************//
-                    }catch(IOException e){System.err.println("TESTING AN ADD CALL FAILED");}
+                    }catch(ErrorCheck.MissingCommandLineArguments | IOException e){System.err.println("TESTING AN ADD CALL FAILED");}
 
 
 

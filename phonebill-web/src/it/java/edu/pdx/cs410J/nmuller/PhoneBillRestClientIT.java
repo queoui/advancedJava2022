@@ -51,15 +51,15 @@ class PhoneBillRestClientIT {
 //    assertThat(definition, equalTo(testDefinition));
 //  }
 
-  @Test
-  void test4EmptyWordThrowsException() {
-    PhoneBillRestClient client = newPhoneBillRestClient();
-    String emptyString = "";
-
-    RestException ex =
-      assertThrows(RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
-    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
-  }
+//  @Test
+//  void test4EmptyWordThrowsException() {
+//    PhoneBillRestClient client = newPhoneBillRestClient();
+//    String emptyString = "";
+//
+//    RestException ex =
+//      assertThrows(RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
+//    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+//    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
+//  }
 
 }

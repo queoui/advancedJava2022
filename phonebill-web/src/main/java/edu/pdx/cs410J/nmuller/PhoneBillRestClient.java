@@ -50,26 +50,47 @@ public class PhoneBillRestClient {
     return parser.parse();
   }
 
+//  /**
+//   * Returns the definition for the given word
+//   */
+//  public String getDefinition(String word) throws IOException, ParserException {
+//    Response response = http.get(Map.of("word", word));
+//    throwExceptionIfNotOkayHttpStatus(response);
+//    String content = response.getContent();
+//
+//    TextParser parser = new TextParser(new StringReader(content));
+//    return parser.parse().get(word);
+//  }
+  //^^^^^^^^^^^^^^^^^^^^^^^re-does this method ^^^^^^^^^^^^^
+
   /**
-   * Returns the definition for the given word
+   * Returns the call for the given customer
    */
-  public String getDefinition(String word) throws IOException, ParserException {
-    Response response = http.get(Map.of("word", word));
+  public String getLastCall(String customer) throws IOException, ParserException {
+    Response response = http.get(Map.of("customer", customer));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(word);
+    return parser.parse().get(customer);
   }
 
-    public void addDictionaryEntry(String word, String definition) throws IOException {
-      Response response = http.post(Map.of("word", word, "definition", definition));
-      throwExceptionIfNotOkayHttpStatus(response);
-    }
-
+//    public void addDictionaryEntry(String word, String definition) throws IOException {
+//      Response response = http.post(Map.of("word", word, "definition", definition));
+//      throwExceptionIfNotOkayHttpStatus(response);
+//    }
+             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
-    Response response = http.post(Map.of("customer", customer, "caller", caller, "callee", callee, "beginDate", beginDate, "endDate", endDate));
-    throwExceptionIfNotOkayHttpStatus(response);
+      Response isCustomer = http.get(Map.of("customer", customer));
+      throwExceptionIfNotOkayHttpStatus(isCustomer);
+      String content = isCustomer.getContent();
+//
+//      if("".equals(content))
+//          System.out.println("creating new customer ... ");
+//      else {
+//        Response response = http.post(Map.of("customer", customer, "caller", caller, "callee", callee, "beginDate", beginDate, "endDate", endDate));
+//        throwExceptionIfNotOkayHttpStatus(response);
+//      }
     }
 
   public void removeAllDictionaryEntries() throws IOException {

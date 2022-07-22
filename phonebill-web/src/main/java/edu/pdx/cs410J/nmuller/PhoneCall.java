@@ -121,29 +121,31 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   /**
    * Method checks for valid command line arguments and creates a new Call if valid
    *
-   * @param args
+   * @param caller
+   * @param callee
+   * @param callBegin
+   * @param callEnd
    *        command line arguments
    * @return <code>call</code>
    * @throws ErrorCheck.MissingCommandLineArguments
    *         error is thrown when command line arguments are not valid.
    */
   @VisibleForTesting
-  static PhoneCall createNewCall(String [] args) throws ErrorCheck.MissingCommandLineArguments {
-    int len = args.length;
+  static PhoneCall createNewCall(String caller, String callee, String callBegin, String callEnd) throws ErrorCheck.MissingCommandLineArguments {
 
       SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
       Date begin = new Date();
       Date end = new Date();
       try {
-         begin = formatter.parse(args[len - 6] + " " + args[len - 5] + args[len - 4]);
-         end = formatter.parse(args[len - 3] + " " + args[len - 2] + args[len-1]);
+         begin = formatter.parse(callBegin);
+         end = formatter.parse(callEnd);
       }catch(Exception errParse){
         System.err.println("Unknown Date Format " + errParse);
       }
       if(!ErrorCheck.checkTimeTravel(begin, end))
         throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
 
-      PhoneCall newCall = new PhoneCall(args[len - 8], args[len - 7], begin,end);
+      PhoneCall newCall = new PhoneCall(caller, callee, begin,end);
       return newCall;
     }
 

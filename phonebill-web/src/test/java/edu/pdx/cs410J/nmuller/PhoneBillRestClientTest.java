@@ -17,7 +17,6 @@ import static org.mockito.Mockito.when;
 
 public class PhoneBillRestClientTest {
 
-  @Ignore
   @Test
   void getAllDictionaryEntriesPerformsHttpGetWithNoParameters() throws ParserException, IOException {
     Map<String, String> dictionary = Map.of("One", "1", "Two", "2");
@@ -33,7 +32,6 @@ public class PhoneBillRestClientTest {
   private HttpRequestHelper.Response dictionaryAsText(Map<String, String> dictionary) {
     StringWriter writer = new StringWriter();
     new TextDumper(writer).dump(dictionary);
-
     return new HttpRequestHelper.Response(writer.toString());
   }
 }
