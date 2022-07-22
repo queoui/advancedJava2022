@@ -3,9 +3,7 @@ package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -22,7 +20,7 @@ public class Project4 {
         boolean search = false;
         boolean print = false;
         int optionsTotal = 0;
-        int port;
+        int port = 0;
         String customer = null;
         String caller = null;
         String callee = null;
@@ -30,126 +28,167 @@ public class Project4 {
         String endTime = null;
 
 
-        if(args.length == 0){
+        if (args.length == 0) {
             //print usage and exit
-        }
-        else{
-            for (int i = 0; i < args.length ; ++i){
-                if (args[i].equalsIgnoreCase("-readme")){
+            usage("Missing command line arguments");
+        } else {
+            for (int i = 0; i < args.length; ++i) {
+                if (args[i].equalsIgnoreCase("-readme")) {
                     //print readme and exit
-                }
-                else if((args[i].equalsIgnoreCase("-host"))){
+                    try {
+                        getReadMe();
+                    } catch (IOException e) {
+                        System.err.println("Unable to find README" + e);
+                    }
+                } else if ((args[i].equalsIgnoreCase("-host"))) {
                     optionsTotal += 2;
                     hostName = args[i + 1];
                     ++i;
-                }
-                else if((args[i].equalsIgnoreCase("-port"))){
+                } else if ((args[i].equalsIgnoreCase("-port"))) {
                     optionsTotal += 2;
-                    portString = args[i +1];
+                    portString = args[i + 1];
                     ++i;
-                }
-                else if((args[i].equalsIgnoreCase("-search"))){
-                    optionsTotal+=1;
+                } else if ((args[i].equalsIgnoreCase("-search"))) {
+                    optionsTotal += 1;
                     search = true;
-                }
-                else if((args[i].equalsIgnoreCase("-print"))){
-                    optionsTotal+=1;
+                } else if ((args[i].equalsIgnoreCase("-print"))) {
+                    optionsTotal += 1;
                     print = true;
                 }
             }
-            if (hostName == null) {
-                usage( MISSING_ARGS );
+                if (hostName == null) {
+                    usage(MISSING_ARGS);
 
-            } else if ( portString == null) {
-                usage( "Missing port" );
-            }
-
-            try {
-                port = Integer.parseInt( portString );
-
-            } catch (NumberFormatException ex) {
-                usage("Port \"" + portString + "\" must be an integer");
-                return;
-            }
-
-            if(search){
-                for(int i = optionsTotal; i < args.length; ++i){
-
-                    if (customer == null) {
-                        customer = args[i];
-
-                    } else if ( beginTime == null) {
-
-                        //try block out of bounds error
-                        beginTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
-                        i += 3;
-
-                    } else if (endTime == null) {
-
-                        //try block out of bounds error
-                        endTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
-                        i += 3;
-
-                    } else {
-                        usage("Extraneous command line argument: " + args[i]);
-                    }
+                } else if (portString == null) {
+                    usage("Missing port");
                 }
 
-                //get the data between the date times and pretty print to stdout
+                try {
+                    port = Integer.parseInt(portString);
 
-            }
-            else if((args.length == 5)){
-                for(int i = optionsTotal; i < args.length; ++i){
-                    if (customer == null) {
-                        customer = args[i];
-                    }
-                    else{
-                        usage("Extraneous command line argument: " + args[i]);
-                    }
+                } catch (NumberFormatException ex) {
+                    usage("Port \"" + portString + "\" must be an integer");
+                    return;
                 }
 
-                //get the phonebill data for the given customer and pretty print to stdout
+                if (search) {
+                    for (int i = optionsTotal; i < args.length; ++i) {
 
-            }
-            else{
-                for(int i = optionsTotal; i < args.length; ++i){
+                        if (customer == null) {
+                            customer = args[i];
 
-                    if (customer == null) {
-                        customer = args[i];
+                        } else if (beginTime == null) {
 
-                    }else if(caller == null){
-                        caller = args[i];
+                            //check out of bounds error
+                            try{
+                            ErrorCheck.checkDate(args[i]);
+                            ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                            beginTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                            i += 2;
+                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                                System.err.println("**"+e);}
 
-                    }else if(callee == null){
-                        callee = args[i];
+                        } else if (endTime == null) {
 
-                    }else if ( beginTime == null) {
+                            //try block out of bounds error
+                            try{
+                            ErrorCheck.checkDate(args[i]);
+                            ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                            endTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                            i += 2;
+                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                                System.err.println("**"+e);}
+                        } else {
+                            usage("Extraneous command line argument: " + args[i]);
+                        }
+                    }
 
-                        //try block out of bounds error
-                        beginTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
-                        i += 3;
+                    //get the data between the date times and pretty print to stdout
 
-                    } else if (endTime == null) {
 
-                        //try block out of bounds error
-                        endTime = args[i] +" "+ args[i+1] +" "+ args[i+2];
-                        i += 3;
+                } else if ((args.length == 5)) {
+                    for (int i = optionsTotal; i < args.length; ++i) {
+                        if (customer == null) {
+                            customer = args[i];
+                        } else {
+                            usage("Extraneous command line argument: " + args[i]);
+                        }
+                    }
 
-                    } else {
-                        usage("Extraneous command line argument: " + args[i]);
+                    //get the phonebill data for the given customer and pretty print to stdout
+
+                } else {
+                    for (int i = optionsTotal; i < args.length; ++i) {
+
+                        if (customer == null) {
+                            customer = args[i];
+
+                        } else if (caller == null) {
+                            try {
+                                ErrorCheck.checkPhoneNumber(args[i]);
+                                caller = args[i];
+                            }catch(IllegalArgumentException e){
+                                System.err.println("**" +e);
+                            }
+
+                        } else if (callee == null) {
+                            try {
+                                ErrorCheck.checkPhoneNumber(args[i]);
+                                callee = args[i];
+                            }catch(IllegalArgumentException e){
+                                System.err.println("**" +e);
+                            }
+
+                        } else if (beginTime == null) {
+
+                            //check out of bounds error
+                            try{
+                                ErrorCheck.checkDate(args[i]);
+                                ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                                beginTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                                i += 2;
+                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                                System.err.println("**" +e);}
+
+                        } else if (endTime == null) {
+
+                            //try block out of bounds error
+                            try{
+                                ErrorCheck.checkDate(args[i]);
+                                ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                                endTime = args[i] + " " + args[i + 1] + " " + args[i + 2];
+                                i += 2;
+                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
+                                System.err.println("**"+e);}
+                        } else {
+                            usage("Extraneous command line argument: " + args[i]);
+                        }
+                    }
+                    PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+                    try {
+                        client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
+
+
+
+
+                                        //*******change this error *********************//
+                    }catch(IOException e){System.err.println("TESTING AN ADD CALL FAILED");}
+
+
+
+
+                    if (print) {
+
+                        //print the new phone call data to stdout
+
                     }
                 }
-
-                if(print){
-
-                    //print the new phone call data to stdout
-
-                }
             }
-        }
+
 
 
         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+    }
 
 //        String message;
 //        try {
@@ -196,6 +235,19 @@ public class Project4 {
     {
         PrintStream err = System.err;
         err.println("** " + message);
+    }
+
+    public static void getReadMe() throws IOException{
+        try (InputStream readme = Project4.class.getResourceAsStream("README.txt")) {
+            BufferedReader reader = new BufferedReader((new InputStreamReader(readme)));
+            String curr;
+            while ((curr = reader.readLine()) != null) {
+                System.out.println(curr);
+            }
+            reader.close();
+        } catch (IOException exception) {
+            throw new IOException("README file not available. " + exception.getMessage());
+        }
     }
 
     /**

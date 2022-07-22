@@ -67,6 +67,11 @@ public class PhoneBillRestClient {
       throwExceptionIfNotOkayHttpStatus(response);
     }
 
+    public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
+    Response response = http.post(Map.of("customer", customer, "caller", caller, "callee", callee, "beginDate", beginDate, "endDate", endDate));
+    throwExceptionIfNotOkayHttpStatus(response);
+    }
+
   public void removeAllDictionaryEntries() throws IOException {
       Response response = http.delete(Map.of());
       throwExceptionIfNotOkayHttpStatus(response);
