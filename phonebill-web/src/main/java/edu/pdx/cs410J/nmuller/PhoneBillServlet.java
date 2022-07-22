@@ -63,9 +63,9 @@ public class PhoneBillServlet extends HttpServlet
     {
         response.setContentType( "text/plain" );
 
-        String customer = getParameter(CUSTOMER_PARAMETER, request );
+        String customer = getParameter(CUSTOMER_PARAMETER, request);
         if (customer != null) {
-            writeDefinition(customer, response);
+            writePhoneCall(customer, response);
 
         } else {
             writeAllDictionaryEntries(response);
@@ -190,16 +190,16 @@ protected void doPost( HttpServletRequest request, HttpServletResponse response 
      *
      * The text of the message is formatted with {@link TextDumper}
      */
-    private void writeDefinition(String word, HttpServletResponse response) throws IOException {
-        String definition = this.dictionary.get(word);
+    private void writePhoneCall(String customer, HttpServletResponse response) throws IOException {
+        String phoneCall= this.dictionary.get(customer);
 
-        if (definition == null) {
+        if (phoneCall == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
         } else {
             PrintWriter pw = response.getWriter();
 
-            Map<String, String> wordDefinition = Map.of(word, definition);
+            Map<String, String> wordDefinition = Map.of(customer, phoneCall);
             TextDumper dumper = new TextDumper(pw);
             dumper.dump(wordDefinition);
 

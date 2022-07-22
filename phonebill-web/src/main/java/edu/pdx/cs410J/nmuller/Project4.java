@@ -26,6 +26,8 @@ public class Project4 {
         String callee = null;
         String beginTime = null;
         String endTime = null;
+        PhoneBill newBill = null;
+        PhoneCall newCall = null;
 
 
         if (args.length == 0) {
@@ -165,8 +167,8 @@ public class Project4 {
                         }
                     }
                     try{
-                        PhoneBill newBill = new PhoneBill(customer);
-                        PhoneCall newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+                        newBill = new PhoneBill(customer);
+                        newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
@@ -183,6 +185,7 @@ public class Project4 {
                     if (print) {
 
                         //print the new phone call data to stdout
+                        System.out.println(Messages.definedWordAs(customer, newCall.toString()));
 
                     }
                 }

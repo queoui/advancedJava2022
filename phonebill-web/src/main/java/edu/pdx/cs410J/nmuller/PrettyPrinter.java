@@ -9,16 +9,22 @@ import java.util.Map;
 public class PrettyPrinter {
   private final Writer writer;
 
-  @VisibleForTesting
-  static String formatWordCount(int count )
-  {
-    return String.format( "Dictionary on server contains %d words", count );
-  }
+//  @VisibleForTesting
+//  static String formatWordCount(int count )
+//  {
+//    return String.format( "Dictionary on server contains %d words", count );
+//  }
+
+//  @VisibleForTesting
+//  static String formatDictionaryEntry(String word, String definition )
+//  {
+//    return String.format("  %s : %s", word, definition);
+//  }
 
   @VisibleForTesting
-  static String formatDictionaryEntry(String word, String definition )
+  static String formatPhoneCallEntry(String customer, String phoneCall )
   {
-    return String.format("  %s : %s", word, definition);
+    return String.format("  %s \n %s", customer, phoneCall);
   }
 
 
@@ -31,12 +37,12 @@ public class PrettyPrinter {
       PrintWriter pw = new PrintWriter(this.writer)
     ) {
 
-      pw.println(formatWordCount(dictionary.size()));
+      //pw.println(formatWordCount(dictionary.size()));
 
       for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-        String word = entry.getKey();
-        String definition = entry.getValue();
-        pw.println(formatDictionaryEntry(word, definition));
+        String customer = entry.getKey();
+        String phoneCall = entry.getValue();
+        pw.println(formatPhoneCallEntry(customer, phoneCall));
       }
 
       pw.flush();

@@ -13,7 +13,7 @@ public class Messages
 
     public static String definedWordAs(String word, String definition )
     {
-        return String.format( "Defined %s as %s", word, definition );
+        return String.format( "%s as %s", word, definition );
     }
 
     public static String allDictionaryEntriesDeleted() {
