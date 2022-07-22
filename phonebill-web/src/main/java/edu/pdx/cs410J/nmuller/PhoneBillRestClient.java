@@ -80,7 +80,7 @@ public class PhoneBillRestClient {
 //      throwExceptionIfNotOkayHttpStatus(response);
 //    }
              //^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-    public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
+    public void addPhoneCallEntry(String customer, PhoneCall newCall) throws IOException {
 //      Response isCustomer = http.get(Map.of("customer", customer));
 //      throwExceptionIfNotOkayHttpStatus(isCustomer);
 //      String content = isCustomer.getContent();
@@ -88,7 +88,8 @@ public class PhoneBillRestClient {
 //      if("".equals(content))
 //          System.out.println("creating new customer ... ");
 //      else {
-        Response response = http.post(Map.of("customer", customer, "caller", caller, "callee", callee, "beginDate", beginDate, "endDate", endDate));
+        Response response = http.post(Map.of("customer", customer, "caller", newCall.getCaller(), "callee", newCall.getCallee(),
+                                              "beginDate", newCall.getBeginTimeString(), "endDate", newCall.getEndTimeString()));
         throwExceptionIfNotOkayHttpStatus(response);
 //      }
     }

@@ -148,7 +148,7 @@ protected void doPost( HttpServletRequest request, HttpServletResponse response 
     this.dictionary.put(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate));
 
     PrintWriter pw = response.getWriter();
-    pw.println(Messages.definedWordAs(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate)));
+    pw.println(Messages.displayPhoneCallAs(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate)));
     pw.flush();
 
     response.setStatus( HttpServletResponse.SC_OK);

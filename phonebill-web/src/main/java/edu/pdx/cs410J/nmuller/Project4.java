@@ -171,7 +171,7 @@ public class Project4 {
                         newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
-                        client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
+                        client.addPhoneCallEntry(customer, newCall);
 
 
 
@@ -185,7 +185,7 @@ public class Project4 {
                     if (print) {
 
                         //print the new phone call data to stdout
-                        System.out.println(Messages.definedWordAs(customer, newCall.toString()));
+                        System.out.println(Messages.displayPhoneCallAs(customer, newCall.toString()));
 
                     }
                 }

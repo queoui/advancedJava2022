@@ -24,7 +24,7 @@ public class PrettyPrinter {
   @VisibleForTesting
   static String formatPhoneCallEntry(String customer, String phoneCall )
   {
-    return String.format("  %s \n %s", customer, phoneCall);
+    return String.format("  %s : %s", customer, phoneCall);
   }
 
 
