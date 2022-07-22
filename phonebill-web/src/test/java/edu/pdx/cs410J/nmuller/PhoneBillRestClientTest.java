@@ -2,6 +2,7 @@ package edu.pdx.cs410J.nmuller;
 
 import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -31,7 +32,6 @@ public class PhoneBillRestClientTest {
   private HttpRequestHelper.Response dictionaryAsText(Map<String, String> dictionary) {
     StringWriter writer = new StringWriter();
     new TextDumper(writer).dump(dictionary);
-
     return new HttpRequestHelper.Response(writer.toString());
   }
 }

@@ -18,11 +18,40 @@ import java.util.Map;
  */
 public class PhoneBillServlet extends HttpServlet
 {
-    static final String WORD_PARAMETER = "word";
-    static final String DEFINITION_PARAMETER = "definition";
+//    static final String WORD_PARAMETER = "word";
+//    static final String DEFINITION_PARAMETER = "definition";
+
+    static final String CUSTOMER_PARAMETER = "customer";
+    static final String CALLER_PARAMETER = "caller";
+    static final String CALLEE_PARAMETER = "callee";
+    static final String BEGIN_DATE_PARAMETER = "beginDate";
+    static final String END_DATE_PARAMETER = "endDate";
+
+
 
     private final Map<String, String> dictionary = new HashMap<>();
 
+//    /**
+//     * Handles an HTTP GET request from a client by writing the definition of the
+//     * word specified in the "word" HTTP parameter to the HTTP response.  If the
+//     * "word" parameter is not specified, all of the entries in the dictionary
+//     * are written to the HTTP response.
+//     */
+//    @Override
+//    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws IOException
+//    {
+//        response.setContentType( "text/plain" );
+//
+//        String word = getParameter(WORD_PARAMETER, request );
+//        if (word != null) {
+//            writeDefinition(word, response);
+//
+//        } else {
+//            writeAllDictionaryEntries(response);
+//        }
+//    }
+
+    //^^^^^^^^^^^^^^^STILL NEEDS TO BE RE_IMPLEMENTED^^^^^^^^^^^^^
     /**
      * Handles an HTTP GET request from a client by writing the definition of the
      * word specified in the "word" HTTP parameter to the HTTP response.  If the
@@ -34,45 +63,96 @@ public class PhoneBillServlet extends HttpServlet
     {
         response.setContentType( "text/plain" );
 
-        String word = getParameter( WORD_PARAMETER, request );
-        if (word != null) {
-            writeDefinition(word, response);
+        String customer = getParameter(CUSTOMER_PARAMETER, request );
+        if (customer != null) {
+            writeDefinition(customer, response);
 
         } else {
             writeAllDictionaryEntries(response);
         }
     }
 
-    /**
-     * Handles an HTTP POST request by storing the dictionary entry for the
-     * "word" and "definition" request parameters.  It writes the dictionary
-     * entry to the HTTP response.
-     */
-    @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
-    {
-        response.setContentType( "text/plain" );
 
-        String word = getParameter(WORD_PARAMETER, request );
-        if (word == null) {
-            missingRequiredParameter(response, WORD_PARAMETER);
-            return;
-        }
 
-        String definition = getParameter(DEFINITION_PARAMETER, request );
-        if ( definition == null) {
-            missingRequiredParameter( response, DEFINITION_PARAMETER );
-            return;
-        }
 
-        this.dictionary.put(word, definition);
 
-        PrintWriter pw = response.getWriter();
-        pw.println(Messages.definedWordAs(word, definition));
-        pw.flush();
 
-        response.setStatus( HttpServletResponse.SC_OK);
+//    /**
+//     * Handles an HTTP POST request by storing the dictionary entry for the
+//     * "word" and "definition" request parameters.  It writes the dictionary
+//     * entry to the HTTP response.
+//     */
+//    @Override
+//    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
+//    {
+//        response.setContentType( "text/plain" );
+//
+//        String word = getParameter(WORD_PARAMETER, request );
+//        if (word == null) {
+//            missingRequiredParameter(response, WORD_PARAMETER);
+//            return;
+//        }
+//
+//        String definition = getParameter(DEFINITION_PARAMETER, request );
+//        if ( definition == null) {
+//            missingRequiredParameter( response, DEFINITION_PARAMETER );
+//            return;
+//        }
+//
+//        this.dictionary.put(word, definition);
+//
+//        PrintWriter pw = response.getWriter();
+//        pw.println(Messages.definedWordAs(word, definition));
+//        pw.flush();
+//
+//        response.setStatus( HttpServletResponse.SC_OK);
+//    }
+
+
+//    ^^^^^^^^^^^^^^^ORIGINAL ABOVE^^^^^^^^^^^^^^^^^^^^
+@Override
+protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
+{
+    response.setContentType( "text/plain" );
+
+    String customer = getParameter(CUSTOMER_PARAMETER, request );
+    if (customer == null) {
+        missingRequiredParameter(response, CUSTOMER_PARAMETER);
+        return;
     }
+
+    String caller = getParameter(CALLER_PARAMETER, request );
+    if (caller == null) {
+        missingRequiredParameter(response, CALLER_PARAMETER);
+        return;
+    }
+
+    String callee = getParameter(CALLEE_PARAMETER, request );
+    if (callee == null) {
+        missingRequiredParameter(response, CALLEE_PARAMETER);
+        return;
+    }
+
+    String beginDate = getParameter(BEGIN_DATE_PARAMETER, request );
+    if (beginDate == null) {
+        missingRequiredParameter(response, BEGIN_DATE_PARAMETER);
+        return;
+    }
+
+    String endDate = getParameter(END_DATE_PARAMETER, request );
+    if (endDate == null) {
+        missingRequiredParameter(response, END_DATE_PARAMETER);
+        return;
+    }
+
+    this.dictionary.put(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate));
+
+    PrintWriter pw = response.getWriter();
+    pw.println(Messages.definedWordAs(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate)));
+    pw.flush();
+
+    response.setStatus( HttpServletResponse.SC_OK);
+}
 
     /**
      * Handles an HTTP DELETE request by removing all dictionary entries.  This
