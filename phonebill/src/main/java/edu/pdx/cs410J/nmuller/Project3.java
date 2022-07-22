@@ -7,7 +7,7 @@ import java.io.*;
 /**
  * The main class for the CS410J Phone Bill Project
  */
-public class Project2 {
+public class Project3 {
 
 
   /**
