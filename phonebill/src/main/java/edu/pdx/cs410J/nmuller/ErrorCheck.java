@@ -82,7 +82,7 @@ public class ErrorCheck {
             }
         }
         if (check) {
-            try (InputStream readme = Project2.class.getResourceAsStream("README.txt")) {
+            try (InputStream readme = Project3.class.getResourceAsStream("README.txt")) {
                 BufferedReader reader = new BufferedReader((new InputStreamReader(readme)));
                 String curr;
                 while ((curr = reader.readLine()) != null) {
