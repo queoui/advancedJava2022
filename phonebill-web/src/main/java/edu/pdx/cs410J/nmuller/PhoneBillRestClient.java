@@ -43,25 +43,12 @@ public class PhoneBillRestClient {
   /**
    * Returns all dictionary entries from the server
    */
-  public Map<String, String> getAllDictionaryEntries() throws IOException, ParserException {
+  public Map<String, PhoneBill> getAllDictionaryEntries() throws IOException, ParserException {
     Response response = http.get(Map.of());
 
     TextParser parser = new TextParser(new StringReader(response.getContent()));
     return parser.parse();
   }
-
-//  /**
-//   * Returns the definition for the given word
-//   */
-//  public String getDefinition(String word) throws IOException, ParserException {
-//    Response response = http.get(Map.of("word", word));
-//    throwExceptionIfNotOkayHttpStatus(response);
-//    String content = response.getContent();
-//
-//    TextParser parser = new TextParser(new StringReader(content));
-//    return parser.parse().get(word);
-//  }
-  //^^^^^^^^^^^^^^^^^^^^^^^re-does this method ^^^^^^^^^^^^^
 
   /**
    * Returns the call for the given customer
@@ -72,26 +59,15 @@ public class PhoneBillRestClient {
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(customer);
+    return parser.parse().get(customer).getPhoneCalls().toString();
   }
 
-//    public void addDictionaryEntry(String word, String definition) throws IOException {
-//      Response response = http.post(Map.of("word", word, "definition", definition));
-//      throwExceptionIfNotOkayHttpStatus(response);
-//    }
-             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
-    public void addPhoneCallEntry(String customer, PhoneCall newCall) throws IOException {
-//      Response isCustomer = http.get(Map.of("customer", customer));
-//      throwExceptionIfNotOkayHttpStatus(isCustomer);
-//      String content = isCustomer.getContent();
 
-//      if("".equals(content))
-//          System.out.println("creating new customer ... ");
-//      else {
-        Response response = http.post(Map.of("customer", customer, "caller", newCall.getCaller(), "callee", newCall.getCallee(),
-                                              "beginDate", newCall.getBeginTimeString(), "endDate", newCall.getEndTimeString()));
+    public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
+        Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
+                                              "beginDate", beginDate, "endDate",endDate));
+//              Response response = http.post(Map.of("phoneBill", customer, "phoneCall", newCall.toString()));
         throwExceptionIfNotOkayHttpStatus(response);
-//      }
     }
 
   public void removeAllDictionaryEntries() throws IOException {

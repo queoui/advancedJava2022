@@ -167,17 +167,16 @@ public class Project4 {
                         }
                     }
                     try{
-                        newBill = new PhoneBill(customer);
-                        newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+
+
+                        //newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
-                        client.addPhoneCallEntry(customer, newCall);
 
-
-
+                        client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
 
                                         //*******change this error *********************//
-                    }catch(ErrorCheck.MissingCommandLineArguments | IOException e){System.err.println("TESTING AN ADD CALL FAILED");}
+                    }catch( IOException e){System.err.println("Unable to add phone call to bill" + e);}
 
 
 
@@ -191,38 +190,8 @@ public class Project4 {
                 }
             }
 
-
-
         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
     }
-
-//        String message;
-//        try {
-//            if (word == null) {
-//                // Print all word/definition pairs
-//                Map<String, String> dictionary = client.getAllDictionaryEntries();
-//                StringWriter sw = new StringWriter();
-//                PrettyPrinter pretty = new PrettyPrinter(sw);
-//                pretty.dump(dictionary);
-//                message = sw.toString();
-//
-//            } else if (definition == null) {
-//                // Print all dictionary entries
-//                message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
-//
-//            } else {
-//                // Post the word/definition pair
-//                client.addDictionaryEntry(word, definition);
-//                message = Messages.definedWordAs(word, definition);
-//            }
-//
-//        } catch (IOException | ParserException ex ) {
-//            error("While contacting server: " + ex);
-//            return;
-//        }
-//
-//        System.out.println(message);
-//    }
 
     /**
      * Makes sure that the give response has the expected HTTP status code

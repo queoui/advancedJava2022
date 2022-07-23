@@ -17,10 +17,10 @@ public class TextParser {
     this.reader = reader;
   }
 
-  public Map<String, String> parse() throws ParserException {
+  public Map<String, PhoneBill> parse() throws ParserException {
     Pattern pattern = Pattern.compile("(.*) : (.*)");
 
-    Map<String, String> map = new HashMap<>();
+    Map<String, PhoneBill> map = new HashMap<>();
 
     try (
       BufferedReader br = new BufferedReader(this.reader)
@@ -35,7 +35,7 @@ public class TextParser {
         String word = matcher.group(1);
         String definition = matcher.group(2);
 
-        map.put(word, definition);
+        map.put(word, new PhoneBill(definition));
       }
 
     } catch (IOException e) {

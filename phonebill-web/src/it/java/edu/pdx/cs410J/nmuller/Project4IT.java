@@ -59,19 +59,20 @@ class Project4IT extends InvokeMainTestCase {
 //        }
 //    }
 //
-    @Test
-    void test4AddPhoneCall() {
-        String customer = "customer";
-        String host = "localhost";
-        String port = "8080";
-        try {
-            PhoneCall newCall = PhoneCall.createNewCall("425-741-1269", "425-239-9870", "05/24/2022 11:50am", "05/24/2022 12:00pm");
+//    @Test
+//    void test4AddPhoneCall() {
+//        String customer = "customer2";
+//        String host = "localhost";
+//        String port = "8080";
+//        try {
+//            PhoneCall newCall = PhoneCall.createNewCall("425-741-1269", "425-239-9870", "05/24/2022 11:50am", "05/24/2022 12:00pm");
+//
+//
+//            MainMethodResult result = invokeMain( Project4.class, "-print","-host", host, "-port", port, customer,"425-741-1269",
+//                                                                        "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
+//            String out = result.getTextWrittenToStandardOut();
+//            assertThat(out, out, containsString(Messages.displayPhoneCallAs(customer, newCall.getPhoneCall())));
 
-
-            MainMethodResult result = invokeMain( Project4.class, "-print","-host", host, "-port", port, customer,"425-741-1269",
-                                                                        "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
-            String out = result.getTextWrittenToStandardOut();
-            assertThat(out, out, containsString(Messages.displayPhoneCallAs(customer, newCall.getPhoneCall())));
 
 //            result = invokeMain(  Project4.class, "-print","-host", host, "-port", port, customer,"425-741-1269",
 //                    "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
@@ -82,7 +83,7 @@ class Project4IT extends InvokeMainTestCase {
 //                    "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
 //            out = result.getTextWrittenToStandardOut();
 //            assertThat(out, out, containsString(PrettyPrinter.formatPhoneCallEntry(customer, newCall.getPhoneCall())));
-
-        }catch (ErrorCheck.MissingCommandLineArguments e){}
-    }
+//
+//        }catch (ErrorCheck.MissingCommandLineArguments e){}
+//    }
 }

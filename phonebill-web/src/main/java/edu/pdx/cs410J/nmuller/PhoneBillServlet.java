@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,18 +19,18 @@ import java.util.Map;
  */
 public class PhoneBillServlet extends HttpServlet
 {
-//    static final String WORD_PARAMETER = "word";
-//    static final String DEFINITION_PARAMETER = "definition";
+    static String CALLER_PARAMETER = "caller";
+    static String CALLEE_PARAMETER = "callee";
+    static String BEGIN_DATE_PARAMETER = "beginDate";
+    static String END_DATE_PARAMETER = "endDate";
+
 
     static final String CUSTOMER_PARAMETER = "customer";
-    static final String CALLER_PARAMETER = "caller";
-    static final String CALLEE_PARAMETER = "callee";
-    static final String BEGIN_DATE_PARAMETER = "beginDate";
-    static final String END_DATE_PARAMETER = "endDate";
 
 
 
-    private final Map<String, String> dictionary = new HashMap<>();
+
+    private final Map<String, PhoneBill> dictionary = new HashMap<>();
 
 //    /**
 //     * Handles an HTTP GET request from a client by writing the definition of the
@@ -72,6 +73,47 @@ public class PhoneBillServlet extends HttpServlet
         }
     }
 
+    @Override
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
+    {
+
+        response.setContentType( "text/plain" );
+        if(this.dictionary.containsKey(CUSTOMER_PARAMETER)){
+            try {
+                this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(CALLER_PARAMETER, CALLEE_PARAMETER, BEGIN_DATE_PARAMETER, END_DATE_PARAMETER));
+            }catch (ErrorCheck.MissingCommandLineArguments e){}
+        } else {
+            this.dictionary.put(CUSTOMER_PARAMETER, new
+                    PhoneBill(CUSTOMER_PARAMETER));
+            try{
+            this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(CALLER_PARAMETER, CALLEE_PARAMETER, BEGIN_DATE_PARAMETER, END_DATE_PARAMETER));
+            }catch (ErrorCheck.MissingCommandLineArguments e){}
+        }
+
+//        else {
+//
+//            String phoneBill = getParameter(PHONE_BILL_PARAMETER, request);
+//            if (phoneBill == null) {
+//                missingRequiredParameter(response, PHONE_BILL_PARAMETER);
+//                return;
+//            }
+//
+//            String phoneCall = getParameter(PHONE_CALL_PARAMETER, request);
+//            if (phoneCall == null) {
+//                missingRequiredParameter(response, PHONE_CALL_PARAMETER);
+//                return;
+//            }
+
+//            this.dictionary.put(phoneBill, phoneCall);
+//
+//            PrintWriter pw = response.getWriter();
+//            pw.println(Messages.displayPhoneCallAs(phoneBill, phoneCall));
+//            pw.flush();
+//        }
+
+        response.setStatus( HttpServletResponse.SC_OK);
+    }
+
 
 
 
@@ -82,77 +124,49 @@ public class PhoneBillServlet extends HttpServlet
 //     * "word" and "definition" request parameters.  It writes the dictionary
 //     * entry to the HTTP response.
 //     */
-//    @Override
-//    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
-//    {
-//        response.setContentType( "text/plain" );
+//@Override
+//protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
+//{
+//    response.setContentType( "text/plain" );
 //
-//        String word = getParameter(WORD_PARAMETER, request );
-//        if (word == null) {
-//            missingRequiredParameter(response, WORD_PARAMETER);
-//            return;
-//        }
-//
-//        String definition = getParameter(DEFINITION_PARAMETER, request );
-//        if ( definition == null) {
-//            missingRequiredParameter( response, DEFINITION_PARAMETER );
-//            return;
-//        }
-//
-//        this.dictionary.put(word, definition);
-//
-//        PrintWriter pw = response.getWriter();
-//        pw.println(Messages.definedWordAs(word, definition));
-//        pw.flush();
-//
-//        response.setStatus( HttpServletResponse.SC_OK);
+//    String customer = getParameter(CUSTOMER_PARAMETER, request );
+//    if (customer == null) {
+//        missingRequiredParameter(response, CUSTOMER_PARAMETER);
+//        return;
 //    }
-
-
-//    ^^^^^^^^^^^^^^^ORIGINAL ABOVE^^^^^^^^^^^^^^^^^^^^
-@Override
-protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws IOException
-{
-    response.setContentType( "text/plain" );
-
-    String customer = getParameter(CUSTOMER_PARAMETER, request );
-    if (customer == null) {
-        missingRequiredParameter(response, CUSTOMER_PARAMETER);
-        return;
-    }
-
-    String caller = getParameter(CALLER_PARAMETER, request );
-    if (caller == null) {
-        missingRequiredParameter(response, CALLER_PARAMETER);
-        return;
-    }
-
-    String callee = getParameter(CALLEE_PARAMETER, request );
-    if (callee == null) {
-        missingRequiredParameter(response, CALLEE_PARAMETER);
-        return;
-    }
-
-    String beginDate = getParameter(BEGIN_DATE_PARAMETER, request );
-    if (beginDate == null) {
-        missingRequiredParameter(response, BEGIN_DATE_PARAMETER);
-        return;
-    }
-
-    String endDate = getParameter(END_DATE_PARAMETER, request );
-    if (endDate == null) {
-        missingRequiredParameter(response, END_DATE_PARAMETER);
-        return;
-    }
-
-    this.dictionary.put(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate));
-
-    PrintWriter pw = response.getWriter();
-    pw.println(Messages.displayPhoneCallAs(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate)));
-    pw.flush();
-
-    response.setStatus( HttpServletResponse.SC_OK);
-}
+//
+//    String caller = getParameter(CALLER_PARAMETER, request );
+//    if (caller == null) {
+//        missingRequiredParameter(response, CALLER_PARAMETER);
+//        return;
+//    }
+//
+//    String callee = getParameter(CALLEE_PARAMETER, request );
+//    if (callee == null) {
+//        missingRequiredParameter(response, CALLEE_PARAMETER);
+//        return;
+//    }
+//
+//    String beginDate = getParameter(BEGIN_DATE_PARAMETER, request );
+//    if (beginDate == null) {
+//        missingRequiredParameter(response, BEGIN_DATE_PARAMETER);
+//        return;
+//    }
+//
+//    String endDate = getParameter(END_DATE_PARAMETER, request );
+//    if (endDate == null) {
+//        missingRequiredParameter(response, END_DATE_PARAMETER);
+//        return;
+//    }
+//
+//    this.dictionary.put(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate));
+//
+//    PrintWriter pw = response.getWriter();
+//    pw.println(Messages.displayPhoneCallAs(customer, (caller +" "+ callee +" "+ beginDate +" "+ endDate)));
+//    pw.flush();
+//
+//    response.setStatus( HttpServletResponse.SC_OK);
+//}
 
     /**
      * Handles an HTTP DELETE request by removing all dictionary entries.  This
@@ -191,7 +205,7 @@ protected void doPost( HttpServletRequest request, HttpServletResponse response 
      * The text of the message is formatted with {@link TextDumper}
      */
     private void writePhoneCall(String customer, HttpServletResponse response) throws IOException {
-        String phoneCall= this.dictionary.get(customer);
+        String phoneCall= this.dictionary.get(customer).getPhoneCalls().toString();
 
         if (phoneCall == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -199,7 +213,7 @@ protected void doPost( HttpServletRequest request, HttpServletResponse response 
         } else {
             PrintWriter pw = response.getWriter();
 
-            Map<String, String> wordDefinition = Map.of(customer, phoneCall);
+            Map<String, PhoneBill> wordDefinition = Map.of(customer, this.dictionary.get(customer));
             TextDumper dumper = new TextDumper(pw);
             dumper.dump(wordDefinition);
 
@@ -237,9 +251,10 @@ protected void doPost( HttpServletRequest request, HttpServletResponse response 
       }
     }
 
-    @VisibleForTesting
-    String getDefinition(String word) {
-        return this.dictionary.get(word);
-    }
+//
+//    @VisibleForTesting
+//    String getDefinition(String word) {
+//        return this.dictionary.get(word);
+//    }
 
 }
