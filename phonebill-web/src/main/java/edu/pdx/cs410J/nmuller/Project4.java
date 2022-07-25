@@ -4,7 +4,6 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.*;
-import java.util.Map;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -119,15 +118,19 @@ public class Project4 {
                     }
 
                     PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
-//                    Writer newWrite = new PrintWriter()
-//                    PrettyPrinter prettyPrinter = new PrettyPrinter()
-                    System.out.println(client.getLastCall(customer));
-//                    try {
-//                        Map<String, PhoneBill> displayPhoneCallsFromBill = client.getPhoneBillEntries();
-//                        displayPhoneCallsFromBill.get(customer).getPhoneCalls();
-//                    } catch (ParserException | IOException e) {
-//                        e.printStackTrace();
-//                    }
+
+                    try {
+                        //PRETTY PRINTER
+                        Writer tempWriter = new OutputStreamWriter(System.out);
+                        PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
+                        try {
+                            prettyPrinter.dump(client.getCustomerBill(customer));
+                        } catch (IOException e) {
+                                e.printStackTrace();
+                        }
+                    }catch(NullPointerException e) {
+                        System.err.println("Invalid customer, does not exist");
+                    }
 
                     //get the phonebill data for the given customer and pretty print to stdout
 

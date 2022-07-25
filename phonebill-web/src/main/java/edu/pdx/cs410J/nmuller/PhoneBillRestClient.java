@@ -53,15 +53,16 @@ public class PhoneBillRestClient {
   /**
    * Returns the call for the given customer
    */
-  public String getLastCall(String customer) throws IOException, ParserException {
+  public Map<String, PhoneBill> getCustomerBill(String customer) throws IOException, ParserException {
     Response response = http.get(Map.of("customer", customer));
     //System.out.println(response.getContent());
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(customer).getPhoneCalls().toString();
-    //return parser.parse().toString();
+
+    return parser.parse();
+
   }
 
 

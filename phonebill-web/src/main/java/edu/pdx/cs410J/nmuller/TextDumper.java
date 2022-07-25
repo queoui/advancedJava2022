@@ -1,5 +1,7 @@
 package edu.pdx.cs410J.nmuller;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -18,14 +20,16 @@ public class TextDumper {
     ){
 
      for (Map.Entry<String, PhoneBill> entry : dictionary.entrySet()) {
-         if(entry.getKey() != null) {
+         if (entry.getKey() != null) {
              //ArrayList<PhoneCall> thisBill = entry.getValue().billOfCalls;
              pw.println(entry.getKey());
              for (PhoneCall call : entry.getValue().billOfCalls)
                  pw.println(call.getPhoneCall());
-         }
-      }
 
+
+
+         }
+     }
       pw.flush();
     }
 
