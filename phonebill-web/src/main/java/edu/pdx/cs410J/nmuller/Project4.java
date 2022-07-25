@@ -121,10 +121,10 @@ public class Project4 {
                     PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 //                    Writer newWrite = new PrintWriter()
 //                    PrettyPrinter prettyPrinter = new PrettyPrinter()
-                    //System.out.println( client.getLastCall(customer));
+                    System.out.println(client.getLastCall(customer));
 //                    try {
 //                        Map<String, PhoneBill> displayPhoneCallsFromBill = client.getPhoneBillEntries();
-//                        displayPhoneCallsFromBill.get(customer).getPhoneCalls().toString();
+//                        displayPhoneCallsFromBill.get(customer).getPhoneCalls();
 //                    } catch (ParserException | IOException e) {
 //                        e.printStackTrace();
 //                    }

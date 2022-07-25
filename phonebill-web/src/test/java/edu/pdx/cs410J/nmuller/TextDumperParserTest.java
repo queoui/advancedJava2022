@@ -13,23 +13,23 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TextDumperParserTest {
 
-//  @Test
-//  void emptyMapCanBeDumpedAndParsed() throws ParserException {
-//    Map<String, PhoneBill> map = Collections.emptyMap();
-//    Map<String, PhoneBill> read = dumpAndParse(map);
-//    assertThat(read, equalTo(map));
-//  }
-//
-//  private Map<String, PhoneBill> dumpAndParse(Map<String, PhoneBill> map) throws ParserException {
-//    StringWriter sw = new StringWriter();
-//    TextDumper dumper = new TextDumper(sw);
-//    dumper.dump(map);
-//
-//    String text = sw.toString();
-//
-//    TextParser parser = new TextParser(new StringReader(text));
-//    return parser.parse();
-//  }
+  @Test
+  void emptyMapCanBeDumpedAndParsed() throws ParserException {
+    Map<String, PhoneBill> map = Collections.emptyMap();
+    Map<String, PhoneBill> read = dumpAndParse(map);
+    assertThat(read, equalTo(map));
+  }
+
+  private Map<String, PhoneBill> dumpAndParse(Map<String, PhoneBill> map) throws ParserException {
+    StringWriter sw = new StringWriter();
+    TextDumper dumper = new TextDumper(sw);
+    dumper.dump(map);
+
+    String text = sw.toString();
+
+    TextParser parser = new TextParser(new StringReader(text));
+    return parser.parse();
+  }
 
 //  @Test
 //  void dumpedTextCanBeParsed() throws ParserException {

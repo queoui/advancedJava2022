@@ -52,7 +52,7 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
    * returns the entire bill with all phone calls
    */
   @Override
-  public Collection<PhoneCall> getPhoneCalls() {return this.billOfCalls;}
+  public ArrayList<PhoneCall> getPhoneCalls() {return this.billOfCalls;}
 
   /**
    * sorting function for this current bill. sorts by begin time.
@@ -62,3 +62,5 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
   }
 
 }
+
+

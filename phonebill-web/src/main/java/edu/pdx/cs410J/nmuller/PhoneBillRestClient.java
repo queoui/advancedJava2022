@@ -55,17 +55,19 @@ public class PhoneBillRestClient {
    */
   public String getLastCall(String customer) throws IOException, ParserException {
     Response response = http.get(Map.of("customer", customer));
+    //System.out.println(response.getContent());
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(customer).getPhoneCalls().toString();
+    //return parser.parse().get(customer).getPhoneCalls().toString();
+    return parser.parse().toString();
   }
 
 
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
         Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
-                                              "beginDate", beginDate, "endDate",endDate));
+                                              "begin", beginDate, "end",endDate));
         throwExceptionIfNotOkayHttpStatus(response);
     }
 

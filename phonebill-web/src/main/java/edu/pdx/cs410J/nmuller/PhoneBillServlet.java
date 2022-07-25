@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,8 @@ public class PhoneBillServlet extends HttpServlet
 {
     static String CALLER_PARAMETER = "caller";
     static String CALLEE_PARAMETER = "callee";
-    static String BEGIN_DATE_PARAMETER = "beginDate";
-    static String END_DATE_PARAMETER = "endDate";
+    static String BEGIN_DATE_PARAMETER = "begin";
+    static String END_DATE_PARAMETER = "end";
 
 
     static final String CUSTOMER_PARAMETER = "customer";
@@ -62,6 +63,7 @@ public class PhoneBillServlet extends HttpServlet
         response.setContentType( "text/plain" );
 
         String customer = getParameter(CUSTOMER_PARAMETER, request);
+        //System.out.println(customer);
         if (customer != null) {
             writePhoneCall(customer, response);
 
@@ -204,7 +206,8 @@ public class PhoneBillServlet extends HttpServlet
      * The text of the message is formatted with {@link TextDumper}
      */
     private void writePhoneCall(String customer, HttpServletResponse response) throws IOException {
-        String phoneCall= this.dictionary.get(customer).getPhoneCalls().toString();
+        ArrayList<PhoneCall> phoneCall = this.dictionary.get(CUSTOMER_PARAMETER).getPhoneCalls();
+
 
         if (phoneCall == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -212,7 +215,8 @@ public class PhoneBillServlet extends HttpServlet
         } else {
             PrintWriter pw = response.getWriter();
 
-            Map<String, PhoneBill> wordDefinition = Map.of(customer, this.dictionary.get(customer));
+
+            Map<String, PhoneBill> wordDefinition = Map.of(customer, this.dictionary.get(CUSTOMER_PARAMETER));
             TextDumper dumper = new TextDumper(pw);
             dumper.dump(wordDefinition);
 
