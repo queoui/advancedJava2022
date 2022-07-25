@@ -14,7 +14,7 @@ public class Project4 {
 
     public static final String MISSING_ARGS = "Missing command line arguments";
 
-    public static void main(String... args) {
+    public static void main(String... args) throws ParserException, IOException {
         String hostName = null;
         String portString = null;
         boolean search = false;
@@ -108,6 +108,7 @@ public class Project4 {
                     //get the data between the date times and pretty print to stdout
 
 
+                    // DISPLAY ALL IN A RANGE //
                 } else if ((args.length == 5)) {
                     for (int i = optionsTotal; i < args.length; ++i) {
                         if (customer == null) {
@@ -116,6 +117,15 @@ public class Project4 {
                             usage("Extraneous command line argument: " + args[i]);
                         }
                     }
+
+                    PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+                    client.getLastCall(customer);
+//                    try {
+//                        Map<String, PhoneBill> displayPhoneCallsFromBill = client.getPhoneBillEntries();
+//                        displayPhoneCallsFromBill.get(customer).getPhoneCalls().toString();
+//                    } catch (ParserException | IOException e) {
+//                        e.printStackTrace();
+//                    }
 
                     //get the phonebill data for the given customer and pretty print to stdout
 
@@ -169,29 +179,30 @@ public class Project4 {
                     try{
 
 
-                        //newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+                        newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
 
 
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
 
                                         //*******change this error *********************//
-                    }catch( IOException e){System.err.println("Unable to add phone call to bill" + e);}
-
-
+                    }catch(ErrorCheck.MissingCommandLineArguments | IOException e){System.err.println("Unable to add phone call to bill" + e);}
+                    }
 
 
                     if (print) {
-
                         //print the new phone call data to stdout
-                        System.out.println(Messages.displayPhoneCallAs(customer, newCall.toString()));
+                        if (newCall != null) {
+                            System.out.println(Messages.displayPhoneCallAs(customer, newCall.toString()));
+                        }
+                    }
 
                     }
                 }
-            }
 
-        PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
-    }
+
+       // PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+
 
     /**
      * Makes sure that the give response has the expected HTTP status code

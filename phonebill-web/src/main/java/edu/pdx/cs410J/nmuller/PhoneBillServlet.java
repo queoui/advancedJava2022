@@ -80,13 +80,13 @@ public class PhoneBillServlet extends HttpServlet
         response.setContentType( "text/plain" );
         if(this.dictionary.containsKey(CUSTOMER_PARAMETER)){
             try {
-                this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(CALLER_PARAMETER, CALLEE_PARAMETER, BEGIN_DATE_PARAMETER, END_DATE_PARAMETER));
+                this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(getParameter(CALLER_PARAMETER, request), getParameter(CALLEE_PARAMETER, request), getParameter(BEGIN_DATE_PARAMETER, request), getParameter(END_DATE_PARAMETER, request)));
             }catch (ErrorCheck.MissingCommandLineArguments e){}
         } else {
             this.dictionary.put(CUSTOMER_PARAMETER, new
                     PhoneBill(CUSTOMER_PARAMETER));
             try{
-            this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(CALLER_PARAMETER, CALLEE_PARAMETER, BEGIN_DATE_PARAMETER, END_DATE_PARAMETER));
+                this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(getParameter(CALLER_PARAMETER, request), getParameter(CALLEE_PARAMETER, request), getParameter(BEGIN_DATE_PARAMETER, request), getParameter(END_DATE_PARAMETER, request)));
             }catch (ErrorCheck.MissingCommandLineArguments e){}
         }
 

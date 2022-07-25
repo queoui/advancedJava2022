@@ -43,7 +43,7 @@ public class PhoneBillRestClient {
   /**
    * Returns all dictionary entries from the server
    */
-  public Map<String, PhoneBill> getAllDictionaryEntries() throws IOException, ParserException {
+  public Map<String, PhoneBill> getPhoneBillEntries() throws IOException, ParserException {
     Response response = http.get(Map.of());
 
     TextParser parser = new TextParser(new StringReader(response.getContent()));

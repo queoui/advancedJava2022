@@ -133,7 +133,7 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
   @VisibleForTesting
   static PhoneCall createNewCall(String caller, String callee, String callBegin, String callEnd) throws ErrorCheck.MissingCommandLineArguments {
 
-      SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mma", Locale.US);
+      SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
       Date begin = new Date();
       Date end = new Date();
       try {
