@@ -66,7 +66,6 @@ public class PhoneBillRestClient {
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
         Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
                                               "beginDate", beginDate, "endDate",endDate));
-//              Response response = http.post(Map.of("phoneBill", customer, "phoneCall", newCall.toString()));
         throwExceptionIfNotOkayHttpStatus(response);
     }
 

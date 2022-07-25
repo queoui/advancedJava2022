@@ -32,16 +32,16 @@ public class PrettyPrinter {
     this.writer = writer;
   }
 
-  public void dump(Map<String, String> dictionary) {
+  public void dump(Map<String, PhoneBill> dictionary) {
     try (
       PrintWriter pw = new PrintWriter(this.writer)
     ) {
 
       //pw.println(formatWordCount(dictionary.size()));
 
-      for (Map.Entry<String, String> entry : dictionary.entrySet()) {
+      for (Map.Entry<String, PhoneBill> entry : dictionary.entrySet()) {
         String customer = entry.getKey();
-        String phoneCall = entry.getValue();
+        String phoneCall = entry.getValue().toString();
         pw.println(formatPhoneCallEntry(customer, phoneCall));
       }
 

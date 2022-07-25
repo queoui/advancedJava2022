@@ -1,13 +1,10 @@
 package edu.pdx.cs410J.nmuller;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,6 +78,8 @@ public class PhoneBillServlet extends HttpServlet
         if(this.dictionary.containsKey(CUSTOMER_PARAMETER)){
             try {
                 this.dictionary.get(CUSTOMER_PARAMETER).addPhoneCall(PhoneCall.createNewCall(getParameter(CALLER_PARAMETER, request), getParameter(CALLEE_PARAMETER, request), getParameter(BEGIN_DATE_PARAMETER, request), getParameter(END_DATE_PARAMETER, request)));
+//                String putCalls = this.dictionary.get(CUSTOMER_PARAMETER).toString();
+//                this.dictionary.put(putCalls);
             }catch (ErrorCheck.MissingCommandLineArguments e){}
         } else {
             this.dictionary.put(CUSTOMER_PARAMETER, new
