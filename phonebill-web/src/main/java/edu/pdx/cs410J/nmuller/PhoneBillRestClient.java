@@ -60,8 +60,8 @@ public class PhoneBillRestClient {
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    //return parser.parse().get(customer).getPhoneCalls().toString();
-    return parser.parse().toString();
+    return parser.parse().get(customer).getPhoneCalls().toString();
+    //return parser.parse().toString();
   }
 
 

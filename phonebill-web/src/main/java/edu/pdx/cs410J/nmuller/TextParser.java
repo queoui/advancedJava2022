@@ -54,7 +54,7 @@ public class TextParser {
           String beginString = words[7] + " " + words2[0]  + words2[1];
           String endString = words2[3] + " " + words3[0]  + words3[1];
 
-          System.out.println(caller + " * " + callee + " * " + beginString + " * " + endString);
+          //System.out.println(caller + " * " + callee + " * " + beginString + " * " + endString);
 
           DateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US) {
           };
