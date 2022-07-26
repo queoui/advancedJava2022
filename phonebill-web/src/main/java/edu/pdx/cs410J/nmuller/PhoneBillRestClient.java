@@ -66,6 +66,22 @@ public class PhoneBillRestClient {
   }
 
 
+  /**
+   * Returns the call for the given customer
+   */
+  public Map<String, PhoneBill> getCustomerParams(String customer, String begin, String end) throws IOException, ParserException {
+    Response response = http.get(Map.of("customer", customer, "begin", begin, "end", end));
+    //System.out.println(response.getContent());
+    throwExceptionIfNotOkayHttpStatus(response);
+    String content = response.getContent();
+
+    TextParser parser = new TextParser(new StringReader(content));
+
+    return parser.parse();
+
+  }
+
+
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
         Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
                                               "begin", beginDate, "end",endDate));

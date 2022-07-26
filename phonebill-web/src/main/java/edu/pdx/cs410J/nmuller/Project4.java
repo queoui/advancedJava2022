@@ -4,6 +4,7 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.*;
+import java.util.Map;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -105,9 +106,26 @@ public class Project4 {
                     }
 
                     //get the data between the date times and pretty print to stdout
+                    PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+
+                    try {
+                        //PRETTY PRINTER
+                        Writer tempWriter = new OutputStreamWriter(System.out);
+                        PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
+                        try {
+                            Map<String, PhoneBill> prettyMap = (client.getCustomerParams(customer, beginTime, endTime));
+                            prettyPrinter.dump(prettyMap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }catch(NullPointerException e) {
+                        System.err.println("Invalid customer, does not exist");
+                    }
 
 
                     // DISPLAY ALL IN A RANGE //
+
+
                 } else if ((args.length == 5)) {
                     for (int i = optionsTotal; i < args.length; ++i) {
                         if (customer == null) {
@@ -124,7 +142,8 @@ public class Project4 {
                         Writer tempWriter = new OutputStreamWriter(System.out);
                         PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
                         try {
-                            prettyPrinter.dump(client.getCustomerBill(customer));
+                           Map<String, PhoneBill> prettyMap = (client.getCustomerBill(customer));
+                           prettyPrinter.dump(prettyMap);
                         } catch (IOException e) {
                                 e.printStackTrace();
                         }
@@ -183,14 +202,9 @@ public class Project4 {
                     }
                     try{
 
-
                         newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
-
-
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
-
-                                        //*******change this error *********************//
                     }catch(ErrorCheck.MissingCommandLineArguments | IOException e){System.err.println("Unable to add phone call to bill" + e);}
                     }
 

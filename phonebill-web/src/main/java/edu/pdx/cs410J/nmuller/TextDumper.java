@@ -25,9 +25,6 @@ public class TextDumper {
              pw.println(entry.getKey());
              for (PhoneCall call : entry.getValue().billOfCalls)
                  pw.println(call.getPhoneCall());
-
-
-
          }
      }
       pw.flush();

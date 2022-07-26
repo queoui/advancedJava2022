@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -40,10 +39,20 @@ public class PhoneBillServlet extends HttpServlet
         response.setContentType( "text/plain" );
 
         String customer = getParameter(CUSTOMER_PARAMETER, request);
-        //System.out.println(customer);
-        if (customer != null) {
+        String beginString = getParameter(BEGIN_DATE_PARAMETER, request);
+        String endString = getParameter(END_DATE_PARAMETER, request);
+        if(beginString != null && endString != null && customer != null){
+            try {
+                writePhoneCallParams(customer, beginString, endString, response);
+            } catch (ErrorCheck.MissingCommandLineArguments e) {
+                e.printStackTrace();
+            }
+        }
+
+        else if (customer != null) {
             if(dictionary.containsKey(customer))
-                 writePhoneCall(customer, response);
+
+                writePhoneCall(customer, response);
             else
                 try {
                     throw new ErrorCheck.MissingCommandLineArguments("" +
@@ -51,7 +60,6 @@ public class PhoneBillServlet extends HttpServlet
                 } catch (ErrorCheck.MissingCommandLineArguments e) {
                     e.printStackTrace();
                 }
-
         } else {
             writeAllDictionaryEntries(response);
         }
@@ -137,6 +145,54 @@ public class PhoneBillServlet extends HttpServlet
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
+
+
+    /**
+     * Writes the definition of the given word to the HTTP response with date/time params
+     *
+     * The text of the message is formatted with {@link TextDumper}
+     */
+    private void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
+        ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
+        if (phoneCall == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }else{
+            SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
+            Date begin = new Date();
+            Date end = new Date();
+            try {
+                begin = formatter.parse(beginDate);
+                end = formatter.parse(endDate);
+            }catch(Exception errParse){
+                System.err.println("Unknown Date Format " + errParse);
+            }
+            if(!ErrorCheck.checkTimeTravel(begin, end)) {
+                throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
+            }
+                PrintWriter pw = response.getWriter();
+                PhoneBill newBill = new PhoneBill(customer);
+            for(PhoneCall oneCall : phoneCall) {
+                if (oneCall.getBeginTime().compareTo(begin) <= 0 && oneCall.getEndTime().compareTo(end) >= 0) {
+                    newBill.addPhoneCall(oneCall);
+                }
+            }
+
+                Map<String, PhoneBill> phoneParams = Map.of(customer, newBill);
+
+                TextDumper dumper = new TextDumper(pw);
+                dumper.dump(phoneParams);
+
+                response.setStatus(HttpServletResponse.SC_OK);
+        }
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Writes all of the dictionary entries to the HTTP response.

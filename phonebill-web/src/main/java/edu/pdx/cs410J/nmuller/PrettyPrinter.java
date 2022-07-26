@@ -55,7 +55,7 @@ public class PrettyPrinter {
                 throw new IOException("Time travel has been detected. enter accurate time.");
           pw.println("Phone call duration of " + (duration.toMinutes() / 60000) +" minutes" +  " between " + call.getCaller() + " and " + call.getCallee()
                   + " beginning at "+ call.getBeginTimeString()+ " and ending at "+ call.getEndTimeString());
-          pw.println(call.getPhoneCall());
+          //pw.println(call.getPhoneCall());
       }
     }
     }
