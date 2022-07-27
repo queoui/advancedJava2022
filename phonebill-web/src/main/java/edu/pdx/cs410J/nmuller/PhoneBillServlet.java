@@ -187,13 +187,6 @@ public class PhoneBillServlet extends HttpServlet
     }
 
 
-
-
-
-
-
-
-
     /**
      * Writes all of the dictionary entries to the HTTP response.
      *
@@ -214,7 +207,7 @@ public class PhoneBillServlet extends HttpServlet
      * @return <code>null</code> if the value of the parameter is
      *         <code>null</code> or is the empty string
      */
-    private String getParameter(String name, HttpServletRequest request) {
+    public String getParameter(String name, HttpServletRequest request) {
       String value = request.getParameter(name);
       if (value == null || "".equals(value)) {
         return null;

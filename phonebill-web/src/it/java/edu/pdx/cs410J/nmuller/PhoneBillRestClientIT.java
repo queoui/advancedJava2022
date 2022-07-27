@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
+import java.nio.CharBuffer;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,17 +42,33 @@ class PhoneBillRestClientIT {
     assertThat(dictionary.size(), equalTo(0));
   }
 
-//  @Test
-//  void test2DefineOneWord() throws IOException, ParserException {
-//    PhoneBillRestClient client = newPhoneBillRestClient();
-//    String testWord = "TEST WORD";
-//    String testDefinition = "TEST DEFINITION";
-//    client.addDictionaryEntry(testWord, testDefinition);
-//
-//    String definition = client.getDefinition(testWord);
-//    assertThat(definition, equalTo(testDefinition));
-//  }
+  @Test
+  void test2RecievePhoneBill() throws IOException, ParserException {
 
+
+
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    String customer = "customer";
+    String caller = "425-741-1269";
+    String callee = "425-239-9870";
+    String beginTime = "05/24/2022 11:50am";
+    String endTime = "05/24/2022 12:00pm";
+    PhoneCall newCall = null;
+    PhoneBill newBill = new PhoneBill(customer);
+    try {
+      newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+
+      newBill.addPhoneCall(newCall);
+    } catch (ErrorCheck.MissingCommandLineArguments e) {
+      e.printStackTrace();
+    }
+
+    client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
+    String response =  client.getCustomerBill(customer).toString();
+
+    assertThat(response, equalTo(client.getCustomerBill(customer).toString()));
+  }
+//
 //  @Test
 //  void test4EmptyWordThrowsException() {
 //    PhoneBillRestClient client = newPhoneBillRestClient();

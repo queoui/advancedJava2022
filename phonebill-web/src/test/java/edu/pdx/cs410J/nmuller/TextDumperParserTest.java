@@ -31,10 +31,20 @@ public class TextDumperParserTest {
     return parser.parse();
   }
 
-//  @Test
-//  void dumpedTextCanBeParsed() throws ParserException {
-//    Map<String, PhoneBill> map = Map.of("one", "1", "two", "2");
-//    Map<String, PhoneBill> read = dumpAndParse(map);
-//    assertThat(read, equalTo(map));
-//  }
+  @Test
+  void dumpedTextCanBeParsed() throws ParserException {
+    PhoneBill newBill = new PhoneBill("customer");
+    try {
+      PhoneCall newCall = PhoneCall.createNewCall("425-239-9870", "425-741-1269",
+              "05/24/2022 11:50am", "05/24/2022 11:55am");
+      newBill.addPhoneCall(newCall);
+    } catch (ErrorCheck.MissingCommandLineArguments e) {
+      e.printStackTrace();
+    }
+
+    Map<String, PhoneBill> map = Map.of("customer", newBill);
+    Map<String, PhoneBill> read = dumpAndParse(map);
+
+    assertThat(read.toString(), equalTo(map.toString()));
+  }
 }
