@@ -73,7 +73,7 @@ public class TextParser {
         }
 
         map.put(customer, newBill);
-        System.out.println(map);
+        //System.out.println(map);
       }
       } catch(IOException e){
         throw new ParserException("While parsing dictionary", e);

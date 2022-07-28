@@ -23,8 +23,10 @@ public class TextDumper {
          if (entry.getKey() != null) {
              //ArrayList<PhoneCall> thisBill = entry.getValue().billOfCalls;
              pw.println(entry.getKey());
+
              for (PhoneCall call : entry.getValue().billOfCalls)
                  pw.println(call.getPhoneCall());
+
          }
      }
       pw.flush();

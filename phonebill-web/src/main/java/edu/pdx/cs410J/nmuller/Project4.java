@@ -114,6 +114,9 @@ public class Project4 {
                         PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
                         try {
                             Map<String, PhoneBill> prettyMap = (client.getCustomerParams(customer, beginTime, endTime));
+                            if (prettyMap.values().size() == 0){
+                                System.out.println("No matches for that date/time range");
+                            }
                             prettyPrinter.dump(prettyMap);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -264,17 +267,31 @@ public class Project4 {
         PrintStream err = System.err;
         err.println("** " + message);
         err.println();
-        err.println("usage: java Project4 host port [word] [definition]");
-        err.println("  host         Host of web server");
-        err.println("  port         Port of web server");
-        err.println("  word         Word in dictionary");
-        err.println("  definition   Definition of word");
+        err.println("usage: java Project4 [options] <args>");
+        err.println("  args are in this order:");
         err.println();
-        err.println("This simple program posts words and their definitions");
-        err.println("to the server.");
-        err.println("If no definition is specified, then the word's definition");
-        err.println("is printed.");
-        err.println("If no word is specified, all dictionary entries are printed");
+        err.println("  customer             Owner of the phone bill");
+        err.println("  callerNumber         Owner's phone number");
+        err.println("  callerNumber         Phone call recipient number");
+        err.println("  begin                Call begin time MM/DD/YYYY HH:MM am/pm");
+        err.println("  end                  Call end time MM/DD/YYYY HH:MM am/pm");
+        err.println();
+        err.println("   options are (any order): ");
+        err.println("   -host hostname      Host computer on which the server runs");
+        err.println("   -port portnumber    Port on which the server is listening");
+        err.println("   -search             Phone calls should be searched for");
+        err.println("   -print              Prints description of the new phone call");
+        err.println("   -README             Print README and exits");
+        err.println();
+        err.println("Phone bill application keeps track of phone calls for various customers.");
+        err.println("Phone bills are stored on a server for future use");
+        err.println("Host and Port are mandatory options.");
+        err.println("If -search and customer name provided, displays all calls for that customer");
+        err.println("If -search, customer, and begin/end times provided, will display within the calls\n" +
+                        "within the given parameters");
+        err.println("If all arguments are provided a new call will be added to the customers bill, if\n" +
+                "the bill does not exist a new one will be created");
+        err.println("Add -print to the add phone call method above to display the newly added phone call");
         err.println();
     }
 }

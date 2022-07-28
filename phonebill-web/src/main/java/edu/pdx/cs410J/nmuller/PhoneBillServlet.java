@@ -154,7 +154,7 @@ public class PhoneBillServlet extends HttpServlet
      */
     protected void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
 
-//        try {
+
             ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
 
         if (phoneCall == null) {
@@ -179,6 +179,10 @@ public class PhoneBillServlet extends HttpServlet
                     newBill.addPhoneCall(oneCall);
                 }
             }
+//            if (newBill.getPhoneCalls().size() == 0){
+//                throw new IOException("No phone calls in that given date/time range");
+//            }
+
 
                 Map<String, PhoneBill> phoneParams = Map.of(customer, newBill);
 
@@ -186,9 +190,10 @@ public class PhoneBillServlet extends HttpServlet
                 TextDumper dumper = new TextDumper(pw);
                 dumper.dump(phoneParams);
 
+
                 response.setStatus(HttpServletResponse.SC_OK);
         }
-//        }catch(NullPointerException e){System.err.println("One of the parameters is empty");}
+
     }
 
     /**
