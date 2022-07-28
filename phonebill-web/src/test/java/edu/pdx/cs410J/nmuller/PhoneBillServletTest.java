@@ -82,20 +82,5 @@ class PhoneBillServletTest {
     assertThat(servlet.getParameter("customer", request), equalTo(newBill.toString()));
   }
 
-  @Test
-  void testPhoneCallParams() throws ServletException, IOException, ParserException, ErrorCheck.MissingCommandLineArguments {
 
-    PhoneBillServlet servlet = new PhoneBillServlet();
-
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
-    PrintWriter pw = mock(PrintWriter.class);
-
-    servlet.writePhoneCallParams(" ", " ", " ", response);
-
-    assertThat(response.getStatus(), equalTo(0));
-
-
-
-  }
 }

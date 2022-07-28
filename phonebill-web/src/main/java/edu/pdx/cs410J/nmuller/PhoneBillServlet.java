@@ -154,7 +154,7 @@ public class PhoneBillServlet extends HttpServlet
      */
     protected void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
 
-        try {
+//        try {
             ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
 
         if (phoneCall == null) {
@@ -188,7 +188,7 @@ public class PhoneBillServlet extends HttpServlet
 
                 response.setStatus(HttpServletResponse.SC_OK);
         }
-        }catch(NullPointerException e){System.err.println("One of the parameters is empty");}
+//        }catch(NullPointerException e){System.err.println("One of the parameters is empty");}
     }
 
     /**

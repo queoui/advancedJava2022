@@ -22,6 +22,7 @@ import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.MethodOrderer.MethodName;
 import static org.mockito.Mockito.mock;
 
@@ -142,6 +143,24 @@ class Project4IT extends InvokeMainTestCase {
                 ("Phone call duration of 10 minutes between 425-741-1269 and 425-239-9870 beginning at 5/24/22, 11:50 AM and ending at 5/24/22, 12:00 PM"));
 
     }
-
-
+//    @Test
+//    void testPhoneCallParams() throws ServletException, IOException, ParserException, ErrorCheck.MissingCommandLineArguments {
+//
+//        String customer = "customer2";
+//        String host = "localhost";
+//        String port = "8080";
+//        invokeMain( Project4.class, "-host", host, "-port", port, customer,"425-741-1269",
+//                "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
+//
+//
+//        PhoneBillServlet servlet = new PhoneBillServlet();
+//
+//        HttpServletRequest request = mock(HttpServletRequest.class);
+//        HttpServletResponse response = mock(HttpServletResponse.class);
+//        PrintWriter pw = mock(PrintWriter.class);
+//
+//        servlet.writePhoneCallParams("customer2", "05/23/2022 11:00pm", "05/24/2022 11:00pm", response);
+//
+//        assertThat(response.getStatus(), equalTo(0));
+//    }
 }
