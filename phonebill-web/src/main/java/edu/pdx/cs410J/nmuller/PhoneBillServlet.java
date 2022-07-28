@@ -111,18 +111,6 @@ public class PhoneBillServlet extends HttpServlet
     }
 
     /**
-     * Writes an error message about a missing parameter to the HTTP response.
-     *
-     * The text of the error message is created by {@link Messages#missingRequiredParameter(String)}
-     */
-    private void missingRequiredParameter( HttpServletResponse response, String parameterName )
-        throws IOException
-    {
-        String message = Messages.missingRequiredParameter(parameterName);
-        response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
-    }
-
-    /**
      * Writes the definition of the given word to the HTTP response.
      *
      * The text of the message is formatted with {@link TextDumper}
@@ -154,35 +142,31 @@ public class PhoneBillServlet extends HttpServlet
      */
     protected void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
 
-
+        if(this.dictionary.get(customer) != null) {
             ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
 
-        if (phoneCall == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }else{
-            SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
-            Date begin = new Date();
-            Date end = new Date();
-            try {
-                begin = formatter.parse(beginDate);
-                end = formatter.parse(endDate);
-            }catch(Exception errParse){
-                System.err.println("Unknown Date Format " + errParse);
-            }
-            if(!ErrorCheck.checkTimeTravel(begin, end)) {
-                throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
-            }
+            if (phoneCall == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
+                Date begin = new Date();
+                Date end = new Date();
+                try {
+                    begin = formatter.parse(beginDate);
+                    end = formatter.parse(endDate);
+                } catch (Exception errParse) {
+                    System.err.println("Unknown Date Format " + errParse);
+                }
+                if (!ErrorCheck.checkTimeTravel(begin, end)) {
+                    throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
+                }
                 PrintWriter pw = response.getWriter();
                 PhoneBill newBill = new PhoneBill(customer);
-            for(PhoneCall oneCall : phoneCall) {
-                if (oneCall.getBeginTime().compareTo(begin) >= 0 && oneCall.getBeginTime().compareTo(end) <= 0) {
-                    newBill.addPhoneCall(oneCall);
+                for (PhoneCall oneCall : phoneCall) {
+                    if (oneCall.getBeginTime().compareTo(begin) >= 0 && oneCall.getBeginTime().compareTo(end) <= 0) {
+                        newBill.addPhoneCall(oneCall);
+                    }
                 }
-            }
-//            if (newBill.getPhoneCalls().size() == 0){
-//                throw new IOException("No phone calls in that given date/time range");
-//            }
-
 
                 Map<String, PhoneBill> phoneParams = Map.of(customer, newBill);
 
@@ -192,8 +176,8 @@ public class PhoneBillServlet extends HttpServlet
 
 
                 response.setStatus(HttpServletResponse.SC_OK);
+            }
         }
-
     }
 
     /**

@@ -8,23 +8,11 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.io.TempDir;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.MethodOrderer.MethodName;
-import static org.mockito.Mockito.mock;
+
 
 /**
  * Tests the {@link Project4} class by invoking its main method with various arguments
@@ -143,24 +131,99 @@ class Project4IT extends InvokeMainTestCase {
                 ("Phone call duration of 10 minutes between 425-741-1269 and 425-239-9870 beginning at 5/24/22, 11:50 AM and ending at 5/24/22, 12:00 PM"));
 
     }
-//    @Test
-//    void testPhoneCallParams() throws ServletException, IOException, ParserException, ErrorCheck.MissingCommandLineArguments {
-//
-//        String customer = "customer2";
-//        String host = "localhost";
-//        String port = "8080";
-//        invokeMain( Project4.class, "-host", host, "-port", port, customer,"425-741-1269",
-//                "425-239-9870", "05/24/2022", "11:50" ,"am", "05/24/2022" ,"12:00" , "pm");
-//
-//
-//        PhoneBillServlet servlet = new PhoneBillServlet();
-//
-//        HttpServletRequest request = mock(HttpServletRequest.class);
-//        HttpServletResponse response = mock(HttpServletResponse.class);
-//        PrintWriter pw = mock(PrintWriter.class);
-//
-//        servlet.writePhoneCallParams("customer2", "05/23/2022 11:00pm", "05/24/2022 11:00pm", response);
-//
-//        assertThat(response.getStatus(), equalTo(0));
-//    }
+
+
+
+
+
+
+
+    //____________________________________________________________________________________________//
+    /**
+
+
+    /**
+     * Tests that invoking the main method with no arguments issues an error
+     */
+
+    @Test
+    void testNoCommandLineArguments() {
+        MainMethodResult result = invokeMain(Project4.class);
+        assertThat(result.getTextWrittenToStandardError(),
+                CoreMatchers.containsString("usage: java Project4 [options] <args>"));
+    }
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void testAccurateCommandLineWithPrint() {
+        String host = "localhost";
+        String port = "8080";
+        MainMethodResult result = invokeMain(Project4.class,"-host", host, "-port", port,"-print", "Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
+        assertThat(result.getTextWrittenToStandardOut(),
+                CoreMatchers.containsString("Phone call from 425-555-5555 to 206-555-5555 from 5/24/22, 12:50 PM to 5/24/22, 1:00 PM"));
+    }
+
+
+
+    /**
+     * Tests inaccurate phone number argument
+     */
+    @Test
+    void testInaccuratePhoneNumber() {
+        String host = "localhost";
+        String port = "8080";
+        MainMethodResult result = invokeMain(Project4.class,"-host", host, "-port", port,"-print", "Nick Muller", "425-555-55", "206-555-5555",
+                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
+        assertThat(result.getTextWrittenToStandardError(),
+                CoreMatchers.containsString("use NNN-NNN-NNNN where N is 0-9 for phone numbers"));
+    }
+
+
+    /**
+     * Tests no option argument (-print, -readme)
+     */
+    @Test
+    void noOptionArgument() {
+        String host = "localhost";
+        String port = "8080";
+        MainMethodResult result = invokeMain(Project4.class,"-host", host, "-port", port,"Nick Muller", "425-555-5555", "206-555-5555",
+                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
+        assertThat(result.getTextWrittenToStandardOut(),
+                CoreMatchers.containsString(""));
+
+    }
+
+
+    /**
+     * Tests no option argument (-print, -readme)
+     */
+    @Test
+    void onlyPrintGiven() {
+        String host = "localhost";
+        String port = "8080";
+        MainMethodResult result = invokeMain(Project4.class,"-host", host, "-port", port,"-print");
+        assertThat(result.getTextWrittenToStandardOut(),
+                CoreMatchers.containsString(""));
+
+    }
+
+
+    /**
+     * Tests accurate command line arguments
+     */
+    @Test
+    void PhoneNumbersHaveCharacters() {
+        String host = "localhost";
+        String port = "8080";
+        MainMethodResult result = invokeMain(Project4.class,"-host", host, "-port", port,"Test3", "ABC-123-4567", "123-456-7890", "03/03/2022", "12:00", "pm", "03/03/2022", "1:00", "pm");
+        assertThat(result.getTextWrittenToStandardError(),
+                CoreMatchers.containsString("use NNN-NNN-NNNN where N is 0-9 for phone numbers"));
+    }
+
+
+
+
 }

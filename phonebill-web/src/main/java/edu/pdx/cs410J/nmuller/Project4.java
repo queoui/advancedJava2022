@@ -1,7 +1,7 @@
 package edu.pdx.cs410J.nmuller;
 
 import edu.pdx.cs410J.ParserException;
-import edu.pdx.cs410J.web.HttpRequestHelper;
+
 
 import java.io.*;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class Project4 {
 
     public static final String MISSING_ARGS = "Missing command line arguments";
 
-    public static void main(String... args) throws ParserException, IOException {
+    public static void main(String... args){
         String hostName = null;
         String portString = null;
         boolean search = false;
@@ -29,35 +29,34 @@ public class Project4 {
         PhoneBill newBill = null;
         PhoneCall newCall = null;
 
-
-        if (args.length == 0) {
-            //print usage and exit
-            usage("Missing command line arguments");
-        } else {
-            for (int i = 0; i < args.length; ++i) {
-                if (args[i].equalsIgnoreCase("-readme")) {
-                    //print readme and exit
-                    try {
-                        getReadMe();
-                    } catch (IOException e) {
-                        System.err.println("Unable to find README" + e);
+            if (args.length == 0) {
+                //print usage and exit
+                usage("Missing command line arguments");
+            } else {
+                for (int i = 0; i < args.length; ++i) {
+                    if (args[i].equalsIgnoreCase("-readme")) {
+                        //print readme and exit
+                        try {
+                            getReadMe();
+                        } catch (IOException e) {
+                            System.err.println("Unable to find README" + e);
+                        }
+                    } else if ((args[i].equalsIgnoreCase("-host"))) {
+                        optionsTotal += 2;
+                        hostName = args[i + 1];
+                        ++i;
+                    } else if ((args[i].equalsIgnoreCase("-port"))) {
+                        optionsTotal += 2;
+                        portString = args[i + 1];
+                        ++i;
+                    } else if ((args[i].equalsIgnoreCase("-search"))) {
+                        optionsTotal += 1;
+                        search = true;
+                    } else if ((args[i].equalsIgnoreCase("-print"))) {
+                        optionsTotal += 1;
+                        print = true;
                     }
-                } else if ((args[i].equalsIgnoreCase("-host"))) {
-                    optionsTotal += 2;
-                    hostName = args[i + 1];
-                    ++i;
-                } else if ((args[i].equalsIgnoreCase("-port"))) {
-                    optionsTotal += 2;
-                    portString = args[i + 1];
-                    ++i;
-                } else if ((args[i].equalsIgnoreCase("-search"))) {
-                    optionsTotal += 1;
-                    search = true;
-                } else if ((args[i].equalsIgnoreCase("-print"))) {
-                    optionsTotal += 1;
-                    print = true;
                 }
-            }
                 if (hostName == null) {
                     usage(MISSING_ARGS);
 
@@ -82,24 +81,26 @@ public class Project4 {
                         } else if (beginTime == null) {
 
                             //check out of bounds error
-                            try{
-                            ErrorCheck.checkDate(args[i]);
-                            ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                            beginTime = args[i] + " " + args[i + 1]  + args[i + 2];
-                            i += 2;
-                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                                System.err.println("**"+e);}
+                            try {
+                                ErrorCheck.checkDate(args[i]);
+                                ErrorCheck.checkTime(args[i + 1] + args[i + 2]);
+                                beginTime = args[i] + " " + args[i + 1] + args[i + 2];
+                                i += 2;
+                            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                                System.err.println("**" + e);
+                            }
 
                         } else if (endTime == null) {
 
                             //try block out of bounds error
-                            try{
-                            ErrorCheck.checkDate(args[i]);
-                            ErrorCheck.checkTime(args[i+1]+args[i+2]);
-                            endTime = args[i] + " " + args[i + 1] + args[i + 2];
-                            i += 2;
-                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                                System.err.println("**"+e);}
+                            try {
+                                ErrorCheck.checkDate(args[i]);
+                                ErrorCheck.checkTime(args[i + 1] + args[i + 2]);
+                                endTime = args[i] + " " + args[i + 1] + args[i + 2];
+                                i += 2;
+                            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                                System.err.println("**" + e);
+                            }
                         } else {
                             usage("Extraneous command line argument: " + args[i]);
                         }
@@ -114,14 +115,16 @@ public class Project4 {
                         PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
                         try {
                             Map<String, PhoneBill> prettyMap = (client.getCustomerParams(customer, beginTime, endTime));
-                            if (prettyMap.values().size() == 0){
+                            if (prettyMap.values().size() == 0) {
                                 System.out.println("No matches for that date/time range");
                             }
                             prettyPrinter.dump(prettyMap);
                         } catch (IOException e) {
                             e.printStackTrace();
+                        } catch (ParserException e) {
+                            e.printStackTrace();
                         }
-                    }catch(NullPointerException e) {
+                    } catch (NullPointerException e) {
                         System.err.println("Invalid customer, does not exist");
                     }
 
@@ -145,12 +148,14 @@ public class Project4 {
                         Writer tempWriter = new OutputStreamWriter(System.out);
                         PrettyPrinter prettyPrinter = new PrettyPrinter(tempWriter);
                         try {
-                           Map<String, PhoneBill> prettyMap = (client.getCustomerBill(customer));
-                           prettyPrinter.dump(prettyMap);
+                            Map<String, PhoneBill> prettyMap = (client.getCustomerBill(customer));
+                            prettyPrinter.dump(prettyMap);
                         } catch (IOException e) {
-                                e.printStackTrace();
+                            e.printStackTrace();
+                        } catch (ParserException e) {
+                            e.printStackTrace();
                         }
-                    }catch(NullPointerException e) {
+                    } catch (NullPointerException e) {
                         System.err.println("Invalid customer, does not exist");
                     }
 
@@ -166,84 +171,67 @@ public class Project4 {
                             try {
                                 ErrorCheck.checkPhoneNumber(args[i]);
                                 caller = args[i];
-                            }catch(IllegalArgumentException e){
-                                System.err.println("**" +e);
+                            } catch (IllegalArgumentException e) {
+                                System.err.println("**" + e);
                             }
 
                         } else if (callee == null) {
                             try {
                                 ErrorCheck.checkPhoneNumber(args[i]);
                                 callee = args[i];
-                            }catch(IllegalArgumentException e){
-                                System.err.println("**" +e);
+                            } catch (IllegalArgumentException e) {
+                                System.err.println("**" + e);
                             }
 
                         } else if (beginTime == null) {
 
                             //check out of bounds error
-                            try{
+                            try {
                                 ErrorCheck.checkDate(args[i]);
-                                ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                                ErrorCheck.checkTime(args[i + 1] + args[i + 2]);
                                 beginTime = args[i] + " " + args[i + 1] + args[i + 2];
                                 i += 2;
-                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                                System.err.println("**" +e);}
+                            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                                System.err.println("**" + e);
+                            }
 
                         } else if (endTime == null) {
 
                             //try block out of bounds error
-                            try{
+                            try {
                                 ErrorCheck.checkDate(args[i]);
-                                ErrorCheck.checkTime(args[i+1]+args[i+2]);
+                                ErrorCheck.checkTime(args[i + 1] + args[i + 2]);
                                 endTime = args[i] + " " + args[i + 1] + args[i + 2];
                                 i += 2;
-                            }catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e){
-                                System.err.println("**"+e);}
+                            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                                System.err.println("**" + e);
+                            }
                         } else {
                             usage("Extraneous command line argument: " + args[i]);
                         }
                     }
-                    try{
+                    try {
 
                         newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
-                    }catch(ErrorCheck.MissingCommandLineArguments | IOException e){System.err.println("Unable to add phone call to bill" + e);}
-                    }
-
-
-                    if (print) {
-                        //print the new phone call data to stdout
-                        if (newCall != null) {
-                            System.out.println(Messages.displayPhoneCallAs(customer, newCall.toString()));
-                        }
-                    }
-
+                    } catch (ErrorCheck.MissingCommandLineArguments | IOException e) {
+                        System.err.println("Unable to add phone call to bill" + e);
                     }
                 }
 
 
-       // PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
+                if (print) {
+                    //print the new phone call data to stdout
+                    if (newCall != null) {
+                        System.out.println(Messages.displayPhoneCallAs(customer, newCall.toString()));
+                    }
+                }
 
+            }
 
-    /**
-     * Makes sure that the give response has the expected HTTP status code
-     * @param code The expected status code
-     * @param response The response from the server
-     */
-    private static void checkResponseCode( int code, HttpRequestHelper.Response response )
-    {
-        if (response.getHttpStatusCode() != code) {
-            error(String.format("Expected HTTP code %d, got code %d.\n\n%s", code,
-                                response.getHttpStatusCode(), response.getContent()));
-        }
-    }
+                }
 
-    private static void error( String message )
-    {
-        PrintStream err = System.err;
-        err.println("** " + message);
-    }
 
     public static void getReadMe() throws IOException{
         try (InputStream readme = Project4.class.getResourceAsStream("README.txt")) {
@@ -254,7 +242,7 @@ public class Project4 {
             }
             reader.close();
         } catch (IOException exception) {
-            throw new IOException("README file not available. " + exception.getMessage());
+            System.err.println("README file not available. " + exception.getMessage());
         }
     }
 

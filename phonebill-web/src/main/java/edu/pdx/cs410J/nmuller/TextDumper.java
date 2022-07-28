@@ -1,12 +1,9 @@
 package edu.pdx.cs410J.nmuller;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Map;
-
 public class TextDumper {
   private final Writer writer;
 

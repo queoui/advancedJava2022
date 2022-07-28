@@ -3,8 +3,7 @@ package edu.pdx.cs410J.nmuller;
 import edu.pdx.cs410J.AbstractPhoneBill;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 
 
 /**
@@ -54,12 +53,6 @@ public class PhoneBill extends AbstractPhoneBill<PhoneCall> {
   @Override
   public ArrayList<PhoneCall> getPhoneCalls() {return this.billOfCalls;}
 
-  /**
-   * sorting function for this current bill. sorts by begin time.
-   */
-  public void sortBill(){
-    Collections.sort(this.billOfCalls);
-  }
 
 }
 

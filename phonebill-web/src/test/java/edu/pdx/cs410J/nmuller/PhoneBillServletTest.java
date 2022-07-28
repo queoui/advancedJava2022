@@ -13,8 +13,10 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 
+import static edu.pdx.cs410J.nmuller.PhoneBillServlet.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -81,6 +83,36 @@ class PhoneBillServletTest {
 
     assertThat(servlet.getParameter("customer", request), equalTo(newBill.toString()));
   }
-
-
+//
+//  @Test
+//  void checkForError() throws IOException{
+//    PhoneBillServlet servlet = new PhoneBillServlet();
+//    HttpServletResponse response = mock(HttpServletResponse.class);
+//    HttpServletRequest request = mock(HttpServletRequest.class);
+//    StringWriter stringWriter = new StringWriter();
+//    PrintWriter printWriter = new PrintWriter(stringWriter, true);
+//
+//    when(response.getWriter()).thenReturn(printWriter);
+//    when(request.getParameter(CUSTOMER_PARAMETER)).thenReturn("nick");
+//    when(request.getParameter(BEGIN_DATE_PARAMETER)).thenReturn("03/24/2022 11:00PM");
+//    when(request.getParameter(END_DATE_PARAMETER)).thenReturn("03/25/2022 11:00PM");
+//    when(request.getParameter(CALLER_PARAMETER)).thenReturn("425-239-8954");
+//    when(request.getParameter(CALLEE_PARAMETER)).thenReturn("206-985-6547");
+//
+//
+//
+//    servlet.doPost(request, response);
+//    try {
+//      servlet.writePhoneCallParams("nick", "03/22/2022 11:00PM", "03/25/2022 11:00PM", response);
+//    } catch (ErrorCheck.MissingCommandLineArguments e) {
+//      e.printStackTrace();
+//    }
+//
+//    ArgumentCaptor<Integer> statusCode = ArgumentCaptor.forClass((Integer.class));
+//    ArgumentCaptor<String> message = ArgumentCaptor.forClass((String.class));
+//
+//    verify(response).setStatus();
+//    assertEquals(statusCode.capture(), 0);
+//
+//  }
 }

@@ -83,6 +83,10 @@ public class PhoneBillRestClient {
     return parser.parse();
   }
 
+  /**
+   *
+   * This method adds a phone call entry to the web server
+   */
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
         Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
                                               "begin", beginDate, "end",endDate));
