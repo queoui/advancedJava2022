@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
-import java.nio.CharBuffer;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -68,16 +66,16 @@ class PhoneBillRestClientIT {
 
     assertThat(response, equalTo(client.getCustomerBill(customer).toString()));
   }
-//
-//  @Test
-//  void test4EmptyWordThrowsException() {
-//    PhoneBillRestClient client = newPhoneBillRestClient();
-//    String emptyString = "";
-//
-//    RestException ex =
-//      assertThrows(RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
-//    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-//    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
-//  }
+
+  @Test
+  void test4EmptyWordThrowsException() {
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    String emptyString = "";
+
+    RestException ex =
+      assertThrows(RestException.class, () -> client.getCustomerBill(emptyString));
+    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
+  }
 
 }

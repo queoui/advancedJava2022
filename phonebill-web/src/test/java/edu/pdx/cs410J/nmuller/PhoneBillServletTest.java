@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.nmuller;
 
-import org.junit.Ignore;
+import edu.pdx.cs410J.InvokeMainTestCase;
+import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -13,8 +14,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
  */
 class PhoneBillServletTest {
 
-  @Ignore
+
   @Test
   void initiallyServletContainsNoDictionaryEntries() throws ServletException, IOException {
     PhoneBillServlet servlet = new PhoneBillServlet();
@@ -82,4 +82,20 @@ class PhoneBillServletTest {
     assertThat(servlet.getParameter("customer", request), equalTo(newBill.toString()));
   }
 
+  @Test
+  void testPhoneCallParams() throws ServletException, IOException, ParserException, ErrorCheck.MissingCommandLineArguments {
+
+    PhoneBillServlet servlet = new PhoneBillServlet();
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    HttpServletResponse response = mock(HttpServletResponse.class);
+    PrintWriter pw = mock(PrintWriter.class);
+
+    servlet.writePhoneCallParams(" ", " ", " ", response);
+
+    assertThat(response.getStatus(), equalTo(0));
+
+
+
+  }
 }

@@ -41,12 +41,12 @@ public class PhoneBillServlet extends HttpServlet
         String customer = getParameter(CUSTOMER_PARAMETER, request);
         String beginString = getParameter(BEGIN_DATE_PARAMETER, request);
         String endString = getParameter(END_DATE_PARAMETER, request);
-        if(beginString != null && endString != null && customer != null){
-            try {
-                writePhoneCallParams(customer, beginString, endString, response);
-            } catch (ErrorCheck.MissingCommandLineArguments e) {
-                e.printStackTrace();
-            }
+        if(beginString != null && endString != null) {
+                try {
+                    writePhoneCallParams(customer, beginString, endString, response);
+                } catch (ErrorCheck.MissingCommandLineArguments e) {
+                    e.printStackTrace();
+                }
         }
 
         else if (customer != null) {
@@ -127,8 +127,8 @@ public class PhoneBillServlet extends HttpServlet
      *
      * The text of the message is formatted with {@link TextDumper}
      */
-    private void writePhoneCall(String customer, HttpServletResponse response) throws IOException {
-        ArrayList<PhoneCall> phoneCall = this.dictionary.get(CUSTOMER_PARAMETER).getPhoneCalls();
+    protected void writePhoneCall(String customer, HttpServletResponse response) throws IOException {
+        ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
 
 
         if (phoneCall == null) {
@@ -138,7 +138,7 @@ public class PhoneBillServlet extends HttpServlet
             PrintWriter pw = response.getWriter();
 
 
-            Map<String, PhoneBill> wordDefinition = Map.of(customer, this.dictionary.get(CUSTOMER_PARAMETER));
+            Map<String, PhoneBill> wordDefinition = Map.of(customer, this.dictionary.get(customer));
             TextDumper dumper = new TextDumper(pw);
             dumper.dump(wordDefinition);
 
@@ -152,8 +152,11 @@ public class PhoneBillServlet extends HttpServlet
      *
      * The text of the message is formatted with {@link TextDumper}
      */
-    private void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
-        ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
+    protected void writePhoneCallParams(String customer, String beginDate, String endDate, HttpServletResponse response) throws IOException, ErrorCheck.MissingCommandLineArguments {
+
+        try {
+            ArrayList<PhoneCall> phoneCall = this.dictionary.get(customer).getPhoneCalls();
+
         if (phoneCall == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }else{
@@ -172,27 +175,28 @@ public class PhoneBillServlet extends HttpServlet
                 PrintWriter pw = response.getWriter();
                 PhoneBill newBill = new PhoneBill(customer);
             for(PhoneCall oneCall : phoneCall) {
-                if (oneCall.getBeginTime().compareTo(begin) <= 0 && oneCall.getEndTime().compareTo(end) >= 0) {
+                if (oneCall.getBeginTime().compareTo(begin) >= 0 && oneCall.getBeginTime().compareTo(end) <= 0) {
                     newBill.addPhoneCall(oneCall);
                 }
             }
 
                 Map<String, PhoneBill> phoneParams = Map.of(customer, newBill);
 
+
                 TextDumper dumper = new TextDumper(pw);
                 dumper.dump(phoneParams);
 
                 response.setStatus(HttpServletResponse.SC_OK);
         }
+        }catch(NullPointerException e){System.err.println("One of the parameters is empty");}
     }
-
 
     /**
      * Writes all of the dictionary entries to the HTTP response.
      *
      * The text of the message is formatted with {@link TextDumper}
      */
-    private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
+    protected void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
     {
         PrintWriter pw = response.getWriter();
         TextDumper dumper = new TextDumper(pw);

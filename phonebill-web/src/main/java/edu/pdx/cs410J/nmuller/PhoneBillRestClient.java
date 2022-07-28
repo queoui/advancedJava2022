@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
 
+import static edu.pdx.cs410J.nmuller.Messages.missingRequiredParameter;
 import static edu.pdx.cs410J.web.HttpRequestHelper.Response;
 import static edu.pdx.cs410J.web.HttpRequestHelper.RestException;
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -53,7 +54,10 @@ public class PhoneBillRestClient {
   /**
    * Returns the call for the given customer
    */
-  public Map<String, PhoneBill> getCustomerBill(String customer) throws IOException, ParserException {
+  public Map<String, PhoneBill> getCustomerBill(String customer) throws IOException, ParserException, RestException {
+    if("".equals(customer)) {
+      throw new HttpRequestHelper.RestException(412, missingRequiredParameter("customer"));
+    }
     Response response = http.get(Map.of("customer", customer));
     //System.out.println(response.getContent());
     throwExceptionIfNotOkayHttpStatus(response);
@@ -64,7 +68,6 @@ public class PhoneBillRestClient {
     return parser.parse();
 
   }
-
 
   /**
    * Returns the call for the given customer
@@ -78,9 +81,7 @@ public class PhoneBillRestClient {
     TextParser parser = new TextParser(new StringReader(content));
 
     return parser.parse();
-
   }
-
 
     public void addPhoneCallEntry(String customer, String caller, String callee, String beginDate, String endDate) throws IOException {
         Response response = http.post(Map.of("customer", customer, "caller",caller, "callee", callee,
