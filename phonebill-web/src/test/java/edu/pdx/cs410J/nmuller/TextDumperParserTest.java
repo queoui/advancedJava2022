@@ -15,12 +15,12 @@ public class TextDumperParserTest {
 
   @Test
   void emptyMapCanBeDumpedAndParsed() throws ParserException {
-    Map<String, String> map = Collections.emptyMap();
-    Map<String, String> read = dumpAndParse(map);
+    Map<String, PhoneBill> map = Collections.emptyMap();
+    Map<String, PhoneBill> read = dumpAndParse(map);
     assertThat(read, equalTo(map));
   }
 
-  private Map<String, String> dumpAndParse(Map<String, String> map) throws ParserException {
+  private Map<String, PhoneBill> dumpAndParse(Map<String, PhoneBill> map) throws ParserException {
     StringWriter sw = new StringWriter();
     TextDumper dumper = new TextDumper(sw);
     dumper.dump(map);
@@ -33,8 +33,18 @@ public class TextDumperParserTest {
 
   @Test
   void dumpedTextCanBeParsed() throws ParserException {
-    Map<String, String> map = Map.of("one", "1", "two", "2");
-    Map<String, String> read = dumpAndParse(map);
-    assertThat(read, equalTo(map));
+    PhoneBill newBill = new PhoneBill("customer");
+    try {
+      PhoneCall newCall = PhoneCall.createNewCall("425-239-9870", "425-741-1269",
+              "05/24/2022 11:50am", "05/24/2022 11:55am");
+      newBill.addPhoneCall(newCall);
+    } catch (ErrorCheck.MissingCommandLineArguments e) {
+      e.printStackTrace();
+    }
+
+    Map<String, PhoneBill> map = Map.of("customer", newBill);
+    Map<String, PhoneBill> read = dumpAndParse(map);
+
+    assertThat(read.toString(), equalTo(map.toString()));
   }
 }

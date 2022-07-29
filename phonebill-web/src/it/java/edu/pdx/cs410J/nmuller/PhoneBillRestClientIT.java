@@ -36,30 +36,46 @@ class PhoneBillRestClientIT {
   @Test
   void test1EmptyServerContainsNoDictionaryEntries() throws IOException, ParserException {
     PhoneBillRestClient client = newPhoneBillRestClient();
-    Map<String, String> dictionary = client.getAllDictionaryEntries();
+    Map<String, PhoneBill> dictionary = client.getPhoneBillEntries();
     assertThat(dictionary.size(), equalTo(0));
   }
 
-//  @Test
-//  void test2DefineOneWord() throws IOException, ParserException {
-//    PhoneBillRestClient client = newPhoneBillRestClient();
-//    String testWord = "TEST WORD";
-//    String testDefinition = "TEST DEFINITION";
-//    client.addDictionaryEntry(testWord, testDefinition);
-//
-//    String definition = client.getDefinition(testWord);
-//    assertThat(definition, equalTo(testDefinition));
-//  }
+  @Test
+  void test2RecievePhoneBill() throws IOException, ParserException {
 
-//  @Test
-//  void test4EmptyWordThrowsException() {
-//    PhoneBillRestClient client = newPhoneBillRestClient();
-//    String emptyString = "";
-//
-//    RestException ex =
-//      assertThrows(RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
-//    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-//    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
-//  }
+
+
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    String customer = "customer";
+    String caller = "425-741-1269";
+    String callee = "425-239-9870";
+    String beginTime = "05/24/2022 11:50am";
+    String endTime = "05/24/2022 12:00pm";
+    PhoneCall newCall = null;
+    PhoneBill newBill = new PhoneBill(customer);
+    try {
+      newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
+
+      newBill.addPhoneCall(newCall);
+    } catch (ErrorCheck.MissingCommandLineArguments e) {
+      e.printStackTrace();
+    }
+
+    client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
+    String response =  client.getCustomerBill(customer).toString();
+
+    assertThat(response, equalTo(client.getCustomerBill(customer).toString()));
+  }
+
+  @Test
+  void test4EmptyWordThrowsException() {
+    PhoneBillRestClient client = newPhoneBillRestClient();
+    String emptyString = "";
+
+    RestException ex =
+      assertThrows(RestException.class, () -> client.getCustomerBill(emptyString));
+    assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
+    assertThat(ex.getMessage(), equalTo(Messages.missingRequiredParameter("customer")));
+  }
 
 }
