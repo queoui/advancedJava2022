@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.nmuller;
 
 import edu.pdx.cs410J.ParserException;
+import edu.pdx.cs410J.web.HttpRequestHelper;
 
 
 import java.io.*;
@@ -123,7 +124,7 @@ public class Project4 {
                                 System.out.println("No matches for that date/time range");
                             }
                             prettyPrinter.dump(prettyMap);
-                        } catch (IOException e) {
+                        } catch (IOException| HttpRequestHelper.RestException e) {
                             e.printStackTrace();
                         } catch (ParserException e) {
                             e.printStackTrace();
@@ -154,7 +155,7 @@ public class Project4 {
                         try {
                             Map<String, PhoneBill> prettyMap = (client.getCustomerBill(customer));
                             prettyPrinter.dump(prettyMap);
-                        } catch (IOException e) {
+                        } catch (IOException| HttpRequestHelper.RestException e) {
                             e.printStackTrace();
                         } catch (ParserException e) {
                             e.printStackTrace();
@@ -219,7 +220,7 @@ public class Project4 {
                         newCall = PhoneCall.createNewCall(caller, callee, beginTime, endTime);
                         PhoneBillRestClient client = new PhoneBillRestClient(hostName, port);
                         client.addPhoneCallEntry(customer, caller, callee, beginTime, endTime);
-                    } catch (ErrorCheck.MissingCommandLineArguments | IOException e) {
+                    } catch (ErrorCheck.MissingCommandLineArguments | IOException | HttpRequestHelper.RestException e) {
                         System.err.println("Unable to add phone call to bill" + e);
                     }
                 }
