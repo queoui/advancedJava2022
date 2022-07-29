@@ -66,11 +66,15 @@ public class Project4 {
 
                 try {
                     port = Integer.parseInt(portString);
-
                 } catch (NumberFormatException ex) {
                     usage("Port \"" + portString + "\" must be an integer");
                     return;
                 }
+                try{
+                    if (port < 1024 || port > 65535){
+                        throw new NumberFormatException("Invalid Port Number");
+                    }
+                }catch(NumberFormatException e){System.err.println("Unable to connect: ");return;}
 
                 if (search) {
                     for (int i = optionsTotal; i < args.length; ++i) {

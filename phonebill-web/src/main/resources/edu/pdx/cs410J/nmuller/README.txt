@@ -1,6 +1,6 @@
 ****************
 Nicholas Muller
-Project 2
+Project 4
 ****************
 
 ***********************************************************************************************************************
@@ -11,11 +11,10 @@ Project 2
 ## OVERVIEW ##
 ##############
 This is the README file for the phone bill application!
-This application collects and stores phone calls into external text files. If a phone bill does not exist
-it will create a new phone bill text file and store the given first phone call in the newly created text file. If the
-customer already has a phone bill they can input their text file along with a new call to append a new phone call to
-their already existing one. The purpose is for all phone calls on a given account to be visible in the customers phone
-bill.
+This application collects and stores phone calls into a web server. If a phone bill does not exist
+it will create a new phone bill on the web server and store the given first phone call in the newly created phone bill.
+If the customer already has a phone bill append a new phone call to their already existing one. The purpose is for all
+phone calls on a given account to be visible in the customers phone bill.
 
 ##################
 ## COMMAND LINE ##
@@ -34,10 +33,9 @@ The format for the command line arguments is as follows:
         OPTIONS
             -print: Create a new phone call for the customer provided and print the details of that phone call to the user.
             -readme: Displays the text you are now reading and nothing else.
-            -textfile <file>: appends a phone number to an existing bill or creates a new bill with the given phone call
-                                <file> is a valid file path
-            -pretty <file>: Prints a more human readable version of a phone bill. If STDOUT is the desired path, simply
-                            have the file option be "-", without the quotations.
+            -search: searches a given customers bill for phone calls within a specified range
+            -host  : host on for the local machine
+            -port  : port for the local web server.
 
         ############################
         ## COMMAND LINE ARGUMENTS ##
