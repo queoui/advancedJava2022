@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidPhoneBill</string>
+    <string name="welcome_to_the_phone_bill_application">Welcome to the Phone Bill Application</string>
+    <string name="let_s_get_started">Let\'s Get Started!</string>
+</resources>
