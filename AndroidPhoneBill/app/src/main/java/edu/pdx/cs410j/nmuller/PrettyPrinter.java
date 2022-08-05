@@ -1,5 +1,11 @@
 package edu.pdx.cs410j.nmuller;
 
+import static java.lang.System.out;
+
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import edu.pdx.cs410J.PhoneBillDumper;
 
 import java.io.IOException;
@@ -10,16 +16,13 @@ import java.time.Duration;
 /**
  * Class Pretty Printer prints a more human-readable output for a phone bill
  */
-public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
-    private final Writer prettyWriter;
+public class PrettyPrinter extends AppCompatActivity implements PhoneBillDumper<PhoneBill> {
 
     /**
-     * @param writer
+
      *        constructor for pretty printer
      */
-    public PrettyPrinter(Writer writer) {
-        this.prettyWriter = writer;
-    }
+    public PrettyPrinter(){}
 
     /**
      * Override the PhoneBillDumper dump method, prints to standard out or a text file
@@ -31,18 +34,15 @@ public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
      */
     @Override
     public void dump(PhoneBill bill) throws IOException {
-        PrintWriter out = new PrintWriter(prettyWriter);
-        out.println((bill.getCustomer()));
+        ((TextView) findViewById(R.id.textView6)).setText(bill.getCustomer());
         for (PhoneCall singleCall: bill.billOfCalls) {
             Duration duration = Duration.ofMinutes(singleCall.getEndTime().getTime() - singleCall.getBeginTime().getTime());
             if(duration.toMinutes() / 60000 < 0){
                 throw new IOException("Time travel has been detected. enter accurate time.");
             }
-
-            out.println("Phone call duration of " + (duration.toMinutes() / 60000) +" minutes" +  " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
-                        + " beginning at "+ singleCall.getBeginTimeString()+ " and ending at "+ singleCall.getEndTimeString());
+            String printCall = "Phone call duration of " + (duration.toMinutes() / 60000) +" minutes" +  " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
+                    + " beginning at "+ singleCall.getBeginTimeString()+ " and ending at "+ singleCall.getEndTimeString();
+            ((TextView) findViewById(R.id.textView6)).setText(printCall);
         }
-
-        out.close();
     }
 }

@@ -10,7 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 public class AddPhoneCall extends AppCompatActivity {
@@ -26,6 +29,7 @@ public class AddPhoneCall extends AppCompatActivity {
     String FullEndDate;
     boolean error;
     PhoneCall newCall;
+    File filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class AddPhoneCall extends AppCompatActivity {
         setContentView(R.layout.activity_add_phone_call);
         Intent intent = getIntent();
         customer = (PhoneBill) getIntent().getSerializableExtra("customer");
+        filePath = (File) getIntent().getSerializableExtra("filePath");
+
     }
 
     public void addPhoneCallToBill(View view){
@@ -65,6 +71,9 @@ public class AddPhoneCall extends AppCompatActivity {
             ErrorCheck.checkTime(getEndTimeId.getText().toString().trim());
             newCall = PhoneCall.createNewCall(Caller, Callee, FullStartDate, FullEndDate);
             customer.addPhoneCall(newCall);
+            PrintWriter pw = new PrintWriter(new FileWriter(filePath, true));
+                pw.println(newCall.toString());
+                pw.close();
         }catch(IOException e){
             error = true;
             toastException(e);
@@ -74,6 +83,7 @@ public class AddPhoneCall extends AppCompatActivity {
             Toast.makeText(this, newCall.toString(), Toast.LENGTH_LONG).show();
             Intent data = new Intent(this, EnterChoice.class);
             data.putExtra("customer", customer);
+            data.putExtra("filePath", filePath);
             startActivity(data);
         }
     }

@@ -37,7 +37,7 @@ public class ErrorCheck {
      */
 
     public static void checkTime(String time) throws IOException {
-        String regex = "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
+        String regex = "(1[012]|[1-9]):[0-5][0-9]";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
         //Matching the compiled pattern in the String
