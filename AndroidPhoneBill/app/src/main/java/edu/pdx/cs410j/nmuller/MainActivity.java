@@ -20,4 +20,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void goToREADME(View view) {
+        Intent intent = new Intent(this, README.class);
+        startActivity(intent);
+    }
 }

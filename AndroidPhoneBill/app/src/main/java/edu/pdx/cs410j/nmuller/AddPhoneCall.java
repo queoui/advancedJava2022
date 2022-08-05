@@ -18,8 +18,12 @@ public class AddPhoneCall extends AppCompatActivity {
     PhoneBill customer;
     String Caller;
     String Callee;
-    String StartDate;
-    String EndDate;
+    String JustStartDate;
+    String JustEndDate;
+    String JustStartTime;
+    String JustEndTime;
+    String FullStartDate;
+    String FullEndDate;
     boolean error;
     PhoneCall newCall;
 
@@ -44,17 +48,22 @@ public class AddPhoneCall extends AppCompatActivity {
 
         Caller = getCallerId.getText().toString().trim();
         Callee = getCalleeId.getText().toString().trim();
-        StartDate = getStartDateId.getText().toString().trim() + " " + getStartTimeId.getText().toString().trim() + getFirstAMPM.getSelectedItem().toString();
-        EndDate = getEndDateId.getText().toString().trim() +" "+ getEndTimeId.getText().toString().trim() + getSecondAMPM.getSelectedItem().toString();
+        JustStartDate = getStartDateId.getText().toString().trim();
+        JustEndDate = getEndDateId.getText().toString().trim();
+        JustStartTime = getStartTimeId.getText().toString().trim();
+        JustEndTime = getEndTimeId.getText().toString().trim();
+
+        FullStartDate = JustStartDate + " " + JustStartTime + getFirstAMPM.getSelectedItem().toString();
+        FullEndDate = JustEndDate +" "+ JustEndTime + getSecondAMPM.getSelectedItem().toString();
 
         try{
             ErrorCheck.checkPhoneNumber(Caller);
             ErrorCheck.checkPhoneNumber(Callee);
             ErrorCheck.checkDate(getStartDateId.getText().toString().trim());
-            ErrorCheck.checkDate(getEndDateId.getText().toString().trim());
             ErrorCheck.checkTime(getStartTimeId.getText().toString().trim());
+            ErrorCheck.checkDate(getEndDateId.getText().toString().trim());
             ErrorCheck.checkTime(getEndTimeId.getText().toString().trim());
-            newCall = PhoneCall.createNewCall(Caller, Callee, StartDate, EndDate);
+            newCall = PhoneCall.createNewCall(Caller, Callee, FullStartDate, FullEndDate);
             customer.addPhoneCall(newCall);
         }catch(IOException e){
             error = true;

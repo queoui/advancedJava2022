@@ -19,5 +19,20 @@
         <item>AM</item>
         <item>PM</item>
     </string-array>
+    <string name="README">
+        ****************\n
+Nicholas Muller\n
+Project 5\n
+****************\n\n
+
+##############\n
+##  OVERVIEW ##\n
+##############\n\n
+This is the README file for the phone bill application!\n
+This application collects and stores phone calls into an android app with a little help from some text files. If a phone bill does not exist
+it will create a new phone bill on the app. If the customer already has a phone bill append a new phone call to their already existing one. The purpose is for all
+phone calls on a given account to be visible in the customers phone bill. The customer also has the option to search phone calls given a date and time range.
+
+</string>
 
 </resources>
