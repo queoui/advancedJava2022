@@ -2,6 +2,7 @@ package edu.pdx.cs410j.nmuller;
 
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ public class ErrorCheck {
      *
      */
 
-    public static void checkDate(String date) {
+    public static void checkDate(String date) throws IOException {
         String regex = "^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
@@ -25,7 +26,7 @@ public class ErrorCheck {
         Matcher matcher = pattern.matcher(date);
         boolean bool = matcher.matches();
         if(!bool)
-            throw new IllegalArgumentException("use MM/DD/YYYY format for date");
+            throw new IOException("Invalid Date");
     }
 
     /**
@@ -35,7 +36,7 @@ public class ErrorCheck {
      *
      */
 
-    public static void checkTime(String time) {
+    public static void checkTime(String time) throws IOException {
         String regex = "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
@@ -43,7 +44,7 @@ public class ErrorCheck {
         Matcher matcher = pattern.matcher(time);
         boolean bool = matcher.matches();
         if(!bool){
-            throw new IllegalArgumentException("\"use HH:MM format for time\"");
+            throw new IOException("Invalid Time");
         }
     }
 
@@ -54,7 +55,7 @@ public class ErrorCheck {
      *
      */
 
-    public static void checkPhoneNumber(String number) {
+    public static void checkPhoneNumber(String number) throws IOException {
         String regex = "^(\\d{3}[-]?){2}\\d{4}$";
         //Creating a pattern object
         Pattern pattern = Pattern.compile(regex);
@@ -62,7 +63,7 @@ public class ErrorCheck {
         Matcher matcher = pattern.matcher(number);
         boolean bool = matcher.matches();
         if(!bool){
-            throw new IllegalArgumentException("use NNN-NNN-NNNN where N is 0-9 for phone numbers");
+            throw new IOException("Invalid Phone Number");
         }
     }
 
@@ -78,22 +79,6 @@ public class ErrorCheck {
      */
     public static boolean checkTimeTravel(Date beginTime, Date endTime){
         return beginTime.before(endTime);
-    }
-
-    /**
-     * Exception class for missing command line arguments.
-     */
-    static class MissingCommandLineArguments extends Exception {
-
-        /**
-         *
-         * @param missing_command_line_arguments
-         *          exception handling
-         */
-        public MissingCommandLineArguments(String missing_command_line_arguments) {
-            super(missing_command_line_arguments);
-        }
-
     }
 
 }

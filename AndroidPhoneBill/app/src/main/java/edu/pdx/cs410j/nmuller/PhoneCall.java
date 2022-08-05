@@ -2,12 +2,16 @@ package edu.pdx.cs410j.nmuller;
 
 
 
+import android.widget.Toast;
+
 import edu.pdx.cs410J.AbstractPhoneCall;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 
 /**
@@ -127,10 +131,10 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    * @param callEnd
    *        command line arguments
    * @return <code>call</code>
-   * @throws ErrorCheck.MissingCommandLineArguments
+
    *         error is thrown when command line arguments are not valid.
    */
-  static PhoneCall createNewCall(String caller, String callee, String callBegin, String callEnd) throws ErrorCheck.MissingCommandLineArguments {
+  static PhoneCall createNewCall(String caller, String callee, String callBegin, String callEnd) throws IOException{
 
       SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
       Date begin = new Date();
@@ -141,11 +145,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
       }catch(Exception errParse){
         System.err.println("Unknown Date Format " + errParse);
       }
-      if(!ErrorCheck.checkTimeTravel(begin, end))
-        throw new ErrorCheck.MissingCommandLineArguments("Time travel has been detected, please input accurate date and time");
 
-      PhoneCall newCall = new PhoneCall(caller, callee, begin,end);
-      return newCall;
+      if(!ErrorCheck.checkTimeTravel(Objects.requireNonNull(begin), end))
+        throw new IOException("Time travel has been detected, please input accurate date and time");
+
+    return new PhoneCall(caller, callee, begin,end);
     }
 
 

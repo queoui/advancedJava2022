@@ -3,4 +3,21 @@
     <string name="welcome_to_the_phone_bill_application">Welcome to the Phone Bill Application</string>
     <string name="enterCustomer">Let\'s Get Started!</string>
     <string name="submit">Submit</string>
+    <string name="hello_customer">Hello, Customer!</string>
+    <string name="add_new_phone_call">Add New Phone Call</string>
+    <string name="search_phone_calls">Search Phone Calls</string>
+    <string name="display_all_calls">Display All Calls</string>
+    <string name="please_enter_phone_call_data">Please Enter Phone Call Data</string>
+    <string name="caller_number">Caller Number</string>
+    <string name="callee_number">Callee Number</string>
+    <string name="mm_dd_yyyy">MM/DD/YYYY</string>
+    <string name="hh_mm_am_pm">HH:MM AM/PM</string>
+    <string name="mm_dd_yyyy_2">MM/DD/YYYY</string>
+    <string name="hh_mm_am_pm_2">HH:MM AM/PM</string>
+    <string name="submit_phonecall">Submit PhoneCall</string>
+    <string-array name="am_pm">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
 </resources>
