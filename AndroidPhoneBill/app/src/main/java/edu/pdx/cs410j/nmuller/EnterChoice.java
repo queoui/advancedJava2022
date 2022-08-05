@@ -28,4 +28,11 @@ public class EnterChoice extends AppCompatActivity implements Serializable {
         startActivity(intent);
     }
 
+    public void DisplayAllCallsInBill(View view){
+        Intent intent = new Intent(this, DisplayPretty.class);
+        intent.putExtra("customer", customer);
+        startActivity(intent);
+
+
+    }
 }
