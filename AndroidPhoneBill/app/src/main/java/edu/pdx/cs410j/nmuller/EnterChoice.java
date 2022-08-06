@@ -33,6 +33,11 @@ public class EnterChoice extends AppCompatActivity implements Serializable {
     }
 
     public void searchPhoneCalls(View view) {
+        Intent intent = new Intent(this, SearchCalls.class);
+        intent.putExtra("customer", customer);
+        intent.putExtra("filePath", filePath);
+        startActivity(intent);
+
     }
 
     public void DisplayAllCallsInBill(View view){

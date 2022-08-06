@@ -34,5 +34,10 @@ it will create a new phone bill on the app. If the customer already has a phone 
 phone calls on a given account to be visible in the customers phone bill. The customer also has the option to search phone calls given a date and time range.
 
 </string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="search">Search</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="please_enter_search_parameters">Please Enter Search Parameters</string>
 
 </resources>
