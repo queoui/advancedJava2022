@@ -27,7 +27,6 @@ public class SearchCalls extends AppCompatActivity {
     String FullStartDate;
     String FullEndDate;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +36,6 @@ public class SearchCalls extends AppCompatActivity {
         filePath = (File) getIntent().getSerializableExtra("filePath");
 
     }
-
     public void searchAndPrint(View view) throws IOException {
         EditText getStartDateId = findViewById(R.id.startDateText2);
         EditText getStartTimeId = findViewById(R.id.startTimeText);
@@ -52,42 +50,12 @@ public class SearchCalls extends AppCompatActivity {
         FullStartDate = JustStartDate + " " + JustStartTime + getFirstAMPM.getSelectedItem().toString();
         FullEndDate = JustEndDate +" "+ JustEndTime + getSecondAMPM.getSelectedItem().toString();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
-        Date begin = new Date();
-        Date end = new Date();
-        try {
-            begin = formatter.parse(FullStartDate);
-            end = formatter.parse(FullEndDate);
-        }catch(Exception errParse){
-            System.err.println("Unknown Date Format " + errParse);
-        }
-
-        if(!ErrorCheck.checkTimeTravel(Objects.requireNonNull(begin), end))
-            throw new IOException("Time travel has been detected, please input accurate date and time");
-
-        ((TextView) findViewById(R.id.textView11)).setText(customer.getCustomer());
-        ((TextView) findViewById(R.id.textView11)).append("\n\n");
-
-        for (PhoneCall singleCall: customer.billOfCalls) {
-            Duration duration = Duration.ofMinutes(singleCall.getEndTime().getTime() - singleCall.getBeginTime().getTime());
-            if(duration.toMinutes() / 60000 < 0){
-                try {
-                    throw new IOException("Time travel has been detected. enter accurate time.");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if((singleCall.getBeginTime().compareTo(begin) >= 0) && (singleCall.getEndTime().compareTo(end) <= 0)) {
-                String printCall = "Phone call duration of " + (duration.toMinutes() / 60000) + " minutes" + " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
-                        + " beginning at " + singleCall.getBeginTimeString() + " and ending at " + singleCall.getEndTimeString() + "\n\n";
-                ((TextView) findViewById(R.id.textView11)).append(printCall);
-            }
-        }
         Intent intent = new Intent(this, DisplaySearch.class);
+        intent.putExtra("customer", customer);
+        intent.putExtra("filePath", filePath);
+        intent.putExtra("startDate", FullStartDate);
+        intent.putExtra("endDate", FullEndDate);
         startActivity(intent);
     }
 
-
-    }
 }

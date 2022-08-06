@@ -18,7 +18,7 @@ import java.util.Objects;
  * Phone call class extends AbstractPhoneCall
  * implements Comparable PhoneCalls
  */
-public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
+public class PhoneCall extends AbstractPhoneCall {
 
   /**
    * the one making the call
@@ -160,13 +160,13 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
    * @return
    *      int, negative for this call first, 0 for same, positive for o call first
    */
-  @Override
-  public int compareTo(PhoneCall o) {
-    if(this.callBegin.compareTo(o.callBegin) == 0){
+
+  public int compareTo(Date o) {
+    if(this.callBegin.compareTo(o) == 0){
       return this.caller.compareTo(this.callee);
     }
     else{
-      return this.callBegin.compareTo(o.callBegin);
+      return this.callBegin.compareTo(o);
     }
   }
 }
