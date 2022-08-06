@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.Serializable;
@@ -22,6 +23,8 @@ public class EnterChoice extends AppCompatActivity implements Serializable {
         Intent intent = getIntent();
         customer = (PhoneBill) getIntent().getSerializableExtra("customer");
         filePath = (File) getIntent().getSerializableExtra("filePath");
+        String greetCustomer = "Hello, " + customer.getCustomer() + "!";
+        ((TextView) findViewById(R.id.textView3)).setText(greetCustomer);
 
     }
 
