@@ -6,7 +6,6 @@ import edu.pdx.cs410J.PhoneBillParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -15,7 +14,7 @@ import java.util.Locale;
 /**
  * Public class for parsing a phone bill text file
  */
-public class TextParser implements PhoneBillParser<PhoneBill> {
+public class TextParser{
   private final Reader reader;
 
   /**
@@ -34,8 +33,8 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
    * @throws ParserException
    *        Parser Error with malformed text file
    */
-  @Override
-  public PhoneBill parse() throws ParserException {
+
+  public PhoneBill Billparse() throws ParserException {
 
     try (
       BufferedReader br = new BufferedReader(this.reader)
@@ -56,14 +55,15 @@ public class TextParser implements PhoneBillParser<PhoneBill> {
         if("".equals(line))
           continue;
 
-        DateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US) {
-        };
+        SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yy hh:mma", Locale.US);
         Date begin = new Date();
         Date end = new Date();
         try {
-          begin = formatter.parse(words[7] + " " + words[8]  + words[9]);
+          String beginString = words[7] + " " + words[8]  + words[9];
+          String endString = words[11] + " " + words[12] +  words[13];
+          begin = formatter.parse(beginString);
 
-          end = formatter.parse(words[11] + " " + words[12] +  words[13]);
+          end = formatter.parse(endString);
           PhoneCall addCall = new PhoneCall(words[3], words[5], begin, end);
           newBill.addPhoneCall(addCall);
         }catch(Exception e){System.err.println("Error: Unable to read from given file");}

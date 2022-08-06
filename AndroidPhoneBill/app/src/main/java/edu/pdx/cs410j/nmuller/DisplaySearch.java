@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -20,6 +21,8 @@ public class DisplaySearch extends AppCompatActivity {
     String FullEndDate;
     PhoneBill customer;
     File filePath;
+    Date begin;
+    Date end;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +32,18 @@ public class DisplaySearch extends AppCompatActivity {
 
         customer = (PhoneBill) getIntent().getSerializableExtra("customer");
         filePath = (File) getIntent().getSerializableExtra("filePath");
-        FullStartDate = (String) getIntent().getSerializableExtra("startDate");
-        FullEndDate = (String) getIntent().getSerializableExtra("endDate");
+        FullStartDate =  getIntent().getStringExtra("startDate");
+        FullEndDate =  getIntent().getStringExtra("endDate");
 
 
         SimpleDateFormat formatter = new SimpleDateFormat("M/dd/yyyy hh:mma", Locale.US);
-        Date begin = new Date();
-        Date end = new Date();
+
+        begin = new Date();
+        end = new Date();
         try {
             begin = formatter.parse(FullStartDate);
             end = formatter.parse(FullEndDate);
+
         } catch (Exception errParse) {
             System.err.println("Unknown Date Format " + errParse);
         }
@@ -54,6 +59,7 @@ public class DisplaySearch extends AppCompatActivity {
         ((TextView) findViewById(R.id.textView11)).append("\n\n");
 
         for (PhoneCall singleCall : customer.billOfCalls) {
+
             Duration duration = Duration.ofMinutes(singleCall.getEndTime().getTime() - singleCall.getBeginTime().getTime());
             if (duration.toMinutes() / 60000 < 0) {
                 try {
@@ -63,7 +69,8 @@ public class DisplaySearch extends AppCompatActivity {
                 }
             }
 
-            if ((singleCall.compareTo(begin) >= 0) && (singleCall.getBeginTime().compareTo(end) <= 0)) {
+
+            if ((!singleCall.getBeginTime().before(begin)) && (singleCall.getBeginTime().before(end))) {
                 String printCall = "Phone call duration of " + (duration.toMinutes() / 60000) + " minutes" + " between " + singleCall.getCaller() + " and " + singleCall.getCallee()
                         + " beginning at " + singleCall.getBeginTimeString() + " and ending at " + singleCall.getEndTimeString() + "\n\n";
                 ((TextView) findViewById(R.id.textView11)).append(printCall);

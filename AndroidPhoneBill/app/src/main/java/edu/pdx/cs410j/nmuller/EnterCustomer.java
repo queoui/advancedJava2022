@@ -38,7 +38,7 @@ public class EnterCustomer extends AppCompatActivity {
                         File newFilePath = new File(dataDirectory.toString() +"/"+ singleFile);
                         Reader textFile = new FileReader(newFilePath);
                         TextParser fileReader = new TextParser(textFile);
-                        PhoneBill newBill = fileReader.parse();
+                        PhoneBill newBill = fileReader.Billparse();
                         allBills.put(newBill.getCustomer(), newBill);
                     } catch (FileNotFoundException | ParserException e) {
                         e.printStackTrace();
