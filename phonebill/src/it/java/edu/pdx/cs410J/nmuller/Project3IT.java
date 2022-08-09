@@ -176,17 +176,17 @@ class Project3IT extends InvokeMainTestCase {
                 containsString(""));
 
     }
-
-    /**
-     * Tests accurate command line arguments
-     */
-    @Test
-    void customerDoesNotMatchTheBill() {
-        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
-                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
-        assertThat(result.getTextWrittenToStandardError(),
-                containsString("error reading from file: given customer does not match the bill."));
-    }
+//
+//    /**
+//     * Tests accurate command line arguments
+//     */
+//    @Test
+//    void customerDoesNotMatchTheBill() {
+//        MainMethodResult result = invokeMain("-print", "-textfile", "src/test/resources/edu/pdx/cs410J/nmuller/valid-phonebill.txt", "BillyBob 'the dipster' Dumper", "425-555-5555", "206-555-5555",
+//                "05/24/2022", "12:50", "pm", "05/24/2022", "1:00", "pm");
+//        assertThat(result.getTextWrittenToStandardError(),
+//                containsString("error reading from file: given customer does not match the bill."));
+//    }
 
     /**
      * Tests accurate command line arguments
