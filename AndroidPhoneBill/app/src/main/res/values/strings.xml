@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">AndroidPhoneBill</string>
+    <string name="welcome_to_the_phone_bill_application">Welcome to the Phone Bill Application</string>
+    <string name="enterCustomer">Let\'s Get Started!</string>
+    <string name="submit">Submit</string>
+    <string name="hello_customer">Hello, Customer!</string>
+    <string name="add_new_phone_call">Add New Phone Call</string>
+    <string name="search_phone_calls">Search Phone Calls</string>
+    <string name="display_all_calls">Display All Calls</string>
+    <string name="please_enter_phone_call_data">Please Enter Phone Call Data</string>
+    <string name="caller_number">Caller Number</string>
+    <string name="callee_number">Callee Number</string>
+    <string name="mm_dd_yyyy">MM/DD/YYYY</string>
+
+    <string name="mm_dd_yyyy_2">MM/DD/YYYY</string>
+
+    <string name="submit_phonecall">Submit PhoneCall</string>
+    <string-array name="am_pm">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+    <string name="README">
+        ****************\n
+Nicholas Muller\n
+Project 5\n
+****************\n\n
+
+############\n
+##  READ ME  ##\n
+############\n\n
+        This is the README file for the phone bill application!\n\n
+The application collects and stores phone calls into an android app with a little help from some text files. If a phone bill does not exist
+it will create a new phone bill on the app. If the customer already has a phone bill they can append a new phone call to their already existing one. The purpose is for all
+phone calls on a given account to be visible in the customers phone bill. The customer also has the option to search phone calls given a date and time range. Through the
+        use of text files the program practices file persistence. Once a phone bill is created it will stay there until the text file is physically deleted from the data
+        section of the app. Please enjoy all of the functionality of this app while you keep track of the phone calls you make in a given day.
+
+</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="search">Search</string>
+    <string name="hh_mm">HH:MM</string>
+    <string name="please_enter_search_parameters">Please Enter Search Parameters</string>
+    <string name="hh_mm2">HH:MM</string>
+    <string name="hh_mm3">HH:MM</string>
+    <string name="start_time2">Start Time</string>
+    <string name="end_time2">End Time</string>
+    <string name="what_would_you_like_to_do">What Would You Like To Do?</string>
+    <string name="full_name">Full Name</string>
+    <string name="please_enter_your_full_name">Please Enter Your Full Name</string>
+    <string name="readme">README</string>
+    <string name="hh_mm4">HH:MM</string>
+
+</resources>

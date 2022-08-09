@@ -13,15 +13,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextParserTest {
 
-  @Test
-  void validTextFileCanBeParsed() throws ParserException {
-    InputStream resource = getClass().getResourceAsStream("valid-phonebill.txt");
-    assertThat(resource, notNullValue());
-
-    TextParser parser = new TextParser(new InputStreamReader(resource));
-    PhoneBill bill = parser.parse();
-    assertThat(bill.getCustomer(), equalTo("Nick Muller"));
-  }
+//  @Test
+//  void validTextFileCanBeParsed() throws ParserException {
+//    InputStream resource = getClass().getResourceAsStream("valid-phonebill.txt");
+//    assertThat(resource, notNullValue());
+//
+//    TextParser parser = new TextParser(new InputStreamReader(resource));
+//    PhoneBill bill = parser.parse();
+//    assertThat(bill.getCustomer(), equalTo("Nick Muller"));
+//  }
 
 
   @Test
