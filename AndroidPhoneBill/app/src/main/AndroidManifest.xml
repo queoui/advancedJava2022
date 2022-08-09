@@ -35,7 +35,7 @@
             android:name=".EnterCustomer"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Project5"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

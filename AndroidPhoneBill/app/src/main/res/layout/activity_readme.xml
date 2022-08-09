@@ -12,7 +12,7 @@
         android:layout_height="609dp"
         android:scrollbars="vertical"
         android:text="@string/README"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:layout_editor_absoluteX="32dp"
         tools:layout_editor_absoluteY="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

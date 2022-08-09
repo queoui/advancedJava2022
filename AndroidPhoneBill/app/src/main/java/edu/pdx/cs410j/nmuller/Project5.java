@@ -9,7 +9,7 @@ import android.view.View;
 import java.io.File;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class Project5 extends AppCompatActivity {
 
     File dataDirectory;
 

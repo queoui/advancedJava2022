@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class SearchCalls extends AppCompatActivity {
     String JustEndTime;
     String FullStartDate;
     String FullEndDate;
+    boolean error = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,29 @@ public class SearchCalls extends AppCompatActivity {
         FullStartDate = JustStartDate + " " + JustStartTime + getFirstAMPM.getSelectedItem().toString();
         FullEndDate = JustEndDate +" "+ JustEndTime + getSecondAMPM.getSelectedItem().toString();
 
-        Intent intent = new Intent(this, DisplaySearch.class);
-        intent.putExtra("customer", customer);
-        intent.putExtra("filePath", filePath);
-        intent.putExtra("startDate", FullStartDate);
-        intent.putExtra("endDate", FullEndDate);
-        startActivity(intent);
+        try{
+            ErrorCheck.checkDate(getStartDateId.getText().toString().trim());
+            ErrorCheck.checkTime(getStartTimeId.getText().toString().trim());
+            ErrorCheck.checkDate(getEndDateId.getText().toString().trim());
+            ErrorCheck.checkTime(getEndTimeId.getText().toString().trim());
+        }catch(IOException e){
+            error = true;
+            toastException(e);
+        }
+
+        if(!error) {
+            Intent intent = new Intent(this, DisplaySearch.class);
+            intent.putExtra("customer", customer);
+            intent.putExtra("filePath", filePath);
+            intent.putExtra("startDate", FullStartDate);
+            intent.putExtra("endDate", FullEndDate);
+            startActivity(intent);
+        }
+
+    }
+
+    private void toastException(IOException e) {
+        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
 }
