@@ -11,9 +11,9 @@
     <string name="caller_number">Caller Number</string>
     <string name="callee_number">Callee Number</string>
     <string name="mm_dd_yyyy">MM/DD/YYYY</string>
-    <string name="hh_mm_am_pm">HH:MM AM/PM</string>
+
     <string name="mm_dd_yyyy_2">MM/DD/YYYY</string>
-    <string name="hh_mm_am_pm_2">HH:MM AM/PM</string>
+
     <string name="submit_phonecall">Submit PhoneCall</string>
     <string-array name="am_pm">
         <item>AM</item>
@@ -41,5 +41,14 @@ phone calls on a given account to be visible in the customers phone bill. The cu
     <string name="search">Search</string>
     <string name="hh_mm">HH:MM</string>
     <string name="please_enter_search_parameters">Please Enter Search Parameters</string>
+    <string name="hh_mm2">HH:MM</string>
+    <string name="hh_mm3">HH:MM</string>
+    <string name="start_time2">Start Time</string>
+    <string name="end_time2">End Time</string>
+    <string name="what_would_you_like_to_do">What Would You Like To Do?</string>
+    <string name="full_name">Full Name</string>
+    <string name="please_enter_your_full_name">Please Enter Your Full Name</string>
+    <string name="readme">README</string>
+    <string name="hh_mm4">HH:MM</string>
 
 </resources>
